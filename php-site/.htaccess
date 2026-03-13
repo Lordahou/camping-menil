@@ -4,9 +4,9 @@
 # Enable rewrite engine
 RewriteEngine On
 
-# Force HTTPS (uncomment in production on OVH)
-# RewriteCond %{HTTPS} !=on
-# RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+# Force HTTPS (OVH)
+RewriteCond %{HTTPS} !=on
+RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
 
 # Remove trailing slash (except root)
 RewriteCond %{REQUEST_FILENAME} !-d
@@ -22,33 +22,24 @@ RewriteRule ^admin/?$ admin/index.php [L]
 
 # Block access to sensitive files
 <FilesMatch "\.(json|log|bak|sql|md)$">
-    Require all denied
+    Order Allow,Deny
+    Deny from all
 </FilesMatch>
 
 # Block access to includes directory
-<IfModule mod_authz_core.c>
-    <Directory "includes">
-        Require all denied
-    </Directory>
-</IfModule>
 RewriteRule ^includes/ - [F,L]
 
+# Block data directory
+RewriteRule ^data/ - [F,L]
+
 # Block dotfiles (except .htaccess)
-<FilesMatch "^\.(?!htaccess)">
-    Require all denied
-</FilesMatch>
+RewriteRule (^\.|/\.) - [F,L]
 
 # Prevent directory listing
 Options -Indexes
 
 # Set default charset
 AddDefaultCharset UTF-8
-
-# MIME types
-AddType image/svg+xml svg svgz
-AddType image/webp webp
-AddType application/javascript js
-AddType text/css css
 
 # Cache control
 <IfModule mod_expires.c>
@@ -59,7 +50,6 @@ AddType text/css css
     ExpiresByType image/webp "access plus 1 year"
     ExpiresByType text/css "access plus 1 month"
     ExpiresByType application/javascript "access plus 1 month"
-    ExpiresByType application/x-font-woff2 "access plus 1 year"
 </IfModule>
 
 # Compression
@@ -75,16 +65,6 @@ AddType text/css css
     Header always set X-Frame-Options "SAMEORIGIN"
     Header always set X-XSS-Protection "1; mode=block"
     Header always set Referrer-Policy "strict-origin-when-cross-origin"
-</IfModule>
-
-# PHP settings (OVH compatible)
-<IfModule mod_php.c>
-    php_value upload_max_filesize 5M
-    php_value post_max_size 8M
-    php_value max_execution_time 30
-    php_value session.cookie_httponly 1
-    php_value session.cookie_secure 1
-    php_value session.use_strict_mode 1
 </IfModule>
 
 # Custom error pages
