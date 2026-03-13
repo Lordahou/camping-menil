@@ -1,0 +1,322 @@
+{
+  "site": {
+    "name": "Camping du Bac de Ménil",
+    "shortName": "Camping du Bac",
+    "tagline": "Un coin de nature au bord de la Mayenne",
+    "description": "Camping 2 étoiles au bord de la Mayenne à Ménil (53). Emplacements, chalets, tentes bivouac, maison éclusière. Pédalo, canoë, pêche. Note 9.6/10.",
+    "rating": "9.6/10",
+    "ratingSource": "Fairguest",
+    "stars": 2,
+    "url": "https://camping.menil53.fr",
+    "bookingUrl": "https://naxiresav2.inaxel.com/etape1-criteres.php?compte=bac53",
+    "logo": "/images/logo.svg"
+  },
+  "contact": {
+    "address": "Rue du Port",
+    "city": "Ménil",
+    "postalCode": "53200",
+    "department": "Mayenne",
+    "region": "Pays de la Loire",
+    "country": "France",
+    "phone": "02 43 70 24 54",
+    "email": "campingdubac@orange.fr",
+    "emailMairie": "mairie@menil53.fr",
+    "latitude": 47.7748589,
+    "longitude": -0.6733064,
+    "googleMapsUrl": "https://www.google.com/maps?q=47.7748589,-0.6733064"
+  },
+  "openingDates": {
+    "emplacements": {
+      "start": "10 avril 2026",
+      "end": "30 septembre 2026"
+    },
+    "chalets": "Toute l'année",
+    "maisonEclusiere": "Toute l'année"
+  },
+  "hero": {
+    "title": "Échappez-vous au bord de la Mayenne",
+    "subtitle": "Un camping nature d'exception, entre rivière et chemins de halage",
+    "cta1": { "text": "Réserver mon séjour", "url": "/contact" },
+    "cta2": { "text": "Découvrir le camping", "url": "/le-camping" },
+    "image": "/images/hero/camping-mayenne-hero.jpg",
+    "imageAlt": "Vue aérienne du Camping du Bac au bord de la Mayenne à Ménil"
+  },
+  "highlights": [
+    {
+      "icon": "river",
+      "title": "Au bord de la Mayenne",
+      "description": "Emplacements ombragés avec accès direct à la rivière et au chemin de halage"
+    },
+    {
+      "icon": "bike",
+      "title": "Sur la Vélo Francette",
+      "description": "Étape idéale sur l'itinéraire cyclable La Vélo Francette, labellisé Accueil Vélo"
+    },
+    {
+      "icon": "star",
+      "title": "Noté 9.6/10",
+      "description": "Une expérience plébiscitée par nos visiteurs pour le cadre, l'accueil et la tranquillité"
+    },
+    {
+      "icon": "boat",
+      "title": "Le Bac de Ménil",
+      "description": "Dernier bac à traction manuelle de Mayenne, une traversée unique et authentique"
+    },
+    {
+      "icon": "location",
+      "title": "À 5 min de Château-Gontier",
+      "description": "Profitez du calme de la nature à deux pas des commerces et services"
+    },
+    {
+      "icon": "activity",
+      "title": "Activités nautiques",
+      "description": "Pédalos, canoës, paddle et pêche directement sur place"
+    }
+  ],
+  "accommodations": [
+    {
+      "id": "emplacements",
+      "title": "Emplacements",
+      "subtitle": "34 emplacements ombragés",
+      "description": "Installez votre tente, caravane ou camping-car au bord de la Mayenne. Emplacements spacieux et ombragés avec accès à l'électricité et au Wi-Fi.",
+      "capacity": "Tentes, caravanes, camping-cars",
+      "count": 34,
+      "features": ["Électricité", "Wi-Fi gratuit", "Accès rivière", "Ombragé", "1 emplacement PMR"],
+      "checkin": "À partir de 12h00",
+      "checkout": "Avant 12h00",
+      "image": "/images/hebergements/emplacements.jpg",
+      "imageAlt": "Emplacements ombragés au bord de la Mayenne"
+    },
+    {
+      "id": "chalets",
+      "title": "Chalets",
+      "subtitle": "5 chalets tout confort — 35 m²",
+      "description": "Chalets entièrement équipés pour 2 à 6 personnes, avec terrasse couverte et vue sur la nature. Disponibles toute l'année.",
+      "capacity": "2 à 6 personnes",
+      "count": 5,
+      "features": ["Cuisine équipée", "2 chambres", "Terrasse couverte", "TV", "Toute l'année", "1 chalet PMR"],
+      "checkin": "À partir de 16h00",
+      "checkout": "Avant 10h00",
+      "image": "/images/hebergements/chalets.jpg",
+      "imageAlt": "Chalet tout confort au Camping du Bac"
+    },
+    {
+      "id": "bivouac",
+      "title": "Tentes Bivouac",
+      "subtitle": "2 tentes — idéal cyclistes",
+      "description": "Pensées pour les cyclistes de passage, ces tentes bivouac offrent un abri simple avec électricité, sans avoir besoin de transporter votre propre tente.",
+      "capacity": "2 personnes",
+      "count": 2,
+      "features": ["Électricité incluse", "Idéal Vélo Francette", "Solution pratique"],
+      "image": "/images/hebergements/bivouac.jpg",
+      "imageAlt": "Tente bivouac pour cyclistes au camping"
+    },
+    {
+      "id": "maison-eclusiere",
+      "title": "Maison Éclusière",
+      "subtitle": "Gîte de caractère — 3 chambres",
+      "description": "Ancienne maison d'éclusier entièrement rénovée, cette demeure de caractère vous accueille au bord du chemin de halage. Jardin privatif et local vélos.",
+      "capacity": "Jusqu'à 8 personnes",
+      "count": 1,
+      "features": ["3 chambres", "Jardin privatif", "Local vélos", "Toute l'année", "Patrimoine fluvial"],
+      "image": "/images/hebergements/maison-eclusiere.jpg",
+      "imageAlt": "Maison éclusière de caractère à Ménil"
+    }
+  ],
+  "services": [
+    { "icon": "wifi", "title": "Wi-Fi gratuit", "description": "Connexion sur tout le camping" },
+    { "icon": "electric", "title": "Électricité", "description": "Bornes sur chaque emplacement" },
+    { "icon": "laundry", "title": "Machine à laver", "description": "Lave-linge en libre-service" },
+    { "icon": "accessible", "title": "Accessibilité PMR", "description": "Emplacement, chalet et sanitaires adaptés" },
+    { "icon": "pets", "title": "Animaux acceptés", "description": "Tenus en laisse, carnet de vaccination à jour" },
+    { "icon": "bike-parking", "title": "Accueil Vélo", "description": "Local vélos et services dédiés cyclistes" },
+    { "icon": "playground", "title": "Aire de jeux", "description": "Espace de jeux pour les enfants" },
+    { "icon": "fishing", "title": "Pêche", "description": "Spots de pêche au bord de la Mayenne" }
+  ],
+  "activities": [
+    {
+      "title": "Le Bac de Ménil",
+      "description": "Traversez la Mayenne à bord du dernier bac à traction manuelle du département. Une expérience unique et authentique.",
+      "image": "/images/activites/bac-menil.jpg",
+      "price": "À partir de 1,50 €",
+      "category": "Patrimoine"
+    },
+    {
+      "title": "Canoë & Paddle",
+      "description": "Explorez la Mayenne en canoë ou en stand-up paddle. Location disponible directement à l'accueil du camping.",
+      "image": "/images/activites/canoe.jpg",
+      "category": "Nautique"
+    },
+    {
+      "title": "Pédalo",
+      "description": "Balade tranquille sur la Mayenne en pédalo 3 ou 5 places. Parfait en famille ou entre amis.",
+      "image": "/images/activites/pedalo.jpg",
+      "category": "Nautique"
+    },
+    {
+      "title": "Vélo & VTC",
+      "description": "Parcourez le chemin de halage et la Vélo Francette. Location de VTC adulte et enfant à l'accueil.",
+      "image": "/images/activites/velo.jpg",
+      "category": "Plein air"
+    },
+    {
+      "title": "Pêche",
+      "description": "La Mayenne offre de beaux spots de pêche. Permis disponibles au Bricomarché de Château-Gontier.",
+      "image": "/images/activites/peche.jpg",
+      "category": "Nature"
+    },
+    {
+      "title": "Randonnée",
+      "description": "Le chemin de halage vous offre des kilomètres de promenade au bord de l'eau, à pied ou à vélo.",
+      "image": "/images/activites/randonnee.jpg",
+      "category": "Plein air"
+    }
+  ],
+  "surroundings": [
+    {
+      "title": "Château-Gontier",
+      "distance": "5 min",
+      "description": "Cité de caractère, marchés, commerces et patrimoine historique"
+    },
+    {
+      "title": "Refuge de l'Arche",
+      "distance": "5 km",
+      "description": "Refuge animalier pour animaux sauvages et domestiques"
+    },
+    {
+      "title": "Château de Craon",
+      "distance": "27 km",
+      "description": "Château du XVIIIe siècle, Monument Historique classé"
+    },
+    {
+      "title": "Musée Robert Tatin",
+      "distance": "27 km",
+      "description": "Créations architecturales et sculpturales uniques à Cossé-le-Vivien"
+    },
+    {
+      "title": "Musée d'Art Naïf de Laval",
+      "distance": "37 km",
+      "description": "Au Château de Laval, artistes autodidactes dont Henri Rousseau"
+    }
+  ],
+  "bac": {
+    "description": "Le Bac de Ménil est le dernier bac à traction manuelle du département de la Mayenne. Cette traversée traditionnelle de la rivière, assurée par un passeur, est accessible aux piétons, cyclistes, motos et animaux.",
+    "price": "À partir de 1,50 €",
+    "restrictions": "Non accessible aux voitures. Fermeture en cas de rafales > 40 km/h, crues ou canicule.",
+    "schedules": {
+      "lowSeason": {
+        "period": "10 avril — 3 juillet & 1er — 30 septembre",
+        "times": ["9h30", "10h30", "11h30", "14h30", "16h00", "17h30"]
+      },
+      "highSeason": {
+        "period": "5 juillet — 24 août",
+        "times": ["9h30", "10h30", "12h00", "14h30", "16h00", "17h00", "18h30"]
+      }
+    }
+  },
+  "tarifs": {
+    "note": "Tarifs indicatifs — Consultez-nous pour les tarifs à jour.",
+    "emplacements": {
+      "title": "Emplacements",
+      "description": "Par nuit — Électricité incluse",
+      "items": [
+        { "label": "Adulte", "price": "À partir de 5,50 €" },
+        { "label": "Enfant (2-12 ans)", "price": "À partir de 3,00 €" },
+        { "label": "Emplacement", "price": "À partir de 3,50 €" },
+        { "label": "Électricité", "price": "À partir de 3,50 €" },
+        { "label": "Animal", "price": "À partir de 1,50 €" }
+      ]
+    },
+    "chalets": {
+      "title": "Chalets",
+      "description": "Location à la semaine ou au week-end",
+      "items": [
+        { "label": "Semaine haute saison", "price": "À partir de 450 €" },
+        { "label": "Semaine basse saison", "price": "À partir de 280 €" },
+        { "label": "Week-end (2 nuits)", "price": "À partir de 130 €" },
+        { "label": "Nuit supplémentaire", "price": "À partir de 60 €" },
+        { "label": "Caution (chèque)", "price": "250 €" },
+        { "label": "Forfait ménage (chèque)", "price": "60 €" }
+      ]
+    },
+    "bivouac": {
+      "title": "Tentes Bivouac",
+      "description": "Par nuit — Électricité incluse",
+      "items": [
+        { "label": "Par nuit (2 pers.)", "price": "À partir de 11 €" }
+      ]
+    },
+    "rentals": {
+      "title": "Location loisirs",
+      "description": "À l'accueil du camping",
+      "items": [
+        { "label": "Pédalo 3 places", "price": "Nous consulter" },
+        { "label": "Pédalo 5 places", "price": "Nous consulter" },
+        { "label": "Canoë 1 place", "price": "Nous consulter" },
+        { "label": "Canoë 2 places", "price": "Nous consulter" },
+        { "label": "VTC adulte", "price": "Nous consulter" },
+        { "label": "VTC enfant", "price": "Nous consulter" },
+        { "label": "Paddle", "price": "Nous consulter" }
+      ]
+    }
+  },
+  "testimonials": [
+    {
+      "text": "Endroit magnifique au bord de la Mayenne. Le cadre est paisible, les emplacements sont spacieux et ombragés. On reviendra !",
+      "author": "Marie L.",
+      "origin": "Nantes",
+      "rating": 5
+    },
+    {
+      "text": "Parfait pour une étape Vélo Francette. Accueil chaleureux, tentes bivouac très pratiques. Le bac est une expérience à ne pas manquer.",
+      "author": "Thomas D.",
+      "origin": "Paris",
+      "rating": 5
+    },
+    {
+      "text": "Vacances idéales en famille. Les enfants ont adoré le pédalo et le canoë. Les chalets sont confortables et bien équipés.",
+      "author": "Sophie & Laurent",
+      "origin": "Rennes",
+      "rating": 5
+    }
+  ],
+  "faq": [
+    {
+      "question": "Comment réserver ?",
+      "answer": "Vous pouvez réserver en ligne via notre plateforme de réservation, par email à campingdubac@orange.fr ou par téléphone au 02 43 70 24 54. Réservation au moins 48h à l'avance."
+    },
+    {
+      "question": "Les animaux sont-ils acceptés ?",
+      "answer": "Oui, les animaux sont les bienvenus au camping (sauf chiens de catégorie 1 et 2). Ils doivent être tenus en laisse et leur carnet de vaccination doit être à jour."
+    },
+    {
+      "question": "Quels moyens de paiement acceptez-vous ?",
+      "answer": "Nous acceptons les cartes bancaires, les chèques et les chèques vacances."
+    },
+    {
+      "question": "Le camping est-il accessible aux personnes à mobilité réduite ?",
+      "answer": "Oui, nous disposons d'un emplacement PMR, d'un chalet adapté et de sanitaires accessibles."
+    },
+    {
+      "question": "Y a-t-il le Wi-Fi ?",
+      "answer": "Oui, le Wi-Fi est gratuit et disponible sur l'ensemble du camping."
+    },
+    {
+      "question": "Quelles sont les conditions d'annulation ?",
+      "answer": "Toute modification ou annulation doit être notifiée par email ou courrier avant le début du séjour. En cas de force majeure justifiée, le solde (70%) est remboursé."
+    }
+  ],
+  "navigation": [
+    { "label": "Le camping", "url": "/le-camping" },
+    { "label": "Hébergements", "url": "/hebergements" },
+    { "label": "Services", "url": "/services" },
+    { "label": "Tarifs", "url": "/tarifs" },
+    { "label": "Activités", "url": "/activites" },
+    { "label": "Galerie", "url": "/galerie" },
+    { "label": "Infos pratiques", "url": "/infos-pratiques" }
+  ],
+  "footerLinks": [
+    { "label": "Mentions légales", "url": "/mentions-legales" },
+    { "label": "Politique de confidentialité", "url": "/politique-confidentialite" }
+  ]
+}
