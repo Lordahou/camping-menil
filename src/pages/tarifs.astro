@@ -1,0 +1,120 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import SectionTitle from '../components/SectionTitle.astro';
+import PricingTable from '../components/PricingTable.astro';
+import CTABanner from '../components/CTABanner.astro';
+import content from '../data/content.json';
+---
+
+<BaseLayout
+  title="Tarifs — Emplacements, chalets, tentes bivouac, locations"
+  description="Consultez les tarifs du Camping du Bac de Ménil : emplacements à partir de 5,50 €, chalets dès 280 € la semaine, tentes bivouac à 11 €/nuit. Réservez en ligne."
+>
+  <Hero
+    title="Tarifs"
+    subtitle="Des tarifs accessibles pour des vacances au bord de la Mayenne"
+    image="/images/galerie/galerie-2.jpg"
+    imageAlt="Tarifs du Camping du Bac de Ménil"
+    size="medium"
+  />
+
+  <!-- NOTE -->
+  <section class="py-12 bg-cream">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center reveal">
+      <div class="bg-sage/10 rounded-2xl p-6 border border-sage/20">
+        <p class="text-forest text-sm leading-relaxed">
+          <strong>Note :</strong> {content.tarifs.note}
+          Les prix indiqués sont des tarifs de base indicatifs. Pour obtenir un devis personnalisé,
+          n'hésitez pas à <a href="/contact" class="text-green underline hover:text-forest">nous contacter</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TARIFS EMPLACEMENTS -->
+  <section class="py-16 lg:py-24 bg-cream">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <SectionTitle
+        badge="Grille tarifaire"
+        title="Nos tarifs par catégorie"
+        subtitle="Trouvez la formule qui vous convient le mieux"
+      />
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+        <div class="reveal reveal-delay-1">
+          <PricingTable
+            title={content.tarifs.emplacements.title}
+            description={content.tarifs.emplacements.description}
+            items={content.tarifs.emplacements.items}
+          />
+        </div>
+        <div class="reveal reveal-delay-2">
+          <PricingTable
+            title={content.tarifs.chalets.title}
+            description={content.tarifs.chalets.description}
+            items={content.tarifs.chalets.items}
+            featured={true}
+          />
+        </div>
+        <div class="reveal reveal-delay-3">
+          <PricingTable
+            title={content.tarifs.bivouac.title}
+            description={content.tarifs.bivouac.description}
+            items={content.tarifs.bivouac.items}
+          />
+        </div>
+        <div class="reveal reveal-delay-4">
+          <PricingTable
+            title={content.tarifs.rentals.title}
+            description={content.tarifs.rentals.description}
+            items={content.tarifs.rentals.items}
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MOYENS DE PAIEMENT -->
+  <section class="py-16 lg:py-24 bg-cream-dark bg-pattern">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <SectionTitle
+        badge="Paiement"
+        title="Moyens de paiement acceptés"
+      />
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto">
+        <div class="bg-white rounded-2xl p-6 text-center border border-gray-100 reveal reveal-delay-1">
+          <div class="w-14 h-14 rounded-xl bg-moss flex items-center justify-center mx-auto mb-4">
+            <svg class="w-7 h-7 text-forest" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+              <rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/>
+            </svg>
+          </div>
+          <h3 class="text-forest text-sm font-semibold">Carte bancaire</h3>
+        </div>
+        <div class="bg-white rounded-2xl p-6 text-center border border-gray-100 reveal reveal-delay-2">
+          <div class="w-14 h-14 rounded-xl bg-moss flex items-center justify-center mx-auto mb-4">
+            <svg class="w-7 h-7 text-forest" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+              <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+            </svg>
+          </div>
+          <h3 class="text-forest text-sm font-semibold">Chèques</h3>
+        </div>
+        <div class="bg-white rounded-2xl p-6 text-center border border-gray-100 reveal reveal-delay-3">
+          <div class="w-14 h-14 rounded-xl bg-moss flex items-center justify-center mx-auto mb-4">
+            <svg class="w-7 h-7 text-forest" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+              <circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 100 4h4a2 2 0 110 4H8"/><path d="M12 18V6"/>
+            </svg>
+          </div>
+          <h3 class="text-forest text-sm font-semibold">Chèques vacances</h3>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <CTABanner
+    title="Prêt à réserver ?"
+    subtitle="Réservez votre séjour en ligne ou contactez-nous pour un devis personnalisé."
+    secondaryText="Nous contacter"
+    secondaryUrl="/contact"
+  />
+</BaseLayout>

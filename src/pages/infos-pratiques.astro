@@ -1,0 +1,271 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import SectionTitle from '../components/SectionTitle.astro';
+import FAQ from '../components/FAQ.astro';
+import CTABanner from '../components/CTABanner.astro';
+import content from '../data/content.json';
+---
+
+<BaseLayout
+  title="Infos pratiques — Horaires, accès, règlement, FAQ"
+  description="Toutes les informations pratiques du Camping du Bac : dates d'ouverture, comment venir, règlement intérieur, FAQ et coordonnées."
+>
+  <Hero
+    title="Infos pratiques"
+    subtitle="Tout ce qu'il faut savoir pour préparer votre séjour"
+    image="/images/galerie/galerie-9.jpg"
+    imageAlt="Informations pratiques du Camping du Bac"
+    size="medium"
+  />
+
+  <!-- DATES D'OUVERTURE -->
+  <section class="py-16 lg:py-24 bg-cream">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <SectionTitle
+        badge="Ouverture"
+        title="Dates d'ouverture"
+        subtitle="Selon le type d'hébergement"
+      />
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
+        <div class="bg-white rounded-2xl p-8 border border-gray-100 text-center hover:shadow-lg transition-shadow duration-300 reveal reveal-delay-1">
+          <div class="w-14 h-14 rounded-xl bg-moss flex items-center justify-center mx-auto mb-4">
+            <svg class="w-7 h-7 text-forest" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+              <path d="M3 3h18v18H3z"/><path d="M3 9h18"/><path d="M9 21V9"/>
+            </svg>
+          </div>
+          <h3 class="text-forest text-base font-semibold mb-2">Emplacements</h3>
+          <p class="text-green text-sm font-semibold">{content.openingDates.emplacements.start}</p>
+          <p class="text-gray-400 text-xs my-1">au</p>
+          <p class="text-green text-sm font-semibold">{content.openingDates.emplacements.end}</p>
+        </div>
+        <div class="bg-white rounded-2xl p-8 border border-gray-100 text-center hover:shadow-lg transition-shadow duration-300 reveal reveal-delay-2">
+          <div class="w-14 h-14 rounded-xl bg-moss flex items-center justify-center mx-auto mb-4">
+            <svg class="w-7 h-7 text-forest" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+              <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+          </div>
+          <h3 class="text-forest text-base font-semibold mb-2">Chalets</h3>
+          <p class="text-green text-sm font-semibold">{content.openingDates.chalets}</p>
+        </div>
+        <div class="bg-white rounded-2xl p-8 border border-gray-100 text-center hover:shadow-lg transition-shadow duration-300 reveal reveal-delay-3">
+          <div class="w-14 h-14 rounded-xl bg-moss flex items-center justify-center mx-auto mb-4">
+            <svg class="w-7 h-7 text-forest" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+              <path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z"/>
+            </svg>
+          </div>
+          <h3 class="text-forest text-base font-semibold mb-2">Maison éclusière</h3>
+          <p class="text-green text-sm font-semibold">{content.openingDates.maisonEclusiere}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMMENT VENIR -->
+  <section class="py-16 lg:py-24 bg-cream-dark bg-pattern">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <SectionTitle
+        badge="Accès"
+        title="Comment venir au camping"
+        subtitle="Situé à 5 minutes de Château-Gontier, sur la commune de Ménil"
+      />
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+        <div class="reveal">
+          <div class="bg-white rounded-2xl p-8 border border-gray-100">
+            <h3 class="text-forest text-lg mb-6">Adresse & coordonnées</h3>
+            <div class="space-y-4">
+              <div class="flex items-start gap-4">
+                <div class="w-10 h-10 rounded-lg bg-moss flex items-center justify-center flex-shrink-0">
+                  <svg class="w-5 h-5 text-forest" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="font-semibold text-forest text-sm">Adresse</p>
+                  <p class="text-gray-600 text-sm">{content.contact.address}</p>
+                  <p class="text-gray-600 text-sm">{content.contact.postalCode} {content.contact.city}</p>
+                  <p class="text-gray-600 text-sm">{content.contact.department}, {content.contact.region}</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-4">
+                <div class="w-10 h-10 rounded-lg bg-moss flex items-center justify-center flex-shrink-0">
+                  <svg class="w-5 h-5 text-forest" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                    <circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="font-semibold text-forest text-sm">GPS</p>
+                  <p class="text-gray-600 text-sm">{content.contact.latitude}, {content.contact.longitude}</p>
+                  <a
+                    href={content.contact.googleMapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-green text-sm underline hover:text-forest mt-1 inline-block"
+                  >
+                    Ouvrir dans Google Maps
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="reveal reveal-delay-2">
+          <div class="bg-white rounded-2xl p-8 border border-gray-100">
+            <h3 class="text-forest text-lg mb-6">Comment y aller</h3>
+            <div class="space-y-5">
+              <div>
+                <h4 class="font-semibold text-forest text-sm mb-2 flex items-center gap-2">
+                  <svg class="w-4 h-4 text-green" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                  En voiture
+                </h4>
+                <p class="text-gray-500 text-sm leading-relaxed">
+                  Depuis Château-Gontier, prendre la direction de Ménil par la D22.
+                  Le camping se trouve sur les bords de la Mayenne, rue du Port.
+                  Depuis Laval (37 km) ou Angers (70 km), rejoindre Château-Gontier par l'A81.
+                </p>
+              </div>
+              <div>
+                <h4 class="font-semibold text-forest text-sm mb-2 flex items-center gap-2">
+                  <svg class="w-4 h-4 text-green" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M15 6a1 1 0 100-2 1 1 0 000 2zM12 17.5V14l-3-3 4-3 2 3h3"/></svg>
+                  À vélo (Vélo Francette)
+                </h4>
+                <p class="text-gray-500 text-sm leading-relaxed">
+                  Le camping est situé directement sur l'itinéraire de la Vélo Francette
+                  (V43 — Ouistreham / La Rochelle). Accès par le chemin de halage.
+                </p>
+              </div>
+              <div>
+                <h4 class="font-semibold text-forest text-sm mb-2 flex items-center gap-2">
+                  <svg class="w-4 h-4 text-green" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M12 18h.01"/></svg>
+                  En train
+                </h4>
+                <p class="text-gray-500 text-sm leading-relaxed">
+                  Gare la plus proche : Château-Gontier (5 km). Ligne TER Le Mans — Angers.
+                  Depuis la gare, le camping est accessible à vélo ou en taxi.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RÈGLEMENT -->
+  <section class="py-16 lg:py-24 bg-cream">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <SectionTitle
+        badge="Règlement"
+        title="Règlement intérieur"
+        subtitle="Pour le confort de tous, merci de respecter ces quelques règles"
+      />
+      <div class="max-w-3xl mx-auto">
+        <div class="bg-white rounded-2xl p-8 lg:p-10 border border-gray-100 reveal">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div>
+              <h3 class="text-forest text-sm font-semibold mb-3 flex items-center gap-2">
+                <svg class="w-4 h-4 text-green" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                Calme & tranquillité
+              </h3>
+              <ul class="text-gray-500 text-sm space-y-2">
+                <li>Silence de 22h00 à 8h00</li>
+                <li>Musique modérée en journée</li>
+                <li>Respect du voisinage</li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="text-forest text-sm font-semibold mb-3 flex items-center gap-2">
+                <svg class="w-4 h-4 text-green" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                Arrivées & départs
+              </h3>
+              <ul class="text-gray-500 text-sm space-y-2">
+                <li>Emplacements : arrivée 12h, départ 12h</li>
+                <li>Chalets : arrivée 16h, départ 10h</li>
+                <li>Véhicules stationnés au parking</li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="text-forest text-sm font-semibold mb-3 flex items-center gap-2">
+                <svg class="w-4 h-4 text-green" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 5.172C10 3.782 8.884 2.5 7.5 2.5S5 3.782 5 5.172C5 7.5 7.5 10 7.5 10s2.5-2.5 2.5-4.828z"/><path d="M19 5.172C19 3.782 17.884 2.5 16.5 2.5S14 3.782 14 5.172C14 7.5 16.5 10 16.5 10s2.5-2.5 2.5-4.828z"/></svg>
+                Animaux
+              </h3>
+              <ul class="text-gray-500 text-sm space-y-2">
+                <li>Animaux acceptés tenus en laisse</li>
+                <li>Carnet de vaccination à jour</li>
+                <li>Sauf chiens de catégorie 1 et 2</li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="text-forest text-sm font-semibold mb-3 flex items-center gap-2">
+                <svg class="w-4 h-4 text-green" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22V8"/><path d="M5 12l7-10 7 10"/></svg>
+                Environnement
+              </h3>
+              <ul class="text-gray-500 text-sm space-y-2">
+                <li>Tri sélectif obligatoire</li>
+                <li>Feux au sol interdits</li>
+                <li>Barbecues surélevés autorisés</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="py-16 lg:py-24 bg-cream-dark">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <SectionTitle
+        badge="FAQ"
+        title="Questions fréquentes"
+        subtitle="Les réponses aux questions les plus courantes"
+      />
+      <div class="max-w-3xl mx-auto reveal">
+        <FAQ />
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT RAPIDE -->
+  <section class="py-16 lg:py-24 bg-cream">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <SectionTitle
+        badge="Contact"
+        title="Une question ?"
+        subtitle="N'hésitez pas à nous contacter"
+      />
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto">
+        <a href={`tel:${content.contact.phone.replace(/\s/g, '')}`} class="bg-white rounded-2xl p-6 border border-gray-100 text-center hover:shadow-lg transition-shadow duration-300 group reveal reveal-delay-1">
+          <div class="w-12 h-12 rounded-xl bg-moss flex items-center justify-center mx-auto mb-3 group-hover:bg-sage transition-colors">
+            <svg class="w-5 h-5 text-forest" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+              <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+            </svg>
+          </div>
+          <p class="text-forest font-semibold text-sm">{content.contact.phone}</p>
+        </a>
+        <a href={`mailto:${content.contact.email}`} class="bg-white rounded-2xl p-6 border border-gray-100 text-center hover:shadow-lg transition-shadow duration-300 group reveal reveal-delay-2">
+          <div class="w-12 h-12 rounded-xl bg-moss flex items-center justify-center mx-auto mb-3 group-hover:bg-sage transition-colors">
+            <svg class="w-5 h-5 text-forest" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+            </svg>
+          </div>
+          <p class="text-forest font-semibold text-sm">{content.contact.email}</p>
+        </a>
+        <a href="/contact" class="bg-white rounded-2xl p-6 border border-gray-100 text-center hover:shadow-lg transition-shadow duration-300 group reveal reveal-delay-3">
+          <div class="w-12 h-12 rounded-xl bg-moss flex items-center justify-center mx-auto mb-3 group-hover:bg-sage transition-colors">
+            <svg class="w-5 h-5 text-forest" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+              <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+            </svg>
+          </div>
+          <p class="text-forest font-semibold text-sm">Formulaire de contact</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <CTABanner
+    title="Prêt à réserver votre séjour ?"
+    subtitle="Réservez en ligne ou contactez-nous pour toute question."
+  />
+</BaseLayout>

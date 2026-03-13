@@ -1,0 +1,47 @@
+---
+interface Props {
+  title: string;
+  subtitle: string;
+  description: string;
+  image: string;
+  imageAlt: string;
+  features: string[];
+  capacity?: string;
+  url?: string;
+}
+
+const { title, subtitle, description, image, imageAlt, features, capacity, url = '/hebergements' } = Astro.props;
+---
+
+<article class="card group">
+  <div class="relative overflow-hidden aspect-[4/3]">
+    <img
+      src={image}
+      alt={imageAlt}
+      class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+      loading="lazy"
+    />
+    <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+    {capacity && (
+      <span class="absolute bottom-4 left-4 badge bg-white/90 text-forest text-xs">
+        {capacity}
+      </span>
+    )}
+  </div>
+  <div class="p-6 lg:p-8">
+    <p class="text-green text-sm font-semibold uppercase tracking-wider mb-1">{subtitle}</p>
+    <h3 class="text-forest text-xl mb-3">{title}</h3>
+    <p class="text-gray-500 text-sm leading-relaxed mb-5">{description}</p>
+
+    <div class="flex flex-wrap gap-2 mb-6">
+      {features.slice(0, 5).map((f) => (
+        <span class="text-xs px-3 py-1 rounded-full bg-moss/50 text-forest-light font-medium">{f}</span>
+      ))}
+    </div>
+
+    <a href={url} class="btn btn-outline btn-sm w-full text-center">
+      Découvrir
+      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+</article>

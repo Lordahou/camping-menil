@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://camping.menil53.fr/sitemap-index.xml
+
+# Disallow admin/dev paths
+Disallow: /admin/
+Disallow: /_astro/

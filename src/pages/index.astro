@@ -1,0 +1,229 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import SectionTitle from '../components/SectionTitle.astro';
+import HighlightCard from '../components/HighlightCard.astro';
+import AccommodationCard from '../components/AccommodationCard.astro';
+import ServiceIcon from '../components/ServiceIcon.astro';
+import Testimonials from '../components/Testimonials.astro';
+import CTABanner from '../components/CTABanner.astro';
+import content from '../data/content.json';
+---
+
+<BaseLayout
+  title="Camping du Bac de Ménil — Camping bord de Mayenne (53)"
+  description="Camping 2 étoiles au bord de la Mayenne à Ménil (53). Emplacements, chalets, tentes bivouac, maison éclusière. Pédalo, canoë, pêche. Note 9.6/10. Réservez en ligne."
+>
+  <!-- HERO -->
+  <Hero
+    title={content.hero.title}
+    subtitle={content.hero.subtitle}
+    image={content.hero.image}
+    imageAlt={content.hero.imageAlt}
+    cta1={content.hero.cta1}
+    cta2={content.hero.cta2}
+    size="full"
+  />
+
+  <!-- INTRO -->
+  <section class="py-16 lg:py-24 bg-cream relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mx-auto text-center reveal">
+        <span class="badge mb-4">Bienvenue à Ménil</span>
+        <h2 class="text-forest mb-6">Un camping nature au fil de l'eau</h2>
+        <p class="text-gray-600 text-lg leading-relaxed">
+          Niché au bord de la Mayenne, le Camping du Bac vous accueille dans un cadre
+          verdoyant et paisible, entre chemin de halage et rivière. À 5 minutes de Château-Gontier,
+          sur l'itinéraire de La Vélo Francette, c'est le lieu idéal pour des vacances nature,
+          en famille ou entre amis.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- POINTS FORTS -->
+  <section class="py-16 lg:py-24 bg-cream-dark bg-pattern">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <SectionTitle
+        badge="Nos atouts"
+        title="Pourquoi choisir le Camping du Bac ?"
+        subtitle="Un cadre exceptionnel et des services pensés pour votre confort"
+      />
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
+        {content.highlights.map((h, i) => (
+          <div class={`reveal reveal-delay-${(i % 4) + 1}`}>
+            <HighlightCard icon={h.icon} title={h.title} description={h.description} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- HÉBERGEMENTS -->
+  <section class="py-16 lg:py-24 bg-cream">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <SectionTitle
+        badge="Hébergements"
+        title="Trouvez votre coin de paradis"
+        subtitle="Emplacements, chalets, tentes bivouac ou maison éclusière : il y en a pour tous les goûts"
+      />
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+        {content.accommodations.map((a, i) => (
+          <div class={`reveal reveal-delay-${(i % 4) + 1}`}>
+            <AccommodationCard
+              title={a.title}
+              subtitle={a.subtitle}
+              description={a.description}
+              image={a.image}
+              imageAlt={a.imageAlt}
+              features={a.features}
+              capacity={a.capacity}
+            />
+          </div>
+        ))}
+      </div>
+      <div class="text-center mt-12 reveal">
+        <a href="/hebergements" class="btn btn-outline btn-lg">
+          Tous nos hébergements
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- LE BAC — Section immersive -->
+  <section class="relative py-24 lg:py-32 overflow-hidden">
+    <div class="absolute inset-0">
+      <img src="/images/activites/bac-menil.jpg" alt="Le Bac de Ménil sur la Mayenne" class="w-full h-full object-cover" loading="lazy" />
+      <div class="absolute inset-0 bg-forest/80 backdrop-blur-sm"></div>
+    </div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div class="reveal">
+          <span class="badge bg-white/15 text-white/90 mb-4">Expérience unique</span>
+          <h2 class="text-white mb-6">Le Bac de Ménil</h2>
+          <p class="text-white/80 text-lg leading-relaxed mb-4">
+            Vivez un moment hors du temps à bord du dernier bac à traction manuelle
+            du département de la Mayenne. Cette traversée de la rivière, opérée par
+            un passeur, est une expérience authentique et inoubliable.
+          </p>
+          <p class="text-white/60 text-sm mb-8">
+            Accessible aux piétons, cyclistes, motos et animaux. À partir de 1,50 €.
+          </p>
+          <a href="/activites" class="btn btn-secondary">
+            En savoir plus
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+        <div class="reveal reveal-delay-2">
+          <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
+            <h4 class="text-white font-semibold mb-4">Horaires du Bac</h4>
+            <div class="space-y-4">
+              <div>
+                <p class="text-sage text-sm font-semibold mb-2">Basse saison</p>
+                <p class="text-white/50 text-xs mb-2">{content.bac.schedules.lowSeason.period}</p>
+                <div class="flex flex-wrap gap-2">
+                  {content.bac.schedules.lowSeason.times.map((t) => (
+                    <span class="text-white/80 text-sm bg-white/5 px-3 py-1 rounded-full">{t}</span>
+                  ))}
+                </div>
+              </div>
+              <div class="border-t border-white/10 pt-4">
+                <p class="text-sage text-sm font-semibold mb-2">Haute saison</p>
+                <p class="text-white/50 text-xs mb-2">{content.bac.schedules.highSeason.period}</p>
+                <div class="flex flex-wrap gap-2">
+                  {content.bac.schedules.highSeason.times.map((t) => (
+                    <span class="text-white/80 text-sm bg-white/5 px-3 py-1 rounded-full">{t}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="py-16 lg:py-24 bg-cream">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <SectionTitle badge="Services" title="Tout pour votre confort" subtitle="Des équipements et services pensés pour un séjour sans souci" />
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 reveal">
+        {content.services.map((s) => (
+          <ServiceIcon icon={s.icon} title={s.title} description={s.description} />
+        ))}
+      </div>
+      <div class="text-center mt-10 reveal">
+        <a href="/services" class="btn btn-outline btn-sm">Tous nos services</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACTIVITÉS -->
+  <section class="py-16 lg:py-24 bg-cream-dark">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <SectionTitle badge="Activités & loisirs" title="Explorez, jouez, détendez-vous" subtitle="Sur l'eau, à vélo ou à pied : le camping et ses environs regorgent d'activités" />
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {content.activities.slice(0, 6).map((a, i) => (
+          <div class={`card group reveal reveal-delay-${(i % 3) + 1}`}>
+            <div class="relative aspect-[3/2] overflow-hidden">
+              <img src={a.image} alt={a.title} class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+              <span class="absolute top-4 left-4 badge bg-white/90 text-forest text-xs">{a.category}</span>
+            </div>
+            <div class="p-5 lg:p-6">
+              <h3 class="text-forest text-lg mb-2">{a.title}</h3>
+              <p class="text-gray-500 text-sm leading-relaxed">{a.description}</p>
+              {a.price && <p class="text-green text-sm font-semibold mt-3">{a.price}</p>}
+            </div>
+          </div>
+        ))}
+      </div>
+      <div class="text-center mt-12 reveal">
+        <a href="/activites" class="btn btn-outline btn-lg">Toutes les activités</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALERIE RAPIDE -->
+  <section class="py-16 lg:py-24 bg-cream">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <SectionTitle badge="En images" title="Découvrez le camping" />
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 lg:gap-4 reveal">
+        {[1,2,3,4,5,6,7,8].map((n) => (
+          <div class={`relative overflow-hidden rounded-xl aspect-square group ${n === 1 || n === 8 ? 'md:col-span-2 md:row-span-2' : ''}`}>
+            <img src={`/images/galerie/galerie-${n}.jpg`} alt={`Camping du Bac — Photo ${n}`} class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />
+            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300"></div>
+          </div>
+        ))}
+      </div>
+      <div class="text-center mt-10 reveal">
+        <a href="/galerie" class="btn btn-outline btn-sm">Voir toute la galerie</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TÉMOIGNAGES -->
+  <Testimonials />
+
+  <!-- ALENTOURS -->
+  <section class="py-16 lg:py-24 bg-cream">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <SectionTitle badge="Aux alentours" title="Un territoire à explorer" subtitle="Le sud Mayenne regorge de trésors : patrimoine, nature et culture à portée de main" />
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6 reveal">
+        {content.surroundings.map((s) => (
+          <div class="p-6 rounded-2xl bg-white border border-gray-100 hover:shadow-md transition-all duration-300">
+            <div class="flex items-start justify-between mb-3">
+              <h3 class="text-forest text-base">{s.title}</h3>
+              <span class="text-green text-sm font-semibold whitespace-nowrap ml-3">{s.distance}</span>
+            </div>
+            <p class="text-gray-500 text-sm leading-relaxed">{s.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <CTABanner />
+</BaseLayout>

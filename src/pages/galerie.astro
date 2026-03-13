@@ -1,0 +1,158 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import CTABanner from '../components/CTABanner.astro';
+
+const categories = ['Tous', 'Le camping', 'La rivière', 'Nos hébergements', 'Activités'];
+
+const images = [
+  { src: '/images/galerie/galerie-1.jpg', alt: 'Vue du camping au bord de la Mayenne', category: 'Le camping' },
+  { src: '/images/galerie/galerie-2.jpg', alt: 'La Mayenne au coucher du soleil', category: 'La rivière' },
+  { src: '/images/galerie/galerie-3.jpg', alt: 'Emplacements ombragés du camping', category: 'Le camping' },
+  { src: '/images/galerie/galerie-4.jpg', alt: 'Chalet tout confort au camping', category: 'Nos hébergements' },
+  { src: '/images/galerie/galerie-5.jpg', alt: 'La rivière Mayenne en été', category: 'La rivière' },
+  { src: '/images/galerie/galerie-6.jpg', alt: 'Maison éclusière de Ménil', category: 'Nos hébergements' },
+  { src: '/images/galerie/galerie-7.jpg', alt: 'Activités nautiques sur la Mayenne', category: 'Activités' },
+  { src: '/images/galerie/galerie-8.jpg', alt: 'Le Bac de Ménil', category: 'Activités' },
+  { src: '/images/galerie/galerie-9.jpg', alt: 'Chemin de halage le long de la Mayenne', category: 'Le camping' },
+  { src: '/images/galerie/galerie-10.jpg', alt: 'Pédalo sur la Mayenne', category: 'Activités' },
+  { src: '/images/galerie/galerie-11.jpg', alt: 'Tente bivouac pour cyclistes', category: 'Nos hébergements' },
+  { src: '/images/galerie/galerie-12.jpg', alt: 'Nature au bord de la Mayenne', category: 'La rivière' },
+];
+---
+
+<BaseLayout
+  title="Galerie photos — Découvrez le Camping du Bac en images"
+  description="Galerie photos du Camping du Bac de Ménil : le camping, la Mayenne, nos hébergements, les activités nautiques et le Bac de Ménil."
+>
+  <Hero
+    title="Galerie photos"
+    subtitle="Découvrez le Camping du Bac en images"
+    image="/images/galerie/galerie-1.jpg"
+    imageAlt="Galerie photos du Camping du Bac de Ménil"
+    size="medium"
+  />
+
+  <!-- GALERIE -->
+  <section class="py-16 lg:py-24 bg-cream">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <!-- Filtres catégories -->
+      <div class="flex flex-wrap justify-center gap-2 mb-12 reveal">
+        {categories.map((cat, i) => (
+          <button
+            class="gallery-filter px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 border border-gray-200 hover:border-sage hover:bg-sage/10 text-forest data-[active]:bg-forest data-[active]:text-white data-[active]:border-forest"
+            data-category={cat}
+            data-active={i === 0 ? '' : undefined}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
+
+      <!-- Grille masonry -->
+      <div class="columns-2 md:columns-3 lg:columns-4 gap-3 lg:gap-4 reveal" id="gallery-grid">
+        {images.map((img, i) => (
+          <a
+            href={`#photo-${i + 1}`}
+            class="gallery-item block mb-3 lg:mb-4 break-inside-avoid group relative rounded-xl overflow-hidden"
+            data-category={img.category}
+          >
+            <img
+              src={img.src}
+              alt={img.alt}
+              class="w-full object-cover transition-transform duration-700 group-hover:scale-110"
+              loading="lazy"
+            />
+            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300 flex items-end">
+              <p class="text-white text-sm font-medium p-4 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+                {img.alt}
+              </p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Lightbox CSS-only avec :target -->
+  {images.map((img, i) => (
+    <div id={`photo-${i + 1}`} class="lightbox fixed inset-0 z-50 bg-black/90 backdrop-blur-sm flex items-center justify-center p-4 opacity-0 pointer-events-none target:opacity-100 target:pointer-events-auto transition-opacity duration-300">
+      <a href="#" class="absolute inset-0 z-0" aria-label="Fermer la lightbox"></a>
+      <div class="relative z-10 max-w-5xl max-h-[85vh] w-full">
+        <img
+          src={img.src}
+          alt={img.alt}
+          class="w-full h-full object-contain rounded-lg"
+          loading="lazy"
+        />
+        <p class="text-white/80 text-sm text-center mt-4">{img.alt}</p>
+        <a href="#" class="absolute -top-2 -right-2 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors" aria-label="Fermer">
+          <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </a>
+      </div>
+      <!-- Navigation -->
+      {i > 0 && (
+        <a href={`#photo-${i}`} class="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors" aria-label="Photo précédente">
+          <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        </a>
+      )}
+      {i < images.length - 1 && (
+        <a href={`#photo-${i + 2}`} class="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors" aria-label="Photo suivante">
+          <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        </a>
+      )}
+    </div>
+  ))}
+
+  <!-- CTA -->
+  <CTABanner
+    title="Ces images vous font rêver ?"
+    subtitle="Venez vivre l'expérience en vrai ! Réservez votre séjour au bord de la Mayenne."
+  />
+</BaseLayout>
+
+<style>
+  .lightbox {
+    transition: opacity 0.3s ease;
+  }
+  .lightbox:target {
+    opacity: 1;
+    pointer-events: auto;
+  }
+</style>
+
+<script>
+  // Gallery filter
+  document.addEventListener('DOMContentLoaded', () => {
+    const filters = document.querySelectorAll('.gallery-filter');
+    const items = document.querySelectorAll('.gallery-item');
+
+    filters.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const category = btn.getAttribute('data-category');
+
+        // Update active filter
+        filters.forEach((f) => f.removeAttribute('data-active'));
+        btn.setAttribute('data-active', '');
+
+        // Show/hide items
+        items.forEach((item) => {
+          const itemCat = item.getAttribute('data-category');
+          if (category === 'Tous' || itemCat === category) {
+            (item as HTMLElement).style.display = '';
+          } else {
+            (item as HTMLElement).style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // Close lightbox on Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && window.location.hash.startsWith('#photo-')) {
+        window.location.hash = '';
+      }
+    });
+  });
+</script>

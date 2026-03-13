@@ -1,0 +1,167 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import ContactForm from '../components/ContactForm.astro';
+import CTABanner from '../components/CTABanner.astro';
+import content from '../data/content.json';
+---
+
+<BaseLayout
+  title="Réserver / Nous contacter — Camping du Bac de Ménil"
+  description="Réservez votre séjour au Camping du Bac de Ménil ou contactez-nous. Réservation en ligne, par téléphone au 02 43 70 24 54 ou par email."
+>
+  <Hero
+    title="Réserver / Nous contacter"
+    subtitle="Réservez votre séjour ou envoyez-nous un message"
+    image="/images/galerie/galerie-7.jpg"
+    imageAlt="Contact et réservation au Camping du Bac"
+    size="medium"
+  />
+
+  <!-- RÉSERVATION EN LIGNE -->
+  <section class="py-16 lg:py-24 bg-cream">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mx-auto text-center mb-12 reveal">
+        <span class="badge mb-4">Réservation en ligne</span>
+        <h2 class="text-forest mb-4">Réservez directement en ligne</h2>
+        <p class="text-gray-600 text-lg leading-relaxed mb-8">
+          La façon la plus simple et rapide de réserver votre séjour au Camping du Bac.
+          Choisissez vos dates, votre hébergement et confirmez votre réservation en quelques clics.
+        </p>
+        <a
+          href={content.site.bookingUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn btn-primary btn-lg"
+        >
+          Réserver en ligne
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+        <p class="text-gray-400 text-xs mt-3">Redirection vers notre plateforme de réservation sécurisée Naxiresa</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORMULAIRE + INFO CONTACT -->
+  <section class="py-16 lg:py-24 bg-cream-dark">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12">
+        <!-- Formulaire -->
+        <div class="lg:col-span-3 reveal">
+          <ContactForm />
+        </div>
+
+        <!-- Panel contact -->
+        <div class="lg:col-span-2 reveal reveal-delay-2">
+          <div class="bg-white rounded-2xl p-8 border border-gray-100 shadow-lg sticky top-8">
+            <h3 class="text-forest text-xl mb-6">Coordonnées</h3>
+
+            <div class="space-y-5">
+              <!-- Téléphone -->
+              <a href={`tel:${content.contact.phone.replace(/\s/g, '')}`} class="flex items-start gap-4 group">
+                <div class="w-10 h-10 rounded-lg bg-moss flex items-center justify-center flex-shrink-0 group-hover:bg-sage transition-colors">
+                  <svg class="w-5 h-5 text-forest" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                    <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="text-xs text-gray-400 uppercase tracking-wider mb-0.5">Téléphone</p>
+                  <p class="text-forest font-semibold text-sm group-hover:text-green transition-colors">{content.contact.phone}</p>
+                </div>
+              </a>
+
+              <!-- Email -->
+              <a href={`mailto:${content.contact.email}`} class="flex items-start gap-4 group">
+                <div class="w-10 h-10 rounded-lg bg-moss flex items-center justify-center flex-shrink-0 group-hover:bg-sage transition-colors">
+                  <svg class="w-5 h-5 text-forest" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="text-xs text-gray-400 uppercase tracking-wider mb-0.5">Email</p>
+                  <p class="text-forest font-semibold text-sm group-hover:text-green transition-colors">{content.contact.email}</p>
+                </div>
+              </a>
+
+              <!-- Adresse -->
+              <div class="flex items-start gap-4">
+                <div class="w-10 h-10 rounded-lg bg-moss flex items-center justify-center flex-shrink-0">
+                  <svg class="w-5 h-5 text-forest" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="text-xs text-gray-400 uppercase tracking-wider mb-0.5">Adresse</p>
+                  <p class="text-forest font-semibold text-sm">{content.contact.address}</p>
+                  <p class="text-gray-500 text-sm">{content.contact.postalCode} {content.contact.city}</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Separator -->
+            <hr class="my-6 border-gray-100" />
+
+            <!-- Dates d'ouverture -->
+            <h4 class="text-forest text-sm font-semibold mb-3">Dates d'ouverture</h4>
+            <div class="space-y-2 text-sm">
+              <div class="flex justify-between">
+                <span class="text-gray-500">Emplacements</span>
+                <span class="text-forest font-medium">{content.openingDates.emplacements.start} — {content.openingDates.emplacements.end}</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-500">Chalets</span>
+                <span class="text-forest font-medium">{content.openingDates.chalets}</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-500">Maison éclusière</span>
+                <span class="text-forest font-medium">{content.openingDates.maisonEclusiere}</span>
+              </div>
+            </div>
+
+            <!-- Separator -->
+            <hr class="my-6 border-gray-100" />
+
+            <!-- Google Maps -->
+            <a
+              href={content.contact.googleMapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-outline btn-sm w-full text-center"
+            >
+              Voir sur Google Maps
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CARTE PLACEHOLDER -->
+  <section class="bg-cream">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+      <div class="rounded-2xl overflow-hidden shadow-lg border border-gray-100 reveal">
+        <div class="bg-gray-200 aspect-[21/9] flex items-center justify-center relative">
+          <iframe
+            src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2700!2d${content.contact.longitude}!3d${content.contact.latitude}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDfCsDQ2JzI5LjUiTiAwwrA0MCcyMy45Ilc!5e0!3m2!1sfr!2sfr!4v1`}
+            width="100%"
+            height="100%"
+            style="border:0; position:absolute; inset:0;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Localisation du Camping du Bac de Ménil"
+          ></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <CTABanner
+    title="On vous attend au bord de la Mayenne !"
+    subtitle="Réservez votre séjour en ligne ou contactez-nous pour plus d'informations."
+    ctaText="Réserver en ligne"
+    ctaUrl={content.site.bookingUrl}
+  />
+</BaseLayout>

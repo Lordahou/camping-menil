@@ -1,0 +1,206 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import SectionTitle from '../components/SectionTitle.astro';
+import HighlightCard from '../components/HighlightCard.astro';
+import CTABanner from '../components/CTABanner.astro';
+import content from '../data/content.json';
+---
+
+<BaseLayout
+  title="Le Camping du Bac — Un écrin de nature au bord de la Mayenne"
+  description="Découvrez le Camping du Bac de Ménil, camping 2 étoiles labellisé Accueil Vélo au bord de la Mayenne. Cadre verdoyant, rivière, chemin de halage, note 9.6/10."
+>
+  <Hero
+    title="Le Camping du Bac"
+    subtitle="Un écrin de nature au bord de la Mayenne"
+    image="/images/hero/camping-mayenne-hero.jpg"
+    imageAlt="Vue panoramique du Camping du Bac au bord de la Mayenne"
+    size="medium"
+  />
+
+  <!-- NOTRE HISTOIRE -->
+  <section class="py-16 lg:py-24 bg-cream">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div class="reveal">
+          <span class="badge mb-4">Notre histoire</span>
+          <h2 class="text-forest mb-6">Un camping municipal au charme authentique</h2>
+          <p class="text-gray-600 text-lg leading-relaxed mb-4">
+            Géré par la commune de Ménil, le Camping du Bac vous accueille dans un cadre naturel
+            d'exception, au bord de la Mayenne. Depuis des années, ce petit coin de paradis séduit
+            les amoureux de la nature, les cyclistes de passage sur la Vélo Francette et les
+            familles en quête de tranquillité.
+          </p>
+          <p class="text-gray-600 leading-relaxed mb-4">
+            Ici, pas de parc aquatique ni de club de vacances : le Camping du Bac, c'est l'authenticité
+            d'un camping nature où l'on prend le temps de vivre, bercé par le murmure de la rivière
+            et le chant des oiseaux.
+          </p>
+          <p class="text-gray-600 leading-relaxed">
+            Avec ses 34 emplacements ombragés, ses chalets tout confort, ses tentes bivouac pour
+            cyclistes et son unique maison éclusière, le camping offre une diversité d'hébergements
+            pour tous les goûts et tous les budgets.
+          </p>
+        </div>
+        <div class="reveal reveal-delay-2">
+          <div class="relative rounded-2xl overflow-hidden shadow-xl">
+            <img
+              src="/images/galerie/galerie-1.jpg"
+              alt="Le camping au bord de la Mayenne"
+              class="w-full h-full object-cover aspect-[4/3]"
+              loading="lazy"
+            />
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/50 to-transparent p-6">
+              <p class="text-white text-sm font-medium">Au bord de la Mayenne depuis des décennies</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NOTRE ENVIRONNEMENT -->
+  <section class="py-16 lg:py-24 bg-cream-dark bg-pattern">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <SectionTitle
+        badge="Notre environnement"
+        title="Un cadre naturel d'exception"
+        subtitle="Entre rivière, chemin de halage et nature préservée"
+      />
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+        <div class="card p-8 text-center reveal reveal-delay-1">
+          <div class="w-16 h-16 rounded-2xl bg-river/20 flex items-center justify-center mx-auto mb-5">
+            <svg class="w-8 h-8 text-river" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+              <path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/>
+              <path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/>
+              <path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/>
+            </svg>
+          </div>
+          <h3 class="text-forest text-lg mb-3">La Mayenne</h3>
+          <p class="text-gray-500 text-sm leading-relaxed">
+            Accès direct à la rivière pour la baignade surveillée, le canoë, le paddle et la pêche.
+            La Mayenne est un cours d'eau paisible, idéal pour les activités nautiques en famille.
+          </p>
+        </div>
+        <div class="card p-8 text-center reveal reveal-delay-2">
+          <div class="w-16 h-16 rounded-2xl bg-sage/30 flex items-center justify-center mx-auto mb-5">
+            <svg class="w-8 h-8 text-green" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+              <path d="M4 19h16"/>
+              <path d="M4 19l4-14h8l4 14"/>
+              <path d="M9.5 5L12 2l2.5 3"/>
+            </svg>
+          </div>
+          <h3 class="text-forest text-lg mb-3">Le chemin de halage</h3>
+          <p class="text-gray-500 text-sm leading-relaxed">
+            Partez directement du camping sur le chemin de halage pour des balades à pied ou à vélo.
+            Ce sentier longe la Mayenne sur des kilomètres, dans un cadre bucolique préservé.
+          </p>
+        </div>
+        <div class="card p-8 text-center reveal reveal-delay-3">
+          <div class="w-16 h-16 rounded-2xl bg-moss flex items-center justify-center mx-auto mb-5">
+            <svg class="w-8 h-8 text-forest" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+              <path d="M12 22V8"/>
+              <path d="M5 12l7-10 7 10"/>
+              <path d="M8 17l4-6 4 6"/>
+            </svg>
+          </div>
+          <h3 class="text-forest text-lg mb-3">Nature préservée</h3>
+          <p class="text-gray-500 text-sm leading-relaxed">
+            Emplacements spacieux et ombragés sous de grands arbres. Le camping est un havre de paix
+            où la faune et la flore sont omniprésentes : hérons, martin-pêcheurs, libellules...
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NOS LABELS -->
+  <section class="py-16 lg:py-24 bg-cream">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <SectionTitle
+        badge="Nos labels & distinctions"
+        title="Un camping reconnu pour sa qualité"
+        subtitle="Des labels qui témoignent de notre engagement"
+      />
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+        <div class="bg-white rounded-2xl p-8 border border-gray-100 text-center hover:shadow-lg transition-shadow duration-300 reveal reveal-delay-1">
+          <div class="text-5xl mb-4">⭐⭐</div>
+          <h3 class="text-forest text-lg mb-2">Camping 2 étoiles</h3>
+          <p class="text-gray-500 text-sm leading-relaxed">
+            Classé 2 étoiles par Atout France, le Camping du Bac offre des équipements
+            et un niveau de confort reconnus.
+          </p>
+        </div>
+        <div class="bg-white rounded-2xl p-8 border border-gray-100 text-center hover:shadow-lg transition-shadow duration-300 reveal reveal-delay-2">
+          <div class="w-16 h-16 rounded-full bg-sage/30 flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-green" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+              <circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M15 6a1 1 0 100-2 1 1 0 000 2zM12 17.5V14l-3-3 4-3 2 3h3"/>
+            </svg>
+          </div>
+          <h3 class="text-forest text-lg mb-2">Accueil Vélo</h3>
+          <p class="text-gray-500 text-sm leading-relaxed">
+            Labellisé Accueil Vélo, le camping est une étape privilégiée sur la Vélo Francette
+            avec des services dédiés aux cyclistes.
+          </p>
+        </div>
+        <div class="bg-white rounded-2xl p-8 border border-gray-100 text-center hover:shadow-lg transition-shadow duration-300 reveal reveal-delay-3">
+          <div class="w-16 h-16 rounded-full bg-sage/30 flex items-center justify-center mx-auto mb-4">
+            <span class="text-green text-2xl font-heading font-bold">9.6</span>
+          </div>
+          <h3 class="text-forest text-lg mb-2">Noté 9.6/10</h3>
+          <p class="text-gray-500 text-sm leading-relaxed">
+            Une note exceptionnelle attribuée par nos visiteurs sur Fairguest,
+            qui plébiscitent le cadre, l'accueil et la tranquillité.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PHOTO + TEXTE -->
+  <section class="py-16 lg:py-24 bg-cream-dark">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div class="order-2 lg:order-1 reveal">
+          <div class="relative rounded-2xl overflow-hidden shadow-xl">
+            <img
+              src="/images/galerie/galerie-3.jpg"
+              alt="Emplacements ombragés au bord de la Mayenne"
+              class="w-full aspect-[4/3] object-cover"
+              loading="lazy"
+            />
+          </div>
+        </div>
+        <div class="order-1 lg:order-2 reveal reveal-delay-2">
+          <span class="badge mb-4">Situation idéale</span>
+          <h2 class="text-forest mb-6">À 5 minutes de Château-Gontier</h2>
+          <p class="text-gray-600 leading-relaxed mb-4">
+            Le camping bénéficie d'une situation privilégiée : en pleine nature, mais à seulement
+            5 minutes de Château-Gontier, cité de caractère offrant commerces, marchés, restaurants
+            et patrimoine historique.
+          </p>
+          <p class="text-gray-600 leading-relaxed mb-6">
+            Sur l'itinéraire de la Vélo Francette (Ouistreham — La Rochelle), le camping est l'étape
+            idéale pour les cyclotouristes. Le chemin de halage vous emmène dans les deux directions
+            pour des balades au fil de l'eau sans fin.
+          </p>
+          <div class="flex flex-wrap gap-3">
+            <span class="text-xs px-4 py-2 rounded-full bg-moss/50 text-forest font-medium">Vélo Francette</span>
+            <span class="text-xs px-4 py-2 rounded-full bg-moss/50 text-forest font-medium">Chemin de halage</span>
+            <span class="text-xs px-4 py-2 rounded-full bg-moss/50 text-forest font-medium">Château-Gontier 5 min</span>
+            <span class="text-xs px-4 py-2 rounded-full bg-moss/50 text-forest font-medium">Laval 37 km</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <CTABanner
+    title="Envie de découvrir le Camping du Bac ?"
+    subtitle="Réservez votre séjour au bord de la Mayenne et laissez-vous charmer par notre cadre naturel."
+    secondaryText="Voir nos hébergements"
+    secondaryUrl="/hebergements"
+  />
+</BaseLayout>

@@ -1,0 +1,162 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import SectionTitle from '../components/SectionTitle.astro';
+import PricingTable from '../components/PricingTable.astro';
+import CTABanner from '../components/CTABanner.astro';
+import content from '../data/content.json';
+---
+
+<BaseLayout
+  title="Activités & alentours — Canoë, vélo, pêche, patrimoine"
+  description="Activités au Camping du Bac : canoë, paddle, pédalo, vélo, pêche, randonnée. Découvrez le Bac de Ménil et les alentours : Château-Gontier, Refuge de l'Arche, châteaux."
+>
+  <Hero
+    title="Activités & alentours"
+    subtitle="Sur l'eau, à vélo ou à pied : explorez la Mayenne et ses trésors"
+    image="/images/activites/canoe.jpg"
+    imageAlt="Activités nautiques sur la Mayenne au Camping du Bac"
+    size="medium"
+  />
+
+  <!-- ACTIVITES -->
+  <section class="py-16 lg:py-24 bg-cream">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <SectionTitle
+        badge="Activités & loisirs"
+        title="Des activités pour tous"
+        subtitle="Nautisme, vélo, randonnée, pêche... Il y en a pour tous les goûts"
+      />
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {content.activities.map((a, i) => (
+          <div class={`card group reveal reveal-delay-${(i % 3) + 1}`}>
+            <div class="relative aspect-[3/2] overflow-hidden">
+              <img src={a.image} alt={a.title} class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+              <span class="absolute top-4 left-4 badge bg-white/90 text-forest text-xs">{a.category}</span>
+            </div>
+            <div class="p-5 lg:p-6">
+              <h3 class="text-forest text-lg mb-2">{a.title}</h3>
+              <p class="text-gray-500 text-sm leading-relaxed">{a.description}</p>
+              {a.price && <p class="text-green text-sm font-semibold mt-3">{a.price}</p>}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- LE BAC DE MÉNIL -->
+  <section class="relative py-24 lg:py-32 overflow-hidden">
+    <div class="absolute inset-0">
+      <img src="/images/activites/bac-menil.jpg" alt="Le Bac de Ménil sur la Mayenne" class="w-full h-full object-cover" loading="lazy" />
+      <div class="absolute inset-0 bg-forest/80 backdrop-blur-sm"></div>
+    </div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div class="reveal">
+          <span class="badge bg-white/15 text-white/90 mb-4">Expérience unique</span>
+          <h2 class="text-white mb-6">Le Bac de Ménil</h2>
+          <p class="text-white/80 text-lg leading-relaxed mb-4">
+            {content.bac.description}
+          </p>
+          <p class="text-white/60 text-sm mb-4">
+            {content.bac.price}
+          </p>
+          <p class="text-white/50 text-xs">
+            {content.bac.restrictions}
+          </p>
+        </div>
+        <div class="reveal reveal-delay-2">
+          <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
+            <h3 class="text-white font-semibold mb-6 text-lg">Horaires du Bac</h3>
+            <div class="space-y-6">
+              <div>
+                <p class="text-sage text-sm font-semibold mb-2">Basse saison</p>
+                <p class="text-white/50 text-xs mb-3">{content.bac.schedules.lowSeason.period}</p>
+                <div class="flex flex-wrap gap-2">
+                  {content.bac.schedules.lowSeason.times.map((t) => (
+                    <span class="text-white/80 text-sm bg-white/5 px-3 py-1.5 rounded-full">{t}</span>
+                  ))}
+                </div>
+              </div>
+              <div class="border-t border-white/10 pt-6">
+                <p class="text-sage text-sm font-semibold mb-2">Haute saison</p>
+                <p class="text-white/50 text-xs mb-3">{content.bac.schedules.highSeason.period}</p>
+                <div class="flex flex-wrap gap-2">
+                  {content.bac.schedules.highSeason.times.map((t) => (
+                    <span class="text-white/80 text-sm bg-white/5 px-3 py-1.5 rounded-full">{t}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOCATION LOISIRS -->
+  <section class="py-16 lg:py-24 bg-cream">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <SectionTitle
+        badge="Location de loisirs"
+        title="Louez votre matériel à l'accueil"
+        subtitle="Pédalos, canoës, paddle et VTC disponibles à la location"
+      />
+      <div class="max-w-lg mx-auto reveal">
+        <PricingTable
+          title={content.tarifs.rentals.title}
+          description={content.tarifs.rentals.description}
+          items={content.tarifs.rentals.items}
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- ALENTOURS -->
+  <section class="py-16 lg:py-24 bg-cream-dark">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <SectionTitle
+        badge="Aux alentours"
+        title="Un territoire riche à explorer"
+        subtitle="Le sud Mayenne regorge de trésors : patrimoine, nature et culture à portée de main"
+      />
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6 reveal">
+        {content.surroundings.map((s) => (
+          <div class="p-6 rounded-2xl bg-white border border-gray-100 hover:shadow-md transition-all duration-300">
+            <div class="flex items-start justify-between mb-3">
+              <h3 class="text-forest text-base">{s.title}</h3>
+              <span class="text-green text-sm font-semibold whitespace-nowrap ml-3">{s.distance}</span>
+            </div>
+            <p class="text-gray-500 text-sm leading-relaxed">{s.description}</p>
+          </div>
+        ))}
+      </div>
+
+      <!-- Lien Mayenne Tourisme -->
+      <div class="text-center mt-12 reveal">
+        <p class="text-gray-500 text-sm mb-4">
+          Pour encore plus d'idées de visites et d'activités dans le département :
+        </p>
+        <a
+          href="https://www.mayenne-tourisme.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn btn-outline btn-sm"
+        >
+          Mayenne Tourisme
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <CTABanner
+    title="Prêt pour l'aventure ?"
+    subtitle="Réservez votre séjour et profitez de toutes les activités au bord de la Mayenne."
+    secondaryText="Voir les hébergements"
+    secondaryUrl="/hebergements"
+  />
+</BaseLayout>

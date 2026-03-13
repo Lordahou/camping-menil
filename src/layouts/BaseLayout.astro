@@ -1,0 +1,138 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import content from '../data/content.json';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  canonicalUrl?: string;
+  noindex?: boolean;
+}
+
+const {
+  title = content.site.name,
+  description = content.site.description,
+  ogImage = '/images/og-default.jpg',
+  canonicalUrl,
+  noindex = false,
+} = Astro.props;
+
+const fullTitle = title === content.site.name ? title : `${title} | ${content.site.name}`;
+const canonical = canonicalUrl || new URL(Astro.url.pathname, Astro.site).toString();
+---
+
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  <!-- SEO -->
+  <title>{fullTitle}</title>
+  <meta name="description" content={description} />
+  {noindex && <meta name="robots" content="noindex, nofollow" />}
+  <link rel="canonical" href={canonical} />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content={fullTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={new URL(ogImage, Astro.site).toString()} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:locale" content="fr_FR" />
+  <meta property="og:site_name" content={content.site.name} />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={fullTitle} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={new URL(ogImage, Astro.site).toString()} />
+
+  <!-- Geo -->
+  <meta name="geo.region" content="FR-53" />
+  <meta name="geo.placename" content="Ménil, Mayenne" />
+  <meta name="geo.position" content={`${content.contact.latitude};${content.contact.longitude}`} />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Schema.org -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Campground",
+    "name": content.site.name,
+    "description": description,
+    "url": content.site.url,
+    "telephone": content.contact.phone,
+    "email": content.contact.email,
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": content.contact.address,
+      "addressLocality": content.contact.city,
+      "postalCode": content.contact.postalCode,
+      "addressRegion": content.contact.department,
+      "addressCountry": "FR"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": content.contact.latitude,
+      "longitude": content.contact.longitude
+    },
+    "starRating": {
+      "@type": "Rating",
+      "ratingValue": "2"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "9.6",
+      "bestRating": "10",
+      "ratingCount": "150"
+    },
+    "priceRange": "11€ - 575€",
+    "amenityFeature": [
+      { "@type": "LocationFeatureSpecification", "name": "Wi-Fi gratuit", "value": true },
+      { "@type": "LocationFeatureSpecification", "name": "Accès rivière", "value": true },
+      { "@type": "LocationFeatureSpecification", "name": "Accueil Vélo", "value": true }
+    ]
+  })} />
+</head>
+<body class="min-h-screen flex flex-col bg-cream text-black">
+  <Header />
+  <main class="flex-1" id="main-content">
+    <slot />
+  </main>
+  <Footer />
+
+  <!-- Reveal on Scroll Script -->
+  <script>
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px 0px -60px 0px',
+      threshold: 0.1,
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.reveal').forEach((el) => {
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>

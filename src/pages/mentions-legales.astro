@@ -1,0 +1,121 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import content from '../data/content.json';
+---
+
+<BaseLayout
+  title="Mentions légales"
+  description="Mentions légales du site internet du Camping du Bac de Ménil, géré par la Commune de Ménil (53200)."
+  noindex={true}
+>
+  <section class="py-32 lg:py-40 bg-cream">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="reveal">
+        <span class="badge mb-4">Informations légales</span>
+        <h1 class="text-forest mb-8">Mentions légales</h1>
+
+        <div class="prose prose-gray max-w-none space-y-10">
+
+          <!-- Éditeur -->
+          <div>
+            <h2 class="text-forest text-xl mb-4">Éditeur du site</h2>
+            <div class="bg-white rounded-xl p-6 border border-gray-100">
+              <p class="text-gray-600 text-sm leading-relaxed mb-2">
+                <strong class="text-forest">Commune de Ménil</strong>
+              </p>
+              <p class="text-gray-500 text-sm leading-relaxed">
+                Mairie de Ménil<br />
+                1 rue de la Mairie<br />
+                53200 Ménil<br />
+                France
+              </p>
+              <p class="text-gray-500 text-sm leading-relaxed mt-3">
+                <strong>SIRET :</strong> 215 301 508 000 10<br />
+                <strong>Téléphone :</strong> {content.contact.phone}<br />
+                <strong>Email :</strong> {content.contact.emailMairie}
+              </p>
+              <p class="text-gray-500 text-sm leading-relaxed mt-3">
+                <strong>Directeur de la publication :</strong> Le Maire de la commune de Ménil
+              </p>
+            </div>
+          </div>
+
+          <!-- Hébergement -->
+          <div>
+            <h2 class="text-forest text-xl mb-4">Hébergement du site</h2>
+            <div class="bg-white rounded-xl p-6 border border-gray-100">
+              <p class="text-gray-500 text-sm leading-relaxed">
+                Le site est hébergé par :<br />
+                <strong class="text-forest">Vercel Inc.</strong><br />
+                440 N Barranca Ave #4133<br />
+                Covina, CA 91723<br />
+                États-Unis<br />
+                <a href="https://vercel.com" target="_blank" rel="noopener noreferrer" class="text-green underline hover:text-forest">https://vercel.com</a>
+              </p>
+            </div>
+          </div>
+
+          <!-- Propriété intellectuelle -->
+          <div>
+            <h2 class="text-forest text-xl mb-4">Propriété intellectuelle</h2>
+            <p class="text-gray-600 text-sm leading-relaxed">
+              L'ensemble du contenu de ce site (textes, images, graphismes, logo, icônes, etc.)
+              est la propriété exclusive de la Commune de Ménil ou de ses partenaires.
+              Toute reproduction, représentation, modification, publication ou adaptation de tout
+              ou partie des éléments du site, quel que soit le moyen ou le procédé utilisé,
+              est interdite sans l'autorisation écrite préalable de la Commune de Ménil.
+            </p>
+          </div>
+
+          <!-- Responsabilité -->
+          <div>
+            <h2 class="text-forest text-xl mb-4">Limitation de responsabilité</h2>
+            <p class="text-gray-600 text-sm leading-relaxed">
+              Les informations contenues sur ce site sont aussi précises que possible et le site
+              est périodiquement remis à jour, mais peut toutefois contenir des inexactitudes,
+              des omissions ou des lacunes. Si vous constatez une lacune, erreur ou ce qui paraît
+              être un dysfonctionnement, merci de bien vouloir le signaler par email à
+              <a href={`mailto:${content.contact.emailMairie}`} class="text-green underline hover:text-forest">{content.contact.emailMairie}</a>.
+            </p>
+            <p class="text-gray-600 text-sm leading-relaxed mt-3">
+              La Commune de Ménil ne pourra être tenue responsable des dommages directs et indirects
+              causés au matériel de l'utilisateur lors de l'accès au site, résultant soit de l'utilisation
+              d'un matériel ne répondant pas aux spécifications techniques requises, soit de l'apparition
+              d'un bug ou d'une incompatibilité.
+            </p>
+          </div>
+
+          <!-- Liens hypertextes -->
+          <div>
+            <h2 class="text-forest text-xl mb-4">Liens hypertextes</h2>
+            <p class="text-gray-600 text-sm leading-relaxed">
+              Le site peut contenir des liens hypertextes vers d'autres sites internet.
+              La Commune de Ménil n'exerce aucun contrôle sur ces sites et décline toute
+              responsabilité quant à l'accès, au contenu ou à l'utilisation de ces sites tiers.
+            </p>
+          </div>
+
+          <!-- Droit applicable -->
+          <div>
+            <h2 class="text-forest text-xl mb-4">Droit applicable</h2>
+            <p class="text-gray-600 text-sm leading-relaxed">
+              Le présent site et ses mentions légales sont régis par le droit français.
+              En cas de litige et à défaut de résolution amiable, les tribunaux français
+              seront seuls compétents.
+            </p>
+          </div>
+
+          <!-- Crédits -->
+          <div>
+            <h2 class="text-forest text-xl mb-4">Crédits</h2>
+            <p class="text-gray-600 text-sm leading-relaxed">
+              <strong>Conception & développement :</strong> Commune de Ménil<br />
+              <strong>Photographies :</strong> Camping du Bac de Ménil / Commune de Ménil
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

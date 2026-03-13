@@ -1,0 +1,113 @@
+---
+interface Props {
+  title: string;
+  subtitle?: string;
+  image: string;
+  imageAlt: string;
+  cta1?: { text: string; url: string };
+  cta2?: { text: string; url: string };
+  size?: 'full' | 'large' | 'medium';
+  overlay?: 'hero' | 'dark' | 'light';
+}
+
+const {
+  title,
+  subtitle,
+  image,
+  imageAlt,
+  cta1,
+  cta2,
+  size = 'full',
+  overlay = 'hero',
+} = Astro.props;
+
+const sizeClasses = {
+  full: 'min-h-screen',
+  large: 'min-h-[75vh]',
+  medium: 'min-h-[50vh]',
+};
+
+const overlayClasses = {
+  hero: 'gradient-hero',
+  dark: 'bg-black/50',
+  light: 'bg-black/30',
+};
+---
+
+<section class={`relative ${sizeClasses[size]} flex items-center justify-center overflow-hidden`}>
+  <!-- Background Image -->
+  <div class="absolute inset-0">
+    <img
+      src={image}
+      alt={imageAlt}
+      class="w-full h-full object-cover"
+      loading="eager"
+      fetchpriority="high"
+    />
+    <div class={`absolute inset-0 ${overlayClasses[overlay]}`}></div>
+  </div>
+
+  <!-- Content -->
+  <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 text-center py-32">
+    {size === 'full' && (
+      <div class="inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm rounded-full px-4 py-2 mb-8 animate-fade-in">
+        <svg class="w-4 h-4 text-sage" fill="currentColor" viewBox="0 0 24 24">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26" />
+        </svg>
+        <span class="text-white/90 text-sm font-medium">Noté 9.6/10 par nos visiteurs</span>
+      </div>
+    )}
+
+    <h1 class="text-white font-heading text-balance leading-[1.1] mb-6 animate-fade-in-up" style="animation-delay: 0.1s">
+      {title}
+    </h1>
+
+    {subtitle && (
+      <p class="text-white/80 text-lg sm:text-xl max-w-2xl mx-auto mb-10 font-light leading-relaxed animate-fade-in-up" style="animation-delay: 0.2s">
+        {subtitle}
+      </p>
+    )}
+
+    {(cta1 || cta2) && (
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up" style="animation-delay: 0.3s">
+        {cta1 && (
+          <a href={cta1.url} class="btn btn-primary btn-lg">
+            {cta1.text}
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        )}
+        {cta2 && (
+          <a href={cta2.url} class="btn btn-secondary btn-lg">
+            {cta2.text}
+          </a>
+        )}
+      </div>
+    )}
+  </div>
+
+  <!-- Scroll Indicator -->
+  {size === 'full' && (
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 animate-bounce">
+      <svg class="w-6 h-6 text-white/50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 5v14M19 12l-7 7-7-7"/>
+      </svg>
+    </div>
+  )}
+</section>
+
+<style>
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes fade-in-up {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-fade-in {
+    animation: fade-in 0.8s ease-out both;
+  }
+  .animate-fade-in-up {
+    animation: fade-in-up 0.8s ease-out both;
+  }
+</style>

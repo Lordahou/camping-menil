@@ -1,0 +1,138 @@
+---
+import content from '../data/content.json';
+---
+
+<form
+  id="contact-form"
+  class="bg-white rounded-2xl p-8 lg:p-10 shadow-lg border border-gray-100"
+  action="#"
+  method="POST"
+  novalidate
+>
+  <h3 class="text-forest text-xl mb-2">Envoyez-nous un message</h3>
+  <p class="text-gray-500 text-sm mb-8">Nous vous répondrons dans les plus brefs délais.</p>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
+    <div>
+      <label for="firstname" class="block text-sm font-medium text-forest mb-1.5">Prénom *</label>
+      <input
+        type="text"
+        id="firstname"
+        name="firstname"
+        required
+        class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-cream/50 text-sm focus:outline-none focus:ring-2 focus:ring-sage/50 focus:border-sage transition-all"
+        placeholder="Votre prénom"
+      />
+    </div>
+    <div>
+      <label for="lastname" class="block text-sm font-medium text-forest mb-1.5">Nom *</label>
+      <input
+        type="text"
+        id="lastname"
+        name="lastname"
+        required
+        class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-cream/50 text-sm focus:outline-none focus:ring-2 focus:ring-sage/50 focus:border-sage transition-all"
+        placeholder="Votre nom"
+      />
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
+    <div>
+      <label for="email" class="block text-sm font-medium text-forest mb-1.5">Email *</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        required
+        class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-cream/50 text-sm focus:outline-none focus:ring-2 focus:ring-sage/50 focus:border-sage transition-all"
+        placeholder="votre@email.com"
+      />
+    </div>
+    <div>
+      <label for="phone" class="block text-sm font-medium text-forest mb-1.5">Téléphone</label>
+      <input
+        type="tel"
+        id="phone"
+        name="phone"
+        class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-cream/50 text-sm focus:outline-none focus:ring-2 focus:ring-sage/50 focus:border-sage transition-all"
+        placeholder="06 00 00 00 00"
+      />
+    </div>
+  </div>
+
+  <div class="mb-5">
+    <label for="subject" class="block text-sm font-medium text-forest mb-1.5">Objet</label>
+    <select
+      id="subject"
+      name="subject"
+      class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-cream/50 text-sm focus:outline-none focus:ring-2 focus:ring-sage/50 focus:border-sage transition-all"
+    >
+      <option value="">— Choisissez —</option>
+      <option value="reservation">Réservation</option>
+      <option value="information">Demande d'information</option>
+      <option value="groupe">Réservation groupe</option>
+      <option value="autre">Autre</option>
+    </select>
+  </div>
+
+  <div class="mb-6">
+    <label for="message" class="block text-sm font-medium text-forest mb-1.5">Message *</label>
+    <textarea
+      id="message"
+      name="message"
+      rows="5"
+      required
+      class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-cream/50 text-sm focus:outline-none focus:ring-2 focus:ring-sage/50 focus:border-sage transition-all resize-y"
+      placeholder="Votre message..."
+    ></textarea>
+  </div>
+
+  <!-- Honeypot anti-spam -->
+  <div class="hidden" aria-hidden="true">
+    <input type="text" name="website" tabindex="-1" autocomplete="off" />
+  </div>
+
+  <button type="submit" class="btn btn-primary btn-lg w-full">
+    Envoyer le message
+    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4z"/></svg>
+  </button>
+
+  <p class="text-gray-400 text-xs mt-4 text-center">
+    En soumettant ce formulaire, vous acceptez notre
+    <a href="/politique-confidentialite" class="underline hover:text-green">politique de confidentialité</a>.
+  </p>
+</form>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement;
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    // Honeypot check
+    const honeypot = form.querySelector('input[name="website"]') as HTMLInputElement;
+    if (honeypot?.value) return;
+
+    // Basic validation
+    const required = form.querySelectorAll('[required]') as NodeListOf<HTMLInputElement | HTMLTextAreaElement>;
+    let valid = true;
+    required.forEach((field) => {
+      if (!field.value.trim()) {
+        field.classList.add('border-red-400');
+        valid = false;
+      } else {
+        field.classList.remove('border-red-400');
+      }
+    });
+
+    if (valid) {
+      // In production, replace with actual form submission
+      const btn = form.querySelector('button[type="submit"]');
+      if (btn) {
+        btn.innerHTML = '✓ Message envoyé !';
+        btn.classList.remove('btn-primary');
+        btn.classList.add('bg-sage', 'text-forest', 'border-sage');
+        (btn as HTMLButtonElement).disabled = true;
+      }
+    }
+  });
+</script>

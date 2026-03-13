@@ -1,0 +1,235 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import content from '../data/content.json';
+---
+
+<BaseLayout
+  title="Politique de confidentialité"
+  description="Politique de confidentialité et protection des données personnelles du site du Camping du Bac de Ménil, conformément au RGPD."
+  noindex={true}
+>
+  <section class="py-32 lg:py-40 bg-cream">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="reveal">
+        <span class="badge mb-4">Protection des données</span>
+        <h1 class="text-forest mb-8">Politique de confidentialité</h1>
+
+        <div class="prose prose-gray max-w-none space-y-10">
+
+          <!-- Intro -->
+          <div>
+            <p class="text-gray-600 text-sm leading-relaxed">
+              La Commune de Ménil, responsable du traitement des données collectées sur le site
+              <strong>{content.site.url}</strong>, s'engage à protéger la vie privée des utilisateurs
+              de son site internet conformément au Règlement Général sur la Protection des Données
+              (RGPD) et à la loi Informatique et Libertés du 6 janvier 1978 modifiée.
+            </p>
+          </div>
+
+          <!-- Responsable du traitement -->
+          <div>
+            <h2 class="text-forest text-xl mb-4">Responsable du traitement</h2>
+            <div class="bg-white rounded-xl p-6 border border-gray-100">
+              <p class="text-gray-500 text-sm leading-relaxed">
+                <strong class="text-forest">Commune de Ménil</strong><br />
+                Mairie de Ménil<br />
+                1 rue de la Mairie<br />
+                53200 Ménil, France<br /><br />
+                <strong>Email :</strong> <a href={`mailto:${content.contact.emailMairie}`} class="text-green underline hover:text-forest">{content.contact.emailMairie}</a><br />
+                <strong>Téléphone :</strong> {content.contact.phone}
+              </p>
+            </div>
+          </div>
+
+          <!-- Données collectées -->
+          <div>
+            <h2 class="text-forest text-xl mb-4">Données personnelles collectées</h2>
+            <p class="text-gray-600 text-sm leading-relaxed mb-4">
+              Dans le cadre de l'utilisation du site, nous sommes susceptibles de collecter
+              les catégories de données suivantes :
+            </p>
+            <div class="bg-white rounded-xl p-6 border border-gray-100">
+              <ul class="space-y-2">
+                <li class="flex items-start gap-3">
+                  <svg class="w-4 h-4 text-green flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                  <span class="text-gray-600 text-sm"><strong>Formulaire de contact :</strong> nom, prénom, adresse email, numéro de téléphone, message</span>
+                </li>
+                <li class="flex items-start gap-3">
+                  <svg class="w-4 h-4 text-green flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                  <span class="text-gray-600 text-sm"><strong>Réservation :</strong> nom, prénom, adresse email, téléphone, dates de séjour, type d'hébergement</span>
+                </li>
+                <li class="flex items-start gap-3">
+                  <svg class="w-4 h-4 text-green flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                  <span class="text-gray-600 text-sm"><strong>Navigation :</strong> adresse IP, type de navigateur, pages consultées (données anonymisées)</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Finalités -->
+          <div>
+            <h2 class="text-forest text-xl mb-4">Finalités du traitement</h2>
+            <p class="text-gray-600 text-sm leading-relaxed">
+              Les données personnelles collectées ont pour finalités :
+            </p>
+            <ul class="mt-3 space-y-2 text-gray-600 text-sm">
+              <li class="flex items-start gap-3">
+                <span class="text-green font-bold">1.</span>
+                Le traitement de vos demandes de contact et de réservation
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="text-green font-bold">2.</span>
+                La gestion de la relation client (suivi des réservations, communication)
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="text-green font-bold">3.</span>
+                L'amélioration de notre site internet et de nos services
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="text-green font-bold">4.</span>
+                Le respect de nos obligations légales et réglementaires
+              </li>
+            </ul>
+          </div>
+
+          <!-- Base légale -->
+          <div>
+            <h2 class="text-forest text-xl mb-4">Base légale du traitement</h2>
+            <p class="text-gray-600 text-sm leading-relaxed">
+              Le traitement de vos données repose sur :
+            </p>
+            <ul class="mt-3 space-y-2 text-gray-600 text-sm">
+              <li>- <strong>Votre consentement</strong> lorsque vous remplissez le formulaire de contact</li>
+              <li>- <strong>L'exécution d'un contrat</strong> dans le cadre d'une réservation</li>
+              <li>- <strong>L'intérêt légitime</strong> de la Commune pour l'amélioration de ses services</li>
+            </ul>
+          </div>
+
+          <!-- Durée de conservation -->
+          <div>
+            <h2 class="text-forest text-xl mb-4">Durée de conservation</h2>
+            <p class="text-gray-600 text-sm leading-relaxed">
+              Vos données personnelles sont conservées pendant une durée proportionnée
+              à la finalité pour laquelle elles ont été collectées :
+            </p>
+            <div class="bg-white rounded-xl p-6 border border-gray-100 mt-4">
+              <div class="space-y-3 text-sm">
+                <div class="flex justify-between">
+                  <span class="text-gray-500">Données de contact</span>
+                  <span class="text-forest font-medium">3 ans après le dernier échange</span>
+                </div>
+                <div class="flex justify-between border-t border-gray-50 pt-3">
+                  <span class="text-gray-500">Données de réservation</span>
+                  <span class="text-forest font-medium">5 ans (obligations comptables)</span>
+                </div>
+                <div class="flex justify-between border-t border-gray-50 pt-3">
+                  <span class="text-gray-500">Données de navigation</span>
+                  <span class="text-forest font-medium">13 mois maximum</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Destinataires -->
+          <div>
+            <h2 class="text-forest text-xl mb-4">Destinataires des données</h2>
+            <p class="text-gray-600 text-sm leading-relaxed">
+              Vos données personnelles sont destinées à la Commune de Ménil et à l'équipe du Camping du Bac.
+              Elles ne sont en aucun cas cédées ou vendues à des tiers.
+            </p>
+            <p class="text-gray-600 text-sm leading-relaxed mt-3">
+              Seuls les sous-traitants techniques intervenant dans le fonctionnement du site
+              (hébergeur, plateforme de réservation Naxiresa) peuvent avoir accès à certaines
+              données dans le cadre strict de leurs missions.
+            </p>
+          </div>
+
+          <!-- Droits -->
+          <div>
+            <h2 class="text-forest text-xl mb-4">Vos droits</h2>
+            <p class="text-gray-600 text-sm leading-relaxed mb-4">
+              Conformément au RGPD, vous disposez des droits suivants sur vos données personnelles :
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div class="bg-white rounded-xl p-4 border border-gray-100">
+                <h4 class="text-forest text-sm font-semibold mb-1">Droit d'accès</h4>
+                <p class="text-gray-500 text-xs">Obtenir la confirmation que vos données sont traitées</p>
+              </div>
+              <div class="bg-white rounded-xl p-4 border border-gray-100">
+                <h4 class="text-forest text-sm font-semibold mb-1">Droit de rectification</h4>
+                <p class="text-gray-500 text-xs">Modifier vos données inexactes ou incomplètes</p>
+              </div>
+              <div class="bg-white rounded-xl p-4 border border-gray-100">
+                <h4 class="text-forest text-sm font-semibold mb-1">Droit d'effacement</h4>
+                <p class="text-gray-500 text-xs">Demander la suppression de vos données</p>
+              </div>
+              <div class="bg-white rounded-xl p-4 border border-gray-100">
+                <h4 class="text-forest text-sm font-semibold mb-1">Droit de portabilité</h4>
+                <p class="text-gray-500 text-xs">Récupérer vos données dans un format structuré</p>
+              </div>
+              <div class="bg-white rounded-xl p-4 border border-gray-100">
+                <h4 class="text-forest text-sm font-semibold mb-1">Droit d'opposition</h4>
+                <p class="text-gray-500 text-xs">Vous opposer au traitement de vos données</p>
+              </div>
+              <div class="bg-white rounded-xl p-4 border border-gray-100">
+                <h4 class="text-forest text-sm font-semibold mb-1">Droit de limitation</h4>
+                <p class="text-gray-500 text-xs">Limiter le traitement dans certains cas</p>
+              </div>
+            </div>
+            <p class="text-gray-600 text-sm leading-relaxed mt-4">
+              Pour exercer vos droits, contactez-nous par email à
+              <a href={`mailto:${content.contact.emailMairie}`} class="text-green underline hover:text-forest">{content.contact.emailMairie}</a>
+              ou par courrier à l'adresse de la Mairie de Ménil.
+            </p>
+            <p class="text-gray-600 text-sm leading-relaxed mt-3">
+              Vous pouvez également introduire une réclamation auprès de la CNIL
+              (Commission Nationale de l'Informatique et des Libertés) :
+              <a href="https://www.cnil.fr" target="_blank" rel="noopener noreferrer" class="text-green underline hover:text-forest">www.cnil.fr</a>
+            </p>
+          </div>
+
+          <!-- Cookies -->
+          <div>
+            <h2 class="text-forest text-xl mb-4">Cookies</h2>
+            <p class="text-gray-600 text-sm leading-relaxed">
+              Le site peut utiliser des cookies strictement nécessaires à son fonctionnement.
+              Aucun cookie publicitaire ou de traçage n'est déposé sans votre consentement préalable.
+            </p>
+            <p class="text-gray-600 text-sm leading-relaxed mt-3">
+              Vous pouvez à tout moment configurer votre navigateur pour refuser les cookies.
+              Notez que le refus des cookies strictement nécessaires peut altérer le fonctionnement du site.
+            </p>
+          </div>
+
+          <!-- Sécurité -->
+          <div>
+            <h2 class="text-forest text-xl mb-4">Sécurité des données</h2>
+            <p class="text-gray-600 text-sm leading-relaxed">
+              La Commune de Ménil met en oeuvre les mesures techniques et organisationnelles
+              appropriées pour protéger vos données personnelles contre la destruction accidentelle
+              ou illicite, la perte, l'altération, la diffusion ou l'accès non autorisé.
+            </p>
+            <p class="text-gray-600 text-sm leading-relaxed mt-3">
+              Le site utilise le protocole HTTPS pour sécuriser les échanges de données
+              entre votre navigateur et nos serveurs.
+            </p>
+          </div>
+
+          <!-- Mise à jour -->
+          <div>
+            <h2 class="text-forest text-xl mb-4">Mise à jour de la politique</h2>
+            <p class="text-gray-600 text-sm leading-relaxed">
+              La présente politique de confidentialité peut être mise à jour à tout moment.
+              Nous vous invitons à la consulter régulièrement. Toute modification substantielle
+              sera signalée sur le site.
+            </p>
+            <p class="text-gray-400 text-xs mt-4">
+              Dernière mise à jour : mars 2026
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

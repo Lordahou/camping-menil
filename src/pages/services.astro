@@ -1,0 +1,192 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import SectionTitle from '../components/SectionTitle.astro';
+import ServiceIcon from '../components/ServiceIcon.astro';
+import CTABanner from '../components/CTABanner.astro';
+import content from '../data/content.json';
+---
+
+<BaseLayout
+  title="Services & équipements — Wi-Fi, électricité, accessibilité PMR"
+  description="Tous les services du Camping du Bac : Wi-Fi gratuit, électricité, machine à laver, accessibilité PMR, accueil vélo, aire de jeux, pêche et bien plus."
+>
+  <Hero
+    title="Services & équipements"
+    subtitle="Tout pour un séjour confortable et sans souci"
+    image="/images/galerie/galerie-4.jpg"
+    imageAlt="Services et équipements du Camping du Bac"
+    size="medium"
+  />
+
+  <!-- TOUS LES SERVICES -->
+  <section class="py-16 lg:py-24 bg-cream">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <SectionTitle
+        badge="Nos services"
+        title="Des services pensés pour votre confort"
+        subtitle="Au Camping du Bac, nous mettons tout en oeuvre pour que votre séjour soit des plus agréables"
+      />
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 reveal">
+        {content.services.map((s) => (
+          <ServiceIcon icon={s.icon} title={s.title} description={s.description} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- SANITAIRES -->
+  <section class="py-16 lg:py-24 bg-cream-dark bg-pattern">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div class="reveal">
+          <div class="relative rounded-2xl overflow-hidden shadow-xl">
+            <img
+              src="/images/galerie/galerie-5.jpg"
+              alt="Bloc sanitaire du camping"
+              class="w-full aspect-[4/3] object-cover"
+              loading="lazy"
+            />
+          </div>
+        </div>
+        <div class="reveal reveal-delay-2">
+          <span class="badge mb-4">Sanitaires</span>
+          <h2 class="text-forest mb-6">Blocs sanitaires entretenus</h2>
+          <p class="text-gray-600 leading-relaxed mb-6">
+            Le camping dispose de blocs sanitaires régulièrement nettoyés et entretenus
+            pour votre confort. Douches chaudes, WC, lavabos et bacs de vaisselle
+            sont à votre disposition.
+          </p>
+          <ul class="space-y-3">
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-green flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+              <span class="text-gray-600 text-sm">Douches chaudes gratuites</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-green flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+              <span class="text-gray-600 text-sm">WC et lavabos</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-green flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+              <span class="text-gray-600 text-sm">Bacs de vaisselle et lessive</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-green flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+              <span class="text-gray-600 text-sm">Nettoyage quotidien</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-green flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+              <span class="text-gray-600 text-sm">Machine à laver en libre-service</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACCESSIBILITE PMR -->
+  <section class="py-16 lg:py-24 bg-cream">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div class="order-2 lg:order-1 reveal reveal-delay-2">
+          <span class="badge mb-4">Accessibilité</span>
+          <h2 class="text-forest mb-6">Un camping accessible à tous</h2>
+          <p class="text-gray-600 leading-relaxed mb-6">
+            Le Camping du Bac s'engage à accueillir tous les campeurs. Nous disposons
+            d'équipements adaptés aux personnes à mobilité réduite pour que chacun
+            puisse profiter de son séjour en toute sérénité.
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="bg-white rounded-xl p-5 border border-gray-100">
+              <div class="w-10 h-10 rounded-lg bg-river/20 flex items-center justify-center mb-3">
+                <svg class="w-5 h-5 text-river" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                  <circle cx="16" cy="4" r="1"/><path d="M18 22l-4-8h-6l-2-5"/><circle cx="8" cy="20" r="2"/>
+                </svg>
+              </div>
+              <h4 class="text-forest font-semibold text-sm mb-1">Emplacement PMR</h4>
+              <p class="text-gray-500 text-xs">1 emplacement adapté aux fauteuils roulants</p>
+            </div>
+            <div class="bg-white rounded-xl p-5 border border-gray-100">
+              <div class="w-10 h-10 rounded-lg bg-river/20 flex items-center justify-center mb-3">
+                <svg class="w-5 h-5 text-river" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><polyline points="9 22 9 12 15 12 15 22"/>
+                </svg>
+              </div>
+              <h4 class="text-forest font-semibold text-sm mb-1">Chalet PMR</h4>
+              <p class="text-gray-500 text-xs">1 chalet entièrement adapté</p>
+            </div>
+            <div class="bg-white rounded-xl p-5 border border-gray-100">
+              <div class="w-10 h-10 rounded-lg bg-river/20 flex items-center justify-center mb-3">
+                <svg class="w-5 h-5 text-river" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                  <path d="M20 6L9 17l-5-5"/>
+                </svg>
+              </div>
+              <h4 class="text-forest font-semibold text-sm mb-1">Sanitaires adaptés</h4>
+              <p class="text-gray-500 text-xs">Bloc sanitaire accessible PMR</p>
+            </div>
+            <div class="bg-white rounded-xl p-5 border border-gray-100">
+              <div class="w-10 h-10 rounded-lg bg-river/20 flex items-center justify-center mb-3">
+                <svg class="w-5 h-5 text-river" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                  <path d="M4 19h16M4 19l4-14h8l4 14"/>
+                </svg>
+              </div>
+              <h4 class="text-forest font-semibold text-sm mb-1">Cheminements</h4>
+              <p class="text-gray-500 text-xs">Allées accessibles dans le camping</p>
+            </div>
+          </div>
+        </div>
+        <div class="order-1 lg:order-2 reveal">
+          <div class="relative rounded-2xl overflow-hidden shadow-xl">
+            <img
+              src="/images/galerie/galerie-6.jpg"
+              alt="Accessibilité du camping"
+              class="w-full aspect-[4/3] object-cover"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES SUPPLÉMENTAIRES -->
+  <section class="py-16 lg:py-24 bg-cream-dark">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <SectionTitle
+        badge="Bon à savoir"
+        title="Informations complémentaires"
+      />
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+        <div class="card p-8 reveal reveal-delay-1">
+          <h3 class="text-forest text-lg mb-3">Animaux bienvenus</h3>
+          <p class="text-gray-500 text-sm leading-relaxed">
+            Les animaux sont les bienvenus au camping (sauf chiens de catégorie 1 et 2).
+            Ils doivent être tenus en laisse et leur carnet de vaccination doit être à jour.
+          </p>
+        </div>
+        <div class="card p-8 reveal reveal-delay-2">
+          <h3 class="text-forest text-lg mb-3">Accueil Vélo</h3>
+          <p class="text-gray-500 text-sm leading-relaxed">
+            Local vélos sécurisé, kit de réparation, informations sur les itinéraires cyclables
+            et services adaptés aux cyclotouristes sur la Vélo Francette.
+          </p>
+        </div>
+        <div class="card p-8 reveal reveal-delay-3">
+          <h3 class="text-forest text-lg mb-3">Aire de vidange</h3>
+          <p class="text-gray-500 text-sm leading-relaxed">
+            Une aire de service pour camping-cars est disponible à proximité du camping
+            pour la vidange des eaux usées et le remplissage en eau propre.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <CTABanner
+    title="Convaincu par nos services ?"
+    subtitle="Réservez votre séjour et profitez de tous nos équipements au bord de la Mayenne."
+    secondaryText="Voir les tarifs"
+    secondaryUrl="/tarifs"
+  />
+</BaseLayout>

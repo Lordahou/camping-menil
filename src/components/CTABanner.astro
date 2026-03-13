@@ -1,0 +1,40 @@
+---
+interface Props {
+  title?: string;
+  subtitle?: string;
+  ctaText?: string;
+  ctaUrl?: string;
+  secondaryText?: string;
+  secondaryUrl?: string;
+}
+
+const {
+  title = "Prêt à vivre l'expérience Ménil ?",
+  subtitle = "Réservez votre séjour au bord de la Mayenne et profitez d'un cadre naturel exceptionnel.",
+  ctaText = "Réserver mon séjour",
+  ctaUrl = "/contact",
+  secondaryText,
+  secondaryUrl,
+} = Astro.props;
+---
+
+<section class="py-20 lg:py-28 bg-green relative overflow-hidden">
+  <div class="absolute inset-0 opacity-20">
+    <div class="absolute top-0 left-0 w-96 h-96 rounded-full bg-white/10 -translate-x-1/2 -translate-y-1/2"></div>
+    <div class="absolute bottom-0 right-0 w-72 h-72 rounded-full bg-white/10 translate-x-1/3 translate-y-1/3"></div>
+  </div>
+
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 text-center relative z-10">
+    <h2 class="text-white text-balance mb-4">{title}</h2>
+    <p class="text-white/80 text-lg mb-10 leading-relaxed">{subtitle}</p>
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+      <a href={ctaUrl} class="btn btn-lg bg-white text-forest hover:bg-cream border-white font-semibold">
+        {ctaText}
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      {secondaryText && secondaryUrl && (
+        <a href={secondaryUrl} class="btn btn-secondary btn-lg">{secondaryText}</a>
+      )}
+    </div>
+  </div>
+</section>

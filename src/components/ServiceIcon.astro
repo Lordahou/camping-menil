@@ -1,0 +1,32 @@
+---
+interface Props {
+  icon: string;
+  title: string;
+  description: string;
+}
+
+const { icon, title, description } = Astro.props;
+
+const icons: Record<string, string> = {
+  wifi: '<path d="M12 20h.01"/><path d="M2 8.82a15 15 0 0120 0"/><path d="M5 12.86a10 10 0 0114 0"/><path d="M8.5 16.43a5 5 0 017 0"/>',
+  electric: '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10"/>',
+  laundry: '<rect x="2" y="2" width="20" height="20" rx="3"/><circle cx="12" cy="13" r="5"/><path d="M12 8v2"/>',
+  accessible: '<circle cx="16" cy="4" r="1"/><path d="M18 22l-4-8h-6l-2-5"/><circle cx="8" cy="20" r="2"/>',
+  pets: '<path d="M10 5.172C10 3.782 8.884 2.5 7.5 2.5S5 3.782 5 5.172C5 7.5 7.5 10 7.5 10s2.5-2.5 2.5-4.828z"/><path d="M19 5.172C19 3.782 17.884 2.5 16.5 2.5S14 3.782 14 5.172C14 7.5 16.5 10 16.5 10s2.5-2.5 2.5-4.828z"/><path d="M7 14c-2.5 1.5-3 5-3 7h16c0-2-0.5-5.5-3-7-1.5 1-3.5 1.5-5 1.5S8.5 15 7 14z"/>',
+  'bike-parking': '<circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M15 6a1 1 0 100-2 1 1 0 000 2zM12 17.5V14l-3-3 4-3 2 3h3"/>',
+  playground: '<path d="M6 9a3 3 0 100-6 3 3 0 000 6z"/><path d="M6 9v12"/><path d="M12 3v18"/><path d="M18 9a3 3 0 100-6 3 3 0 000 6z"/><path d="M18 9v12"/>',
+  fishing: '<path d="M18 5l-3 3-3-3"/><path d="M15 8V2"/><path d="M15 22c-4 0-8-4-8-8 0-3 2-5 3-6l5 5c-1 1-3 3-6 3"/>',
+};
+---
+
+<div class="flex items-start gap-4 p-4 rounded-xl hover:bg-white/50 transition-colors duration-200">
+  <div class="w-12 h-12 rounded-xl bg-moss flex items-center justify-center flex-shrink-0">
+    <svg class="w-5 h-5 text-forest" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <Fragment set:html={icons[icon] || icons.wifi} />
+    </svg>
+  </div>
+  <div>
+    <h4 class="font-semibold text-forest text-sm mb-0.5">{title}</h4>
+    <p class="text-gray-500 text-sm">{description}</p>
+  </div>
+</div>

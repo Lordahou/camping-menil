@@ -1,0 +1,33 @@
+---
+interface PriceItem {
+  label: string;
+  price: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  items: PriceItem[];
+  featured?: boolean;
+}
+
+const { title, description, items, featured = false } = Astro.props;
+---
+
+<div class={`rounded-2xl overflow-hidden ${featured ? 'ring-2 ring-green shadow-xl' : 'border border-gray-200'}`}>
+  <div class={`p-6 lg:p-8 ${featured ? 'bg-forest text-white' : 'bg-white'}`}>
+    {featured && <span class="badge bg-sage text-forest text-xs mb-3">Populaire</span>}
+    <h3 class={`text-xl mb-1 ${featured ? 'text-white' : 'text-forest'}`}>{title}</h3>
+    <p class={`text-sm ${featured ? 'text-white/70' : 'text-gray-500'}`}>{description}</p>
+  </div>
+  <div class="bg-white p-6 lg:p-8">
+    <ul class="space-y-3">
+      {items.map((item) => (
+        <li class="flex items-center justify-between py-2 border-b border-gray-100 last:border-0">
+          <span class="text-sm text-gray-700">{item.label}</span>
+          <span class="text-sm font-semibold text-forest ml-4 text-right">{item.price}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</div>
