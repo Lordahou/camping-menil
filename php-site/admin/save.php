@@ -48,7 +48,7 @@ function handleUpload(string $fileKey, string $destDir, string $filename = ''): 
 
     // Validate extension
     $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-    if (!in_array($ext, ALLOWED_EXTENSIONS)) {
+    if (!in_array($ext, $GLOBALS['ALLOWED_EXTENSIONS'])) {
         return '';
     }
 
@@ -306,7 +306,7 @@ switch ($section) {
                 // Update content.json references based on category
                 if ($category === 'hero') {
                     $content['hero']['image'] = $uploaded;
-                } elseif ($category === 'hebergements' && str_starts_with($key, 'hebergement-')) {
+                } elseif ($category === 'hebergements' && strpos($key, 'hebergement-') === 0) {
                     $accId = substr($key, strlen('hebergement-'));
                     foreach ($content['accommodations'] as &$acc) {
                         if (($acc['id'] ?? '') === $accId) {
@@ -315,7 +315,7 @@ switch ($section) {
                         }
                     }
                     unset($acc);
-                } elseif ($category === 'activites' && str_starts_with($key, 'activite-')) {
+                } elseif ($category === 'activites' && strpos($key, 'activite-') === 0) {
                     $idx = (int)substr($key, strlen('activite-'));
                     if (isset($content['activities'][$idx])) {
                         $content['activities'][$idx]['image'] = $uploaded;
@@ -341,7 +341,7 @@ if ($json !== false && file_put_contents($currentPath, $json) !== false) {
     if (file_exists($backupPath)) {
         copy($backupPath, $currentPath);
     }
-    $errorRedirect = str_contains($redirect, '?') ? explode('?', $redirect)[0] : $redirect;
+    $errorRedirect = (strpos($redirect, '?') !== false) ? explode('?', $redirect)[0] : $redirect;
     header('Location: ' . $errorRedirect . '?error=' . urlencode('Erreur lors de l\'enregistrement.'));
 }
 exit;

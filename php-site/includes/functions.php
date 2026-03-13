@@ -122,7 +122,7 @@ function formatPhone(string $phone): string {
 function currentPage(): string {
     $path = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);
     // Remove trailing slash except for root
-    if ($path !== '/' && str_ends_with($path, '/')) {
+    if ($path !== '/' && substr($path, -1) === '/') {
         $path = rtrim($path, '/');
     }
     // Remove .php extension for clean URL matching
