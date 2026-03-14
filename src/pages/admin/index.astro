@@ -808,6 +808,12 @@ const contentJson = JSON.stringify(content);
 </div>
 
 <script is:inline define:vars={{ contentJson, basePath: import.meta.env.BASE_URL }}>
+// ─── Error handler (debug) ─────────────────────────────────────────────
+window.onerror = function(msg, url, line, col, error) {
+  alert('Erreur JS ligne ' + line + ': ' + msg);
+  return false;
+};
+
 // ─── State ──────────────────────────────────────────────────────────────
 const originalContent = contentJson;
 let data = JSON.parse(contentJson);
@@ -1383,16 +1389,14 @@ function updateGitHubStatus() {
 }
 
 async function testGitHubConnection() {
-  const cfg = getGitHubConfig();
+  var cfg = getGitHubConfig();
   if (!cfg || !cfg.token) {
-    alert('Entrez d\'abord un token et cliquez "Sauvegarder la configuration"');
+    alert('Token non trouvé. Cliquez d\'abord sur "Sauvegarder la configuration".');
     return;
   }
 
-  showToast('Test de connexion en cours...');
-
   try {
-    const res = await fetch('https://api.github.com/repos/' + cfg.owner + '/' + cfg.repo, {
+    var res = await fetch('https://api.github.com/repos/' + cfg.owner + '/' + cfg.repo, {
       headers: {
         'Authorization': 'token ' + cfg.token,
         'Accept': 'application/vnd.github.v3+json'
@@ -1400,16 +1404,13 @@ async function testGitHubConnection() {
     });
 
     if (res.ok) {
-      const repoData = await res.json();
+      var repoData = await res.json();
       alert('Connexion réussie !\n\nDépôt : ' + repoData.full_name + '\nVous pouvez maintenant publier vos modifications.');
-      const card = document.getElementById('github-status-card');
-      card.style.borderLeftColor = 'var(--sage)';
-      const icon = document.getElementById('github-status-icon');
-      icon.style.background = 'var(--moss)';
-      icon.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>';
-      const title = document.getElementById('github-status-title');
-      title.textContent = 'Connecté et vérifié';
-      title.style.color = 'var(--green)';
+      document.getElementById('github-status-card').style.borderLeftColor = 'var(--sage)';
+      document.getElementById('github-status-icon').style.background = 'var(--moss)';
+      document.getElementById('github-status-icon').innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>';
+      document.getElementById('github-status-title').textContent = 'Connecté et vérifié';
+      document.getElementById('github-status-title').style.color = 'var(--green)';
       document.getElementById('github-status-desc').textContent = cfg.owner + '/' + cfg.repo;
     } else if (res.status === 401) {
       alert('Token invalide ou expiré.\n\nVérifiez que vous avez bien copié le token complet (commence par ghp_).');
