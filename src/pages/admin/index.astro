@@ -1,0 +1,925 @@
+---
+import content from '../../data/content.json';
+import { url } from '../../utils/paths';
+const contentJson = JSON.stringify(content);
+---
+
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administration — Camping du Bac</title>
+  <meta name="robots" content="noindex, nofollow">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --forest: #1a3c2a; --green: #3a7d5c; --sage: #6db88a; --moss: #d4e8dc;
+      --cream: #faf8f4; --cream-dark: #f0ece4; --river: #2a7ab5;
+      --danger: #dc3545; --warning: #ffc107; --radius: 8px;
+    }
+    body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: var(--cream); color: #333; line-height: 1.5; }
+
+    /* Login */
+    .login-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: var(--forest); padding: 1rem; }
+    .login-box { background: white; border-radius: 12px; padding: 2.5rem; width: 100%; max-width: 400px; box-shadow: 0 20px 60px rgba(0,0,0,.3); }
+    .login-box h1 { color: var(--forest); font-size: 1.5rem; margin-bottom: .25rem; }
+    .login-box .subtitle { color: #888; font-size: .875rem; margin-bottom: 1.5rem; }
+    .login-box .error { background: #fef2f2; color: var(--danger); border: 1px solid #fecaca; padding: .75rem; border-radius: var(--radius); font-size: .875rem; margin-bottom: 1rem; display: none; }
+    .login-box label { display: block; font-size: .8rem; font-weight: 600; color: #555; margin-bottom: .35rem; }
+    .login-box input { width: 100%; padding: .65rem .85rem; border: 1px solid #ddd; border-radius: var(--radius); font-size: .9rem; margin-bottom: 1rem; transition: border-color .2s; }
+    .login-box input:focus { outline: none; border-color: var(--sage); box-shadow: 0 0 0 3px rgba(109,184,138,.15); }
+
+    /* Admin Layout */
+    .admin { display: none; min-height: 100vh; }
+    .topbar { background: var(--forest); color: white; padding: .75rem 1.5rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
+    .topbar h1 { font-size: 1.1rem; font-weight: 600; }
+    .topbar-actions { display: flex; align-items: center; gap: .75rem; }
+    .admin-body { display: flex; min-height: calc(100vh - 52px); }
+
+    /* Sidebar */
+    .sidebar { width: 240px; background: white; border-right: 1px solid #e5e5e5; padding: 1rem 0; flex-shrink: 0; overflow-y: auto; }
+    .sidebar a { display: flex; align-items: center; gap: .65rem; padding: .6rem 1.25rem; color: #555; font-size: .85rem; text-decoration: none; transition: all .15s; border-left: 3px solid transparent; }
+    .sidebar a:hover { background: var(--moss); color: var(--forest); }
+    .sidebar a.active { background: var(--moss); color: var(--forest); font-weight: 600; border-left-color: var(--sage); }
+    .sidebar a svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+    /* Content */
+    .content { flex: 1; padding: 2rem; max-width: 900px; }
+    .content h2 { color: var(--forest); font-size: 1.4rem; margin-bottom: .35rem; }
+    .content .section-desc { color: #888; font-size: .875rem; margin-bottom: 1.5rem; }
+    .section-panel { display: none; }
+    .section-panel.active { display: block; }
+
+    /* Form elements */
+    .form-group { margin-bottom: 1.25rem; }
+    .form-group label { display: block; font-size: .8rem; font-weight: 600; color: #555; margin-bottom: .35rem; text-transform: uppercase; letter-spacing: .3px; }
+    .form-group input, .form-group textarea, .form-group select { width: 100%; padding: .6rem .85rem; border: 1px solid #ddd; border-radius: var(--radius); font-size: .875rem; font-family: inherit; transition: border-color .2s; background: white; }
+    .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--sage); box-shadow: 0 0 0 3px rgba(109,184,138,.15); }
+    .form-group textarea { min-height: 80px; resize: vertical; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+
+    /* Cards for items */
+    .item-card { background: white; border: 1px solid #e5e5e5; border-radius: var(--radius); padding: 1.25rem; margin-bottom: 1rem; position: relative; }
+    .item-card .item-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; padding-bottom: .75rem; border-bottom: 1px solid #f0f0f0; }
+    .item-card .item-title { font-weight: 600; color: var(--forest); font-size: .95rem; }
+    .item-card .item-number { background: var(--moss); color: var(--forest); width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .75rem; font-weight: 700; }
+
+    /* Buttons */
+    .btn { display: inline-flex; align-items: center; gap: .5rem; padding: .55rem 1.1rem; border: none; border-radius: var(--radius); font-size: .85rem; font-weight: 600; cursor: pointer; transition: all .15s; font-family: inherit; }
+    .btn-primary { background: var(--sage); color: white; }
+    .btn-primary:hover { background: var(--green); }
+    .btn-secondary { background: #f5f5f5; color: #555; border: 1px solid #ddd; }
+    .btn-secondary:hover { background: #eee; }
+    .btn-danger { background: white; color: var(--danger); border: 1px solid #fecaca; }
+    .btn-danger:hover { background: #fef2f2; }
+    .btn-sm { padding: .35rem .75rem; font-size: .8rem; }
+    .btn-export { background: var(--river); color: white; }
+    .btn-export:hover { background: #1e5f8a; }
+    .btn-logout { background: transparent; color: white; border: 1px solid rgba(255,255,255,.2); }
+    .btn-logout:hover { background: rgba(255,255,255,.1); }
+    .btn-back { background: transparent; color: white; border: none; font-size: .85rem; opacity: .7; }
+    .btn-back:hover { opacity: 1; }
+
+    /* Feature tags (for accommodations) */
+    .features-input { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; margin-top: .25rem; }
+    .feature-tag { background: var(--moss); color: var(--forest); padding: .25rem .65rem; border-radius: 20px; font-size: .8rem; display: flex; align-items: center; gap: .35rem; }
+    .feature-tag button { background: none; border: none; color: var(--forest); cursor: pointer; font-size: 1rem; line-height: 1; opacity: .5; }
+    .feature-tag button:hover { opacity: 1; }
+
+    /* Tarif items */
+    .tarif-item { display: grid; grid-template-columns: 1fr 180px 32px; gap: .5rem; align-items: center; margin-bottom: .5rem; }
+    .tarif-item input { padding: .45rem .65rem; font-size: .85rem; }
+    .tarif-item .btn-remove { width: 28px; height: 28px; padding: 0; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: #fef2f2; border: 1px solid #fecaca; color: var(--danger); cursor: pointer; font-size: 1.1rem; }
+    .tarif-item .btn-remove:hover { background: #fee2e2; }
+
+    /* Schedule times */
+    .schedule-times { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .25rem; }
+    .time-tag { background: var(--river); color: white; padding: .25rem .6rem; border-radius: 20px; font-size: .8rem; display: flex; align-items: center; gap: .35rem; }
+    .time-tag button { background: none; border: none; color: white; cursor: pointer; font-size: .9rem; opacity: .6; }
+    .time-tag button:hover { opacity: 1; }
+
+    /* Toast */
+    .toast { position: fixed; bottom: 2rem; right: 2rem; background: var(--forest); color: white; padding: .85rem 1.5rem; border-radius: var(--radius); font-size: .875rem; box-shadow: 0 10px 40px rgba(0,0,0,.2); transform: translateY(120%); transition: transform .3s; z-index: 100; }
+    .toast.show { transform: translateY(0); }
+
+    /* Unsaved indicator */
+    .unsaved-dot { width: 8px; height: 8px; background: var(--warning); border-radius: 50%; display: none; }
+    .unsaved-dot.visible { display: block; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .sidebar { display: none; position: fixed; top: 52px; left: 0; bottom: 0; z-index: 40; width: 260px; box-shadow: 4px 0 20px rgba(0,0,0,.1); }
+      .sidebar.open { display: block; }
+      .content { padding: 1rem; }
+      .form-row, .form-row-3 { grid-template-columns: 1fr; }
+      .tarif-item { grid-template-columns: 1fr 120px 28px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Login Screen -->
+<div id="login-screen" class="login-page">
+  <div class="login-box">
+    <h1>Camping du Bac</h1>
+    <p class="subtitle">Administration du site</p>
+    <div id="login-error" class="error"></div>
+    <form id="login-form">
+      <label for="login-password">Mot de passe</label>
+      <input type="password" id="login-password" placeholder="Mot de passe" required autofocus>
+      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:.5rem">Se connecter</button>
+    </form>
+    <p style="text-align:center;margin-top:1.25rem">
+      <a href={url('/')} style="color:#888;font-size:.8rem;text-decoration:none">&larr; Retour au site</a>
+    </p>
+  </div>
+</div>
+
+<!-- Admin Panel -->
+<div id="admin-panel" class="admin">
+  <!-- Top Bar -->
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:1rem">
+      <button class="btn-back" id="menu-toggle" style="display:none" onclick="document.querySelector('.sidebar').classList.toggle('open')">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+      </button>
+      <h1>Administration</h1>
+      <div class="unsaved-dot" id="unsaved-dot" title="Modifications non exportées"></div>
+    </div>
+    <div class="topbar-actions">
+      <button class="btn btn-export btn-sm" id="btn-export" onclick="exportContent()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Exporter JSON
+      </button>
+      <a href={url('/')} class="btn btn-logout btn-sm">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Quitter
+      </a>
+    </div>
+  </div>
+
+  <div class="admin-body">
+    <!-- Sidebar -->
+    <nav class="sidebar" id="sidebar">
+      <a href="#general" class="active" data-section="general">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+        Général
+      </a>
+      <a href="#hero" data-section="hero">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        Accueil / Hero
+      </a>
+      <a href="#hebergements" data-section="hebergements">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Hébergements
+      </a>
+      <a href="#tarifs" data-section="tarifs">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+        Tarifs
+      </a>
+      <a href="#activites" data-section="activites">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18.5" cy="17.5" r="3.5"/><circle cx="5.5" cy="17.5" r="3.5"/><path d="M15 6a1 1 0 100-2 1 1 0 000 2zm1 1.5l-3 4.5h4l2 4.5M5.5 17.5L8 10l4 2 3-3.5"/></svg>
+        Activités
+      </a>
+      <a href="#services" data-section="services">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        Services
+      </a>
+      <a href="#bac" data-section="bac">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h20M5 20V8l7-5 7 5v12"/><rect x="9" y="12" width="6" height="8"/></svg>
+        Le Bac
+      </a>
+      <a href="#faq" data-section="faq">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        FAQ
+      </a>
+      <a href="#temoignages" data-section="temoignages">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        Témoignages
+      </a>
+      <a href="#environs" data-section="environs">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Aux environs
+      </a>
+    </nav>
+
+    <!-- Content Area -->
+    <main class="content" id="content-area">
+
+      <!-- GENERAL -->
+      <div class="section-panel active" id="panel-general">
+        <h2>Informations générales</h2>
+        <p class="section-desc">Nom du camping, coordonnées, dates d'ouverture</p>
+
+        <h3 style="font-size:1rem;color:var(--forest);margin-bottom:.75rem">Identité du site</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Nom du camping</label>
+            <input type="text" data-path="site.name">
+          </div>
+          <div class="form-group">
+            <label>Nom court</label>
+            <input type="text" data-path="site.shortName">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Slogan</label>
+          <input type="text" data-path="site.tagline">
+        </div>
+        <div class="form-group">
+          <label>Description (SEO)</label>
+          <textarea data-path="site.description"></textarea>
+        </div>
+        <div class="form-row-3">
+          <div class="form-group">
+            <label>Note</label>
+            <input type="text" data-path="site.rating">
+          </div>
+          <div class="form-group">
+            <label>Source de la note</label>
+            <input type="text" data-path="site.ratingSource">
+          </div>
+          <div class="form-group">
+            <label>Nombre d'étoiles</label>
+            <input type="number" data-path="site.stars" min="1" max="5">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>URL du site</label>
+            <input type="url" data-path="site.url">
+          </div>
+          <div class="form-group">
+            <label>URL de réservation</label>
+            <input type="url" data-path="site.bookingUrl">
+          </div>
+        </div>
+
+        <h3 style="font-size:1rem;color:var(--forest);margin:1.5rem 0 .75rem">Contact</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Adresse</label>
+            <input type="text" data-path="contact.address">
+          </div>
+          <div class="form-group">
+            <label>Ville</label>
+            <input type="text" data-path="contact.city">
+          </div>
+        </div>
+        <div class="form-row-3">
+          <div class="form-group">
+            <label>Code postal</label>
+            <input type="text" data-path="contact.postalCode">
+          </div>
+          <div class="form-group">
+            <label>Département</label>
+            <input type="text" data-path="contact.department">
+          </div>
+          <div class="form-group">
+            <label>Région</label>
+            <input type="text" data-path="contact.region">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Téléphone</label>
+            <input type="tel" data-path="contact.phone">
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" data-path="contact.email">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email mairie</label>
+          <input type="email" data-path="contact.emailMairie">
+        </div>
+
+        <h3 style="font-size:1rem;color:var(--forest);margin:1.5rem 0 .75rem">Dates d'ouverture</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Emplacements — début</label>
+            <input type="text" data-path="openingDates.emplacements.start">
+          </div>
+          <div class="form-group">
+            <label>Emplacements — fin</label>
+            <input type="text" data-path="openingDates.emplacements.end">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Chalets</label>
+            <input type="text" data-path="openingDates.chalets">
+          </div>
+          <div class="form-group">
+            <label>Maison éclusière</label>
+            <input type="text" data-path="openingDates.maisonEclusiere">
+          </div>
+        </div>
+      </div>
+
+      <!-- HERO -->
+      <div class="section-panel" id="panel-hero">
+        <h2>Page d'accueil — Hero</h2>
+        <p class="section-desc">Titre, sous-titre, boutons et image principale</p>
+        <div class="form-group">
+          <label>Titre principal</label>
+          <input type="text" data-path="hero.title">
+        </div>
+        <div class="form-group">
+          <label>Sous-titre</label>
+          <input type="text" data-path="hero.subtitle">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Bouton 1 — texte</label>
+            <input type="text" data-path="hero.cta1.text">
+          </div>
+          <div class="form-group">
+            <label>Bouton 1 — URL</label>
+            <input type="text" data-path="hero.cta1.url">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Bouton 2 — texte</label>
+            <input type="text" data-path="hero.cta2.text">
+          </div>
+          <div class="form-group">
+            <label>Bouton 2 — URL</label>
+            <input type="text" data-path="hero.cta2.url">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Image (chemin)</label>
+          <input type="text" data-path="hero.image">
+        </div>
+        <div class="form-group">
+          <label>Texte alternatif de l'image</label>
+          <input type="text" data-path="hero.imageAlt">
+        </div>
+
+        <h3 style="font-size:1rem;color:var(--forest);margin:1.5rem 0 .75rem">Points forts (highlights)</h3>
+        <div id="highlights-list"></div>
+        <button class="btn btn-secondary btn-sm" onclick="addHighlight()">+ Ajouter un point fort</button>
+      </div>
+
+      <!-- HEBERGEMENTS -->
+      <div class="section-panel" id="panel-hebergements">
+        <h2>Hébergements</h2>
+        <p class="section-desc">Emplacements, chalets, bivouac et maison éclusière</p>
+        <div id="accommodations-list"></div>
+      </div>
+
+      <!-- TARIFS -->
+      <div class="section-panel" id="panel-tarifs">
+        <h2>Tarifs</h2>
+        <p class="section-desc">Grilles tarifaires pour chaque type d'hébergement et les locations</p>
+        <div class="form-group">
+          <label>Note générale sur les tarifs</label>
+          <textarea data-path="tarifs.note"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Note sur les moyens de paiement</label>
+          <input type="text" data-path="tarifs.paymentNote">
+        </div>
+        <div id="tarifs-sections"></div>
+      </div>
+
+      <!-- ACTIVITES -->
+      <div class="section-panel" id="panel-activites">
+        <h2>Activités</h2>
+        <p class="section-desc">Activités disponibles au camping et aux alentours</p>
+        <div id="activities-list"></div>
+        <button class="btn btn-secondary btn-sm" onclick="addActivity()">+ Ajouter une activité</button>
+      </div>
+
+      <!-- SERVICES -->
+      <div class="section-panel" id="panel-services">
+        <h2>Services</h2>
+        <p class="section-desc">Services proposés au camping</p>
+        <div id="services-list"></div>
+        <button class="btn btn-secondary btn-sm" onclick="addService()">+ Ajouter un service</button>
+      </div>
+
+      <!-- BAC -->
+      <div class="section-panel" id="panel-bac">
+        <h2>Le Bac de Ménil</h2>
+        <p class="section-desc">Informations, tarifs et horaires du bac</p>
+        <div class="form-group">
+          <label>Titre</label>
+          <input type="text" data-path="bac.title">
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea data-path="bac.description" style="min-height:100px"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Détails</label>
+          <textarea data-path="bac.details"></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Tarif</label>
+            <input type="text" data-path="bac.price">
+          </div>
+          <div class="form-group">
+            <label>Restrictions</label>
+            <input type="text" data-path="bac.restrictions">
+          </div>
+        </div>
+
+        <h3 style="font-size:1rem;color:var(--forest);margin:1.5rem 0 .75rem">Horaires basse saison</h3>
+        <div class="form-group">
+          <label>Période</label>
+          <input type="text" data-path="bac.schedules.lowSeason.period">
+        </div>
+        <div class="form-group">
+          <label>Horaires</label>
+          <div class="schedule-times" id="low-season-times"></div>
+          <div style="margin-top:.5rem;display:flex;gap:.5rem">
+            <input type="text" id="low-season-new" placeholder="ex: 14h30" style="width:120px;padding:.35rem .65rem;border:1px solid #ddd;border-radius:var(--radius);font-size:.85rem">
+            <button class="btn btn-secondary btn-sm" onclick="addScheduleTime('low')">Ajouter</button>
+          </div>
+        </div>
+
+        <h3 style="font-size:1rem;color:var(--forest);margin:1.5rem 0 .75rem">Horaires haute saison</h3>
+        <div class="form-group">
+          <label>Période</label>
+          <input type="text" data-path="bac.schedules.highSeason.period">
+        </div>
+        <div class="form-group">
+          <label>Horaires</label>
+          <div class="schedule-times" id="high-season-times"></div>
+          <div style="margin-top:.5rem;display:flex;gap:.5rem">
+            <input type="text" id="high-season-new" placeholder="ex: 17h00" style="width:120px;padding:.35rem .65rem;border:1px solid #ddd;border-radius:var(--radius);font-size:.85rem">
+            <button class="btn btn-secondary btn-sm" onclick="addScheduleTime('high')">Ajouter</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- FAQ -->
+      <div class="section-panel" id="panel-faq">
+        <h2>FAQ</h2>
+        <p class="section-desc">Questions fréquentes des visiteurs</p>
+        <div id="faq-list"></div>
+        <button class="btn btn-secondary btn-sm" onclick="addFaq()">+ Ajouter une question</button>
+      </div>
+
+      <!-- TEMOIGNAGES -->
+      <div class="section-panel" id="panel-temoignages">
+        <h2>Témoignages</h2>
+        <p class="section-desc">Avis et témoignages des clients</p>
+        <div id="testimonials-list"></div>
+        <button class="btn btn-secondary btn-sm" onclick="addTestimonial()">+ Ajouter un témoignage</button>
+      </div>
+
+      <!-- ENVIRONS -->
+      <div class="section-panel" id="panel-environs">
+        <h2>Aux environs</h2>
+        <p class="section-desc">Sites et attractions à proximité du camping</p>
+        <div id="surroundings-list"></div>
+        <button class="btn btn-secondary btn-sm" onclick="addSurrounding()">+ Ajouter un lieu</button>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- Toast notification -->
+<div class="toast" id="toast"></div>
+
+<script is:inline define:vars={{ contentJson, basePath: import.meta.env.BASE_URL }}>
+// ─── State ──────────────────────────────────────────────────────────────
+let data = JSON.parse(contentJson);
+let hasChanges = false;
+const PASSWORD_HASH = '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'; // sha256 of "camping2026" — replace this
+
+// ─── Auth ───────────────────────────────────────────────────────────────
+async function sha256(text) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+document.getElementById('login-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const pw = document.getElementById('login-password').value;
+  const hash = await sha256(pw);
+  if (hash === PASSWORD_HASH) {
+    sessionStorage.setItem('admin_auth', '1');
+    showAdmin();
+  } else {
+    const err = document.getElementById('login-error');
+    err.textContent = 'Mot de passe incorrect.';
+    err.style.display = 'block';
+  }
+});
+
+function showAdmin() {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('admin-panel').style.display = 'block';
+  populateAllForms();
+}
+
+// Check if already logged in
+if (sessionStorage.getItem('admin_auth') === '1') showAdmin();
+
+// ─── Navigation ─────────────────────────────────────────────────────────
+document.querySelectorAll('.sidebar a').forEach(link => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    const section = link.dataset.section;
+    document.querySelectorAll('.sidebar a').forEach(l => l.classList.remove('active'));
+    link.classList.add('active');
+    document.querySelectorAll('.section-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('panel-' + section).classList.add('active');
+    // Close mobile sidebar
+    document.getElementById('sidebar').classList.remove('open');
+  });
+});
+
+// Mobile menu toggle
+if (window.innerWidth <= 768) document.getElementById('menu-toggle').style.display = 'block';
+window.addEventListener('resize', () => {
+  document.getElementById('menu-toggle').style.display = window.innerWidth <= 768 ? 'block' : 'none';
+});
+
+// ─── Data helpers ───────────────────────────────────────────────────────
+function getPath(obj, path) {
+  return path.split('.').reduce((o, k) => o?.[k], obj);
+}
+function setPath(obj, path, val) {
+  const keys = path.split('.');
+  const last = keys.pop();
+  const target = keys.reduce((o, k) => o[k] = o[k] || {}, obj);
+  target[last] = val;
+}
+function markChanged() {
+  hasChanges = true;
+  document.getElementById('unsaved-dot').classList.add('visible');
+}
+
+// ─── Populate simple fields ─────────────────────────────────────────────
+function populateAllForms() {
+  document.querySelectorAll('[data-path]').forEach(input => {
+    const val = getPath(data, input.dataset.path);
+    if (val !== undefined) input.value = val;
+    input.addEventListener('input', () => {
+      const v = input.type === 'number' ? Number(input.value) : input.value;
+      setPath(data, input.dataset.path, v);
+      markChanged();
+    });
+  });
+
+  renderHighlights();
+  renderAccommodations();
+  renderTarifs();
+  renderActivities();
+  renderServices();
+  renderScheduleTimes();
+  renderFaq();
+  renderTestimonials();
+  renderSurroundings();
+}
+
+// ─── Highlights ─────────────────────────────────────────────────────────
+function renderHighlights() {
+  const c = document.getElementById('highlights-list');
+  c.innerHTML = '';
+  data.highlights.forEach((h, i) => {
+    c.innerHTML += `<div class="item-card">
+      <div class="item-header"><span class="item-title">${h.title || 'Point fort ' + (i+1)}</span>
+        <div style="display:flex;gap:.5rem;align-items:center">
+          <span class="item-number">${i+1}</span>
+          <button class="btn btn-danger btn-sm" onclick="removeHighlight(${i})">Supprimer</button>
+        </div>
+      </div>
+      <div class="form-row-3">
+        <div class="form-group"><label>Icône</label>
+          <select onchange="data.highlights[${i}].icon=this.value;markChanged()">
+            ${['river','bike','star','boat','location','activity'].map(ic => `<option value="${ic}" ${h.icon===ic?'selected':''}>${ic}</option>`).join('')}
+          </select>
+        </div>
+        <div class="form-group"><label>Titre</label>
+          <input type="text" value="${esc(h.title)}" oninput="data.highlights[${i}].title=this.value;markChanged()">
+        </div>
+        <div class="form-group" style="grid-column:span 1"><label>Description</label>
+          <input type="text" value="${esc(h.description)}" oninput="data.highlights[${i}].description=this.value;markChanged()">
+        </div>
+      </div>
+    </div>`;
+  });
+}
+function addHighlight() {
+  data.highlights.push({ icon: 'star', title: '', description: '' });
+  renderHighlights(); markChanged();
+}
+function removeHighlight(i) {
+  data.highlights.splice(i, 1);
+  renderHighlights(); markChanged();
+}
+
+// ─── Accommodations ─────────────────────────────────────────────────────
+function renderAccommodations() {
+  const c = document.getElementById('accommodations-list');
+  c.innerHTML = '';
+  data.accommodations.forEach((a, i) => {
+    const featuresHtml = (a.features || []).map((f, fi) =>
+      `<span class="feature-tag">${esc(f)}<button onclick="removeFeature(${i},${fi})">&times;</button></span>`
+    ).join('');
+
+    c.innerHTML += `<div class="item-card">
+      <div class="item-header">
+        <span class="item-title">${a.title || 'Hébergement ' + (i+1)}</span>
+        <span class="item-number">${i+1}</span>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Titre</label><input type="text" value="${esc(a.title)}" oninput="data.accommodations[${i}].title=this.value;markChanged()"></div>
+        <div class="form-group"><label>Sous-titre</label><input type="text" value="${esc(a.subtitle)}" oninput="data.accommodations[${i}].subtitle=this.value;markChanged()"></div>
+      </div>
+      <div class="form-group"><label>Description</label><textarea oninput="data.accommodations[${i}].description=this.value;markChanged()">${esc(a.description)}</textarea></div>
+      <div class="form-row-3">
+        <div class="form-group"><label>Capacité</label><input type="text" value="${esc(a.capacity)}" oninput="data.accommodations[${i}].capacity=this.value;markChanged()"></div>
+        <div class="form-group"><label>Check-in</label><input type="text" value="${esc(a.checkin||'')}" oninput="data.accommodations[${i}].checkin=this.value;markChanged()"></div>
+        <div class="form-group"><label>Check-out</label><input type="text" value="${esc(a.checkout||'')}" oninput="data.accommodations[${i}].checkout=this.value;markChanged()"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Image (chemin)</label><input type="text" value="${esc(a.image)}" oninput="data.accommodations[${i}].image=this.value;markChanged()"></div>
+        <div class="form-group"><label>Texte alternatif</label><input type="text" value="${esc(a.imageAlt||'')}" oninput="data.accommodations[${i}].imageAlt=this.value;markChanged()"></div>
+      </div>
+      <div class="form-group"><label>Caractéristiques</label>
+        <div class="features-input">${featuresHtml}
+          <div style="display:flex;gap:.35rem">
+            <input type="text" id="feat-input-${i}" placeholder="Ajouter..." style="width:140px;padding:.3rem .6rem;font-size:.8rem;border:1px solid #ddd;border-radius:20px">
+            <button class="btn btn-secondary btn-sm" onclick="addFeature(${i})">+</button>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  });
+}
+function addFeature(accIdx) {
+  const input = document.getElementById('feat-input-' + accIdx);
+  if (input.value.trim()) {
+    if (!data.accommodations[accIdx].features) data.accommodations[accIdx].features = [];
+    data.accommodations[accIdx].features.push(input.value.trim());
+    input.value = '';
+    renderAccommodations(); markChanged();
+  }
+}
+function removeFeature(accIdx, featIdx) {
+  data.accommodations[accIdx].features.splice(featIdx, 1);
+  renderAccommodations(); markChanged();
+}
+
+// ─── Tarifs ─────────────────────────────────────────────────────────────
+function renderTarifs() {
+  const c = document.getElementById('tarifs-sections');
+  c.innerHTML = '';
+  ['emplacements', 'chalets', 'bivouac', 'rentals'].forEach(key => {
+    const t = data.tarifs[key];
+    if (!t) return;
+    const itemsHtml = (t.items || []).map((item, ii) => `
+      <div class="tarif-item">
+        <input type="text" value="${esc(item.label)}" oninput="data.tarifs['${key}'].items[${ii}].label=this.value;markChanged()">
+        <input type="text" value="${esc(item.price)}" oninput="data.tarifs['${key}'].items[${ii}].price=this.value;markChanged()">
+        <button class="btn-remove" onclick="removeTarifItem('${key}',${ii})">&times;</button>
+      </div>`).join('');
+
+    c.innerHTML += `<div class="item-card">
+      <div class="item-header"><span class="item-title">${esc(t.title)}</span></div>
+      <div class="form-row">
+        <div class="form-group"><label>Titre</label><input type="text" value="${esc(t.title)}" oninput="data.tarifs['${key}'].title=this.value;markChanged()"></div>
+        <div class="form-group"><label>Description</label><input type="text" value="${esc(t.description)}" oninput="data.tarifs['${key}'].description=this.value;markChanged()"></div>
+      </div>
+      <div class="form-group"><label>Tarifs</label>${itemsHtml}
+        <button class="btn btn-secondary btn-sm" style="margin-top:.5rem" onclick="addTarifItem('${key}')">+ Ajouter un tarif</button>
+      </div>
+      ${t.footnote !== undefined ? `<div class="form-group"><label>Note de bas</label><input type="text" value="${esc(t.footnote||'')}" oninput="data.tarifs['${key}'].footnote=this.value;markChanged()"></div>` : ''}
+    </div>`;
+  });
+}
+function addTarifItem(key) {
+  data.tarifs[key].items.push({ label: '', price: '' });
+  renderTarifs(); markChanged();
+}
+function removeTarifItem(key, idx) {
+  data.tarifs[key].items.splice(idx, 1);
+  renderTarifs(); markChanged();
+}
+
+// ─── Activities ─────────────────────────────────────────────────────────
+function renderActivities() {
+  const c = document.getElementById('activities-list');
+  c.innerHTML = '';
+  data.activities.forEach((a, i) => {
+    c.innerHTML += `<div class="item-card">
+      <div class="item-header"><span class="item-title">${esc(a.title)}</span>
+        <div style="display:flex;gap:.5rem;align-items:center">
+          <span class="item-number">${i+1}</span>
+          <button class="btn btn-danger btn-sm" onclick="removeActivity(${i})">Supprimer</button>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Titre</label><input type="text" value="${esc(a.title)}" oninput="data.activities[${i}].title=this.value;markChanged()"></div>
+        <div class="form-group"><label>Catégorie</label><input type="text" value="${esc(a.category||'')}" oninput="data.activities[${i}].category=this.value;markChanged()"></div>
+      </div>
+      <div class="form-group"><label>Description</label><textarea oninput="data.activities[${i}].description=this.value;markChanged()">${esc(a.description)}</textarea></div>
+      <div class="form-row">
+        <div class="form-group"><label>Image (chemin)</label><input type="text" value="${esc(a.image)}" oninput="data.activities[${i}].image=this.value;markChanged()"></div>
+        <div class="form-group"><label>Tarif</label><input type="text" value="${esc(a.price||'')}" oninput="data.activities[${i}].price=this.value;markChanged()"></div>
+      </div>
+    </div>`;
+  });
+}
+function addActivity() {
+  data.activities.push({ title: '', description: '', image: '', category: '', price: '' });
+  renderActivities(); markChanged();
+}
+function removeActivity(i) {
+  data.activities.splice(i, 1);
+  renderActivities(); markChanged();
+}
+
+// ─── Services ───────────────────────────────────────────────────────────
+function renderServices() {
+  const c = document.getElementById('services-list');
+  c.innerHTML = '';
+  data.services.forEach((s, i) => {
+    c.innerHTML += `<div class="item-card">
+      <div class="item-header"><span class="item-title">${esc(s.title)}</span>
+        <div style="display:flex;gap:.5rem;align-items:center">
+          <span class="item-number">${i+1}</span>
+          <button class="btn btn-danger btn-sm" onclick="removeService(${i})">Supprimer</button>
+        </div>
+      </div>
+      <div class="form-row-3">
+        <div class="form-group"><label>Icône</label>
+          <select onchange="data.services[${i}].icon=this.value;markChanged()">
+            ${['wifi','electric','laundry','accessible','pets','bike-parking','playground','fishing','shower','parking','bbq'].map(ic => `<option value="${ic}" ${s.icon===ic?'selected':''}>${ic}</option>`).join('')}
+          </select>
+        </div>
+        <div class="form-group"><label>Titre</label><input type="text" value="${esc(s.title)}" oninput="data.services[${i}].title=this.value;markChanged()"></div>
+        <div class="form-group"><label>Description</label><input type="text" value="${esc(s.description)}" oninput="data.services[${i}].description=this.value;markChanged()"></div>
+      </div>
+    </div>`;
+  });
+}
+function addService() {
+  data.services.push({ icon: 'wifi', title: '', description: '' });
+  renderServices(); markChanged();
+}
+function removeService(i) {
+  data.services.splice(i, 1);
+  renderServices(); markChanged();
+}
+
+// ─── Schedule times ─────────────────────────────────────────────────────
+function renderScheduleTimes() {
+  ['low', 'high'].forEach(season => {
+    const key = season === 'low' ? 'lowSeason' : 'highSeason';
+    const c = document.getElementById(season + '-season-times');
+    c.innerHTML = '';
+    (data.bac.schedules[key].times || []).forEach((t, i) => {
+      c.innerHTML += `<span class="time-tag">${t}<button onclick="removeScheduleTime('${season}',${i})">&times;</button></span>`;
+    });
+  });
+}
+function addScheduleTime(season) {
+  const key = season === 'low' ? 'lowSeason' : 'highSeason';
+  const input = document.getElementById(season + '-season-new');
+  if (input.value.trim()) {
+    data.bac.schedules[key].times.push(input.value.trim());
+    input.value = '';
+    renderScheduleTimes(); markChanged();
+  }
+}
+function removeScheduleTime(season, i) {
+  const key = season === 'low' ? 'lowSeason' : 'highSeason';
+  data.bac.schedules[key].times.splice(i, 1);
+  renderScheduleTimes(); markChanged();
+}
+
+// ─── FAQ ────────────────────────────────────────────────────────────────
+function renderFaq() {
+  const c = document.getElementById('faq-list');
+  c.innerHTML = '';
+  data.faq.forEach((f, i) => {
+    c.innerHTML += `<div class="item-card">
+      <div class="item-header"><span class="item-title">${esc(f.question).substring(0,50)}${f.question.length>50?'...':''}</span>
+        <div style="display:flex;gap:.5rem;align-items:center">
+          <span class="item-number">${i+1}</span>
+          <button class="btn btn-danger btn-sm" onclick="removeFaq(${i})">Supprimer</button>
+        </div>
+      </div>
+      <div class="form-group"><label>Question</label><input type="text" value="${esc(f.question)}" oninput="data.faq[${i}].question=this.value;markChanged()"></div>
+      <div class="form-group"><label>Réponse</label><textarea style="min-height:100px" oninput="data.faq[${i}].answer=this.value;markChanged()">${esc(f.answer)}</textarea></div>
+    </div>`;
+  });
+}
+function addFaq() {
+  data.faq.push({ question: '', answer: '' });
+  renderFaq(); markChanged();
+}
+function removeFaq(i) {
+  data.faq.splice(i, 1);
+  renderFaq(); markChanged();
+}
+
+// ─── Testimonials ───────────────────────────────────────────────────────
+function renderTestimonials() {
+  const c = document.getElementById('testimonials-list');
+  c.innerHTML = '';
+  data.testimonials.forEach((t, i) => {
+    c.innerHTML += `<div class="item-card">
+      <div class="item-header"><span class="item-title">${esc(t.author)}</span>
+        <div style="display:flex;gap:.5rem;align-items:center">
+          <span class="item-number">${i+1}</span>
+          <button class="btn btn-danger btn-sm" onclick="removeTestimonial(${i})">Supprimer</button>
+        </div>
+      </div>
+      <div class="form-group"><label>Témoignage</label><textarea oninput="data.testimonials[${i}].text=this.value;markChanged()">${esc(t.text)}</textarea></div>
+      <div class="form-row-3">
+        <div class="form-group"><label>Auteur</label><input type="text" value="${esc(t.author)}" oninput="data.testimonials[${i}].author=this.value;markChanged()"></div>
+        <div class="form-group"><label>Source</label><input type="text" value="${esc(t.origin||'')}" oninput="data.testimonials[${i}].origin=this.value;markChanged()"></div>
+        <div class="form-group"><label>Note (1-5)</label><input type="number" min="1" max="5" value="${t.rating}" oninput="data.testimonials[${i}].rating=Number(this.value);markChanged()"></div>
+      </div>
+    </div>`;
+  });
+}
+function addTestimonial() {
+  data.testimonials.push({ text: '', author: '', origin: 'Google', rating: 5 });
+  renderTestimonials(); markChanged();
+}
+function removeTestimonial(i) {
+  data.testimonials.splice(i, 1);
+  renderTestimonials(); markChanged();
+}
+
+// ─── Surroundings ───────────────────────────────────────────────────────
+function renderSurroundings() {
+  const c = document.getElementById('surroundings-list');
+  c.innerHTML = '';
+  data.surroundings.forEach((s, i) => {
+    c.innerHTML += `<div class="item-card">
+      <div class="item-header"><span class="item-title">${esc(s.title)}</span>
+        <div style="display:flex;gap:.5rem;align-items:center">
+          <span class="item-number">${i+1}</span>
+          <button class="btn btn-danger btn-sm" onclick="removeSurrounding(${i})">Supprimer</button>
+        </div>
+      </div>
+      <div class="form-row-3">
+        <div class="form-group"><label>Nom</label><input type="text" value="${esc(s.title)}" oninput="data.surroundings[${i}].title=this.value;markChanged()"></div>
+        <div class="form-group"><label>Distance</label><input type="text" value="${esc(s.distance)}" oninput="data.surroundings[${i}].distance=this.value;markChanged()"></div>
+        <div class="form-group"><label>URL</label><input type="url" value="${esc(s.url||'')}" oninput="data.surroundings[${i}].url=this.value;markChanged()"></div>
+      </div>
+      <div class="form-group"><label>Description</label><input type="text" value="${esc(s.description)}" oninput="data.surroundings[${i}].description=this.value;markChanged()"></div>
+    </div>`;
+  });
+}
+function addSurrounding() {
+  data.surroundings.push({ title: '', distance: '', description: '', url: '' });
+  renderSurroundings(); markChanged();
+}
+function removeSurrounding(i) {
+  data.surroundings.splice(i, 1);
+  renderSurroundings(); markChanged();
+}
+
+// ─── Export ──────────────────────────────────────────────────────────────
+function exportContent() {
+  const json = JSON.stringify(data, null, 2);
+  const blob = new Blob([json], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'content.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  hasChanges = false;
+  document.getElementById('unsaved-dot').classList.remove('visible');
+  showToast('Fichier content.json téléchargé avec succès');
+}
+
+// ─── Utilities ──────────────────────────────────────────────────────────
+function esc(str) {
+  if (str === undefined || str === null) return '';
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// Warn before leaving with unsaved changes
+window.addEventListener('beforeunload', (e) => {
+  if (hasChanges) { e.preventDefault(); e.returnValue = ''; }
+});
+</script>
+
+</body>
+</html>
