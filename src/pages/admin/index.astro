@@ -1341,16 +1341,19 @@ function loadGitHubConfig() {
   }
 }
 function saveGitHubConfig() {
-  const cfg = {
-    token: document.getElementById('github-token').value,
-    owner: document.getElementById('github-owner').value,
-    repo: document.getElementById('github-repo').value,
-    branch: document.getElementById('github-branch').value,
-    path: document.getElementById('github-path').value,
-  };
-  localStorage.setItem('admin_github_config', JSON.stringify(cfg));
-  updateGitHubStatus();
-  showToast('Configuration GitHub sauvegardée');
+  try {
+    const token = document.getElementById('github-token').value;
+    const owner = document.getElementById('github-owner').value;
+    const repo = document.getElementById('github-repo').value;
+    const branch = document.getElementById('github-branch').value;
+    const path = document.getElementById('github-path').value;
+    const cfg = { token: token, owner: owner, repo: repo, branch: branch, path: path };
+    localStorage.setItem('admin_github_config', JSON.stringify(cfg));
+    updateGitHubStatus();
+    showToast('Configuration GitHub sauvegardée');
+  } catch(err) {
+    alert('Erreur lors de la sauvegarde : ' + err.message);
+  }
 }
 
 function updateGitHubStatus() {
@@ -1380,7 +1383,7 @@ function updateGitHubStatus() {
 async function testGitHubConnection() {
   const cfg = getGitHubConfig();
   if (!cfg || !cfg.token) {
-    showToast('Entrez d\'abord un token et sauvegardez');
+    alert('Entrez d\'abord un token et cliquez "Sauvegarder la configuration"');
     return;
   }
 
@@ -1395,22 +1398,26 @@ async function testGitHubConnection() {
     });
 
     if (res.ok) {
-      const data = await res.json();
-      showToast('Connexion réussie ! Dépôt : ' + data.full_name);
+      const repoData = await res.json();
+      alert('Connexion réussie !\n\nDépôt : ' + repoData.full_name + '\nVous pouvez maintenant publier vos modifications.');
       const card = document.getElementById('github-status-card');
       card.style.borderLeftColor = 'var(--sage)';
+      const icon = document.getElementById('github-status-icon');
+      icon.style.background = 'var(--moss)';
+      icon.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>';
       const title = document.getElementById('github-status-title');
       title.textContent = 'Connecté et vérifié';
       title.style.color = 'var(--green)';
+      document.getElementById('github-status-desc').textContent = cfg.owner + '/' + cfg.repo;
     } else if (res.status === 401) {
-      showToast('Token invalide ou expiré. Vérifiez votre token.');
+      alert('Token invalide ou expiré.\n\nVérifiez que vous avez bien copié le token complet (commence par ghp_).');
     } else if (res.status === 404) {
-      showToast('Dépôt introuvable. Vérifiez propriétaire/nom du dépôt.');
+      alert('Dépôt introuvable.\n\nVérifiez le propriétaire (' + cfg.owner + ') et le nom du dépôt (' + cfg.repo + ').');
     } else {
-      showToast('Erreur de connexion (code ' + res.status + ')');
+      alert('Erreur de connexion (code ' + res.status + ')');
     }
   } catch (err) {
-    showToast('Erreur réseau : impossible de joindre GitHub');
+    alert('Erreur réseau : impossible de joindre GitHub.\n\n' + err.message);
   }
 }
 function getGitHubConfig() {
