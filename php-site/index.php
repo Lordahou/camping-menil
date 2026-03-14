@@ -30,7 +30,7 @@ $pageDescription = 'Camping municipal 2 étoiles au bord de la Mayenne à Ménil
   <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
     <div class="absolute inset-0">
       <img
-        src="<?= e(getImagePath($hero['image'] ?? '/images/hero/camping-mayenne-hero.jpg')) ?>"
+        src="<?= e(getImagePath($hero['image'] ?? '/images/hero/camping-menil-panorama.jpg')) ?>"
         alt="<?= e($hero['imageAlt'] ?? 'Camping du Bac de Ménil') ?>"
         class="w-full h-full object-cover"
         fetchpriority="high"
