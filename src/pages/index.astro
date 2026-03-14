@@ -213,13 +213,13 @@ import { url } from '../utils/paths';
       <SectionTitle badge="Aux alentours" title="Un territoire à explorer" subtitle="Le sud Mayenne regorge de trésors : patrimoine, nature et culture à portée de main" />
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6 reveal">
         {content.surroundings.map((s) => (
-          <div class="p-6 rounded-2xl bg-white border border-gray-100 hover:shadow-md transition-all duration-300">
+          <a href={s.url} target="_blank" rel="noopener noreferrer" class="block p-6 rounded-2xl bg-white border border-gray-100 hover:shadow-md hover:border-sage/30 transition-all duration-300 group no-underline">
             <div class="flex items-start justify-between mb-3">
-              <h3 class="text-forest text-base">{s.title}</h3>
+              <h3 class="text-forest text-base group-hover:text-sage transition-colors duration-200">{s.title}</h3>
               <span class="text-green text-sm font-semibold whitespace-nowrap ml-3">{s.distance}</span>
             </div>
             <p class="text-gray-500 text-sm leading-relaxed">{s.description}</p>
-          </div>
+          </a>
         ))}
       </div>
     </div>

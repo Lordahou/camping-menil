@@ -176,27 +176,32 @@
     {
       "title": "Château-Gontier",
       "distance": "5 min",
-      "description": "Cité de caractère, marchés, commerces et patrimoine historique"
+      "description": "Cité de caractère, marchés, commerces et patrimoine historique",
+      "url": "https://www.sudmayenne.com/chateau-gontier-sur-mayenne/"
     },
     {
       "title": "Refuge de l'Arche",
       "distance": "5 km",
-      "description": "Refuge animalier pour animaux sauvages et domestiques"
+      "description": "Refuge animalier pour animaux sauvages et domestiques",
+      "url": "https://www.refuge-arche.org/"
     },
     {
       "title": "Château de Craon",
       "distance": "27 km",
-      "description": "Château du XVIIIe siècle, Monument Historique classé"
+      "description": "Château du XVIIIe siècle, Monument Historique classé",
+      "url": "https://www.chateaudecraon.fr/"
     },
     {
       "title": "Musée Robert Tatin",
       "distance": "27 km",
-      "description": "Créations architecturales et sculpturales uniques à Cossé-le-Vivien"
+      "description": "Créations architecturales et sculpturales uniques à Cossé-le-Vivien",
+      "url": "https://www.musee-robert-tatin.fr/"
     },
     {
       "title": "Musée d'Art Naïf de Laval",
       "distance": "37 km",
-      "description": "Au Château de Laval, artistes autodidactes dont Henri Rousseau"
+      "description": "Au Château de Laval, artistes autodidactes dont Henri Rousseau",
+      "url": "https://museedartnaif.laval.fr/"
     }
   ],
   "bac": {
