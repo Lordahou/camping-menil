@@ -7,7 +7,7 @@ $site = $content['site'] ?? [];
 $contact = $content['contact'] ?? [];
 $bac = $content['bac'] ?? [];
 
-$pageTitle = 'Le Camping';
+$pageTitle = 'Le Camping du Bac — Camping municipal Ménil Mayenne — Bord de Mayenne — Vélo Francette — Bac de Ménil';
 $pageDescription = 'Découvrez le Camping du Bac de Ménil, camping 2 étoiles au bord de la Mayenne. Un cadre naturel entre rivière et chemin de halage, à 5 min de Château-Gontier.';
 ?>
 <!DOCTYPE html>
@@ -27,7 +27,7 @@ $pageDescription = 'Découvrez le Camping du Bac de Ménil, camping 2 étoiles a
     </div>
     <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
       <h1 class="font-heading text-4xl sm:text-5xl lg:text-6xl text-white mb-4">Le Camping</h1>
-      <p class="text-lg sm:text-xl text-white/80 max-w-2xl mx-auto font-light">Un coin de nature au bord de la Mayenne, entre chemin de halage et rivière</p>
+      <p class="text-lg sm:text-xl text-white/80 max-w-2xl mx-auto font-light">Camping municipal de Ménil — Au bord de la Mayenne depuis des décennies</p>
     </div>
   </section>
 
@@ -37,20 +37,16 @@ $pageDescription = 'Découvrez le Camping du Bac de Ménil, camping 2 étoiles a
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
         <div>
           <span class="badge bg-sage/10 text-forest text-xs font-semibold px-3 py-1 rounded-full mb-4 inline-block">Notre histoire</span>
-          <h2 class="font-heading text-3xl lg:text-4xl text-forest mb-6">Un camping municipal au caractère unique</h2>
+          <h2 class="font-heading text-3xl lg:text-4xl text-forest mb-6">Un camping municipal, une histoire de rivière</h2>
           <div class="space-y-4 text-gray-600 leading-relaxed">
             <p>
-              Géré par la commune de Ménil, le Camping du Bac est un lieu d'accueil chaleureux niché au bord de la Mayenne.
-              Avec ses 34 emplacements ombragés, ses chalets tout confort, ses tentes bivouac pour cyclistes et sa maison
-              éclusière de caractère, il offre une expérience de séjour variée et authentique.
+              Géré directement par la commune de Ménil, le Camping du Bac est ancré dans l'histoire du village et dans la vie de la Mayenne. Depuis des décennies, il accueille familles, cyclistes et amoureux de la nature dans un cadre préservé, loin des campings industriels.
             </p>
             <p>
-              Situé sur l'itinéraire de La Vélo Francette et labellisé Accueil Vélo, le camping est une étape idéale pour
-              les cyclistes de passage comme pour les familles en quête de nature et de tranquillité.
+              Ici, on prend le temps. On écoute la rivière. On traverse en bac comme le faisaient les générations précédentes. On repart avec quelque chose qu'on n'attendait pas : le sentiment d'avoir vraiment décroché.
             </p>
             <p>
-              Le camping tire son nom du Bac de Ménil, dernier bac à traction manuelle du département de la Mayenne,
-              qui permet de traverser la rivière juste à côté du camping.
+              34 emplacements ombragés, 5 chalets, 2 tentes bivouac et une maison éclusière de caractère : chaque hébergement a son ambiance, sa vue, son histoire.
             </p>
           </div>
         </div>
@@ -65,18 +61,18 @@ $pageDescription = 'Découvrez le Camping du Bac de Ménil, camping 2 étoiles a
   <section class="py-20 lg:py-28 bg-cream-dark reveal">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-16">
-        <h2 class="font-heading text-3xl lg:text-4xl text-forest mb-4">Nos valeurs</h2>
+        <h2 class="font-heading text-3xl lg:text-4xl text-forest mb-4">Un cadre naturel façonné par la Mayenne</h2>
         <p class="text-gray-600 max-w-2xl mx-auto">Ce qui fait l'âme du Camping du Bac</p>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         <?php
         $values = [
           ['icon' => '<path d="M17 8c.7-1 1-2.2 1-3.5C18 2.5 16 1 16 1s-2 1.5-2 3.5c0 1.3.3 2.5 1 3.5"/><path d="M12 12c-1.5-2-2.5-3.5-2.5-5.5C9.5 3.5 12 1 12 1s2.5 2.5 2.5 5.5c0 2-1 3.5-2.5 5.5z"/><path d="M7 8c-.7-1-1-2.2-1-3.5C6 2.5 8 1 8 1s2 1.5 2 3.5c0 1.3-.3 2.5-1 3.5"/><path d="M12 22v-10"/><path d="M8 18c-2 0-4-1-4-3.5S8 10 8 10"/><path d="M16 18c2 0 4-1 4-3.5S16 10 16 10"/>',
-           'title' => 'Nature', 'desc' => 'Un environnement préservé au bord de la Mayenne, avec des espaces verts, des arbres centenaires et un accès direct à la rivière.'],
+           'title' => 'La Mayenne, à portée de main', 'desc' => 'Accès direct à la rivière depuis le camping. Canoë, paddle, pêche, pédalo : la Mayenne est votre terrain de jeu. Cours d\'eau paisible, idéal pour les activités en famille ou en solo.'],
           ['icon' => '<path d="M2 12s3-3 5-3c3 0 4 3 7 3s4-3 7-3 3 3 3 3"/><path d="M2 18s3-3 5-3c3 0 4 3 7 3s4-3 7-3 3 3 3 3" opacity="0.5"/>',
-           'title' => 'Calme', 'desc' => 'Loin du tumulte, le camping est un havre de paix où le chant des oiseaux et le murmure de la rivière sont vos seuls compagnons.'],
+           'title' => 'Le chemin de halage, votre porte de sortie', 'desc' => 'Partez directement du camping à pied ou à vélo sur le chemin de halage. Des kilomètres de nature longeant la Mayenne, sans voiture, sans bruit. Un dépaysement immédiat.'],
           ['icon' => '<path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>',
-           'title' => 'Authenticité', 'desc' => 'Un accueil chaleureux, un patrimoine fluvial unique avec le Bac de Ménil, et la simplicité d\'un camping municipal à taille humaine.'],
+           'title' => 'Hérons, martin-pêcheurs, libellules…', 'desc' => 'Le camping est un havre de paix où la faune est omniprésente. Emplacements spacieux et ombragés sous de grands arbres centenaires. La nature ici n\'est pas un décor — c\'est l\'essentiel.'],
         ];
         foreach ($values as $v): ?>
           <div class="card rounded-2xl shadow-soft hover:shadow-md transition-all p-8 bg-white text-center">
@@ -95,8 +91,9 @@ $pageDescription = 'Découvrez le Camping du Bac de Ménil, camping 2 étoiles a
   <section class="py-20 lg:py-28 bg-white reveal">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-16">
-        <h2 class="font-heading text-3xl lg:text-4xl text-forest mb-4">Situation</h2>
-        <p class="text-gray-600"><?= e($contact['address'] ?? '') ?>, <?= e($contact['postalCode'] ?? '') ?> <?= e($contact['city'] ?? '') ?> &mdash; <?= e($contact['department'] ?? '') ?></p>
+        <h2 class="font-heading text-3xl lg:text-4xl text-forest mb-4">Entre nature et services : le meilleur des deux</h2>
+        <p class="text-gray-600 max-w-3xl mx-auto mb-2">À 5 minutes seulement de Château-Gontier, le Camping du Bac cumule les avantages : le calme de la rivière et la proximité immédiate de commerces, restaurants, marchés et soins.</p>
+        <p class="text-gray-600 max-w-3xl mx-auto">Sur l'axe de la Vélo Francette, à égale distance de Laval (37 km) et d'Angers (70 km), le camping est une étape stratégique pour les cyclotouristes comme un point de départ idéal pour explorer le sud Mayenne.</p>
       </div>
       <div class="rounded-2xl overflow-hidden shadow-soft h-[400px] lg:h-[500px]">
         <iframe
@@ -130,7 +127,7 @@ $pageDescription = 'Découvrez le Camping du Bac de Ménil, camping 2 étoiles a
             <svg class="w-6 h-6 text-forest" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><?= getServiceIcon('bike-parking') ?></svg>
           </div>
           <h3 class="font-heading text-lg text-forest mb-2">Accueil Vélo</h3>
-          <p class="text-gray-500 text-sm">Étape labellisée sur La Vélo Francette</p>
+          <p class="text-gray-500 text-sm">Le camping est officiellement labellisé Accueil Vélo, étape référencée sur la Vélo Francette (V43, Ouistreham — La Rochelle). Local vélos sécurisé, kit de réparation, conseils itinéraires.</p>
         </div>
         <div class="card rounded-2xl shadow-soft hover:shadow-md transition-all p-6 bg-white text-center">
           <div class="w-12 h-12 mx-auto mb-3 rounded-xl bg-sage/10 flex items-center justify-center">

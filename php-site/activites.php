@@ -8,7 +8,7 @@ $bac = $content['bac'] ?? [];
 $surroundings = $content['surroundings'] ?? [];
 $rentals = $content['tarifs']['rentals'] ?? [];
 
-$pageTitle = 'Activités & Alentours';
+$pageTitle = 'Activités & alentours — Canoë paddle pêche vélo Mayenne — Bac de Ménil — Vélo Francette';
 $pageDescription = 'Canoë, pédalo, paddle, vélo, pêche, randonnée... Découvrez toutes les activités du Camping du Bac de Ménil et les sites à visiter aux alentours.';
 ?>
 <!DOCTYPE html>
@@ -28,7 +28,7 @@ $pageDescription = 'Canoë, pédalo, paddle, vélo, pêche, randonnée... Décou
     </div>
     <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
       <h1 class="font-heading text-4xl sm:text-5xl lg:text-6xl text-white mb-4">Activités & Alentours</h1>
-      <p class="text-lg sm:text-xl text-white/80 max-w-2xl mx-auto font-light">Sur l'eau, à vélo ou à pied : explorez, jouez, détendez-vous</p>
+      <p class="text-lg sm:text-xl text-white/80 max-w-2xl mx-auto font-light">Sur l'eau, à vélo, à pied ou en bac — la Mayenne et ses rives n'ont pas fini de vous surprendre</p>
     </div>
   </section>
 
@@ -36,8 +36,8 @@ $pageDescription = 'Canoë, pédalo, paddle, vélo, pêche, randonnée... Décou
   <section class="py-20 lg:py-28 bg-cream reveal">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-16">
-        <h2 class="font-heading text-3xl lg:text-4xl text-forest mb-4">De quoi bien s'occuper</h2>
-        <p class="text-gray-600 max-w-2xl mx-auto">Des activités nautiques, du plein air et des loisirs pour tous les âges</p>
+        <h2 class="font-heading text-3xl lg:text-4xl text-forest mb-4">Des activités pour toutes les envies</h2>
+        <p class="text-gray-600 max-w-2xl mx-auto">Que vous soyez sportif, curieux, flâneur ou amoureux de patrimoine, le Camping du Bac est un point de départ idéal. Activités sur place, location de matériel à l'accueil, et un territoire riche à explorer dans toutes les directions.</p>
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <?php foreach ($activities as $a): ?>
@@ -72,10 +72,10 @@ $pageDescription = 'Canoë, pédalo, paddle, vélo, pêche, randonnée... Décou
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <div>
           <span class="badge bg-white/15 text-white/90 mb-4 inline-flex">Patrimoine fluvial</span>
-          <h2 class="font-heading text-3xl lg:text-4xl text-white mb-6">Le Bac de Ménil</h2>
+          <h2 class="font-heading text-3xl lg:text-4xl text-white mb-6"><?= e($bac['title'] ?? 'Le Bac de Ménil') ?></h2>
           <p class="text-white/80 text-lg leading-relaxed mb-4"><?= e($bac['description'] ?? '') ?></p>
+          <p class="text-white/70 text-sm leading-relaxed mb-4"><?= e($bac['details'] ?? '') ?></p>
           <p class="text-white/60 text-sm mb-4"><?= e($bac['price'] ?? '') ?></p>
-          <p class="text-white/50 text-xs"><?= e($bac['restrictions'] ?? '') ?></p>
         </div>
         <div>
           <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
@@ -124,6 +124,7 @@ $pageDescription = 'Canoë, pédalo, paddle, vélo, pêche, randonnée... Décou
             <?php endforeach; ?>
           </div>
         </div>
+        <p class="text-gray-400 text-xs mt-3 px-2 text-center">Tous les tarifs sont disponibles à l'accueil du camping ou sur simple demande. Réservation recommandée en haute saison.</p>
       </div>
     </section>
   <?php endif; ?>
