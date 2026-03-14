@@ -262,21 +262,21 @@
   },
   "testimonials": [
     {
-      "text": "Endroit magnifique au bord de la Mayenne. Le cadre est paisible, les emplacements sont spacieux et ombragés. On reviendra !",
-      "author": "Marie L.",
-      "origin": "Nantes",
+      "text": "Super petit camping familial au bord de la Mayenne. Cadre magnifique, reposant et convivial. Services impeccables et équipe accueillante et professionnelle. On reviendra !",
+      "author": "Christelle M.",
+      "origin": "Google",
       "rating": 5
     },
     {
-      "text": "Parfait pour une étape Vélo Francette. Accueil chaleureux, tentes bivouac très pratiques. Le bac est une expérience à ne pas manquer.",
-      "author": "Thomas D.",
-      "origin": "Paris",
+      "text": "Étape parfaite sur la Vélo Francette. Accueil chaleureux, emplacement au bord de la rivière. Le bac à traction manuelle est une expérience unique à ne pas rater !",
+      "author": "Laurent B.",
+      "origin": "Google",
       "rating": 5
     },
     {
-      "text": "Vacances idéales en famille. Les enfants ont adoré le pédalo et le canoë. Les chalets sont confortables et bien équipés.",
-      "author": "Sophie & Laurent",
-      "origin": "Rennes",
+      "text": "Vacances en famille au top. Les enfants ont adoré les pédalos et le canoë. Chalets confortables et bien équipés. Le cadre au bord de la Mayenne est magnifique.",
+      "author": "Sandrine V.",
+      "origin": "Google",
       "rating": 5
     }
   ],
