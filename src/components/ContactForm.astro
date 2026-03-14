@@ -1,5 +1,6 @@
 ---
 import content from '../data/content.json';
+import { url } from '../utils/paths';
 ---
 
 <form
@@ -100,7 +101,7 @@ import content from '../data/content.json';
 
   <p class="text-gray-400 text-xs mt-4 text-center">
     En soumettant ce formulaire, vous acceptez notre
-    <a href="/politique-confidentialite" class="underline hover:text-green">politique de confidentialité</a>.
+    <a href={url('/politique-confidentialite')} class="underline hover:text-green">politique de confidentialité</a>.
   </p>
 </form>
 

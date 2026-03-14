@@ -8,6 +8,7 @@ import ServiceIcon from '../components/ServiceIcon.astro';
 import Testimonials from '../components/Testimonials.astro';
 import CTABanner from '../components/CTABanner.astro';
 import content from '../data/content.json';
+import { url } from '../utils/paths';
 ---
 
 <BaseLayout
@@ -83,7 +84,7 @@ import content from '../data/content.json';
         ))}
       </div>
       <div class="text-center mt-12 reveal">
-        <a href="/hebergements" class="btn btn-outline btn-lg">
+        <a href={url('/hebergements')} class="btn btn-outline btn-lg">
           Tous nos hébergements
           <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
@@ -94,7 +95,7 @@ import content from '../data/content.json';
   <!-- LE BAC — Section immersive -->
   <section class="relative py-24 lg:py-32 overflow-hidden">
     <div class="absolute inset-0">
-      <img src="/images/activites/bac-menil.jpg" alt="Le Bac de Ménil sur la Mayenne" class="w-full h-full object-cover" loading="lazy" />
+      <img src={url('/images/activites/bac-menil.jpg')} alt="Le Bac de Ménil sur la Mayenne" class="w-full h-full object-cover" loading="lazy" />
       <div class="absolute inset-0 bg-forest/80 backdrop-blur-sm"></div>
     </div>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -110,7 +111,7 @@ import content from '../data/content.json';
           <p class="text-white/60 text-sm mb-8">
             Accessible aux piétons, cyclistes, motos et animaux. À partir de 1,50 €.
           </p>
-          <a href="/activites" class="btn btn-secondary">
+          <a href={url('/activites')} class="btn btn-secondary">
             En savoir plus
             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>
@@ -154,7 +155,7 @@ import content from '../data/content.json';
         ))}
       </div>
       <div class="text-center mt-10 reveal">
-        <a href="/services" class="btn btn-outline btn-sm">Tous nos services</a>
+        <a href={url('/services')} class="btn btn-outline btn-sm">Tous nos services</a>
       </div>
     </div>
   </section>
@@ -167,7 +168,7 @@ import content from '../data/content.json';
         {content.activities.slice(0, 6).map((a, i) => (
           <div class={`card group reveal reveal-delay-${(i % 3) + 1}`}>
             <div class="relative aspect-[3/2] overflow-hidden">
-              <img src={a.image} alt={a.title} class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
+              <img src={url(a.image)} alt={a.title} class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
               <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
               <span class="absolute top-4 left-4 badge bg-white/90 text-forest text-xs">{a.category}</span>
             </div>
@@ -180,7 +181,7 @@ import content from '../data/content.json';
         ))}
       </div>
       <div class="text-center mt-12 reveal">
-        <a href="/activites" class="btn btn-outline btn-lg">Toutes les activités</a>
+        <a href={url('/activites')} class="btn btn-outline btn-lg">Toutes les activités</a>
       </div>
     </div>
   </section>
@@ -192,13 +193,13 @@ import content from '../data/content.json';
       <div class="grid grid-cols-2 md:grid-cols-4 gap-3 lg:gap-4 reveal">
         {[1,2,3,4,5,6,7,8].map((n) => (
           <div class={`relative overflow-hidden rounded-xl aspect-square group ${n === 1 || n === 8 ? 'md:col-span-2 md:row-span-2' : ''}`}>
-            <img src={`/images/galerie/galerie-${n}.jpg`} alt={`Camping du Bac — Photo ${n}`} class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />
+            <img src={url(`/images/galerie/galerie-${n}.jpg`)} alt={`Camping du Bac — Photo ${n}`} class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />
             <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300"></div>
           </div>
         ))}
       </div>
       <div class="text-center mt-10 reveal">
-        <a href="/galerie" class="btn btn-outline btn-sm">Voir toute la galerie</a>
+        <a href={url('/galerie')} class="btn btn-outline btn-sm">Voir toute la galerie</a>
       </div>
     </div>
   </section>

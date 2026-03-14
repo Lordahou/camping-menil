@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import CTABanner from '../components/CTABanner.astro';
+import { url } from '../utils/paths';
 
 const categories = ['Tous', 'Le camping', 'La rivière', 'Nos hébergements', 'Activités'];
 
@@ -59,7 +60,7 @@ const images = [
             data-category={img.category}
           >
             <img
-              src={img.src}
+              src={url(img.src)}
               alt={img.alt}
               class="w-full object-cover transition-transform duration-700 group-hover:scale-110"
               loading="lazy"
@@ -81,7 +82,7 @@ const images = [
       <a href="#" class="absolute inset-0 z-0" aria-label="Fermer la lightbox"></a>
       <div class="relative z-10 max-w-5xl max-h-[85vh] w-full">
         <img
-          src={img.src}
+          src={url(img.src)}
           alt={img.alt}
           class="w-full h-full object-contain rounded-lg"
           loading="lazy"

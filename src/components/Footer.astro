@@ -1,5 +1,6 @@
 ---
 import content from '../data/content.json';
+import { url } from '../utils/paths';
 ---
 
 <footer class="bg-forest text-white/80">
@@ -9,7 +10,7 @@ import content from '../data/content.json';
 
       <!-- Brand -->
       <div class="lg:col-span-1">
-        <a href="/" class="inline-block mb-4">
+        <a href={url('/')} class="inline-block mb-4">
           <h3 class="text-white text-2xl font-heading">Camping du Bac</h3>
           <p class="text-sage text-sm mt-1">Ménil · Mayenne</p>
         </a>
@@ -39,7 +40,7 @@ import content from '../data/content.json';
         <ul class="space-y-3">
           {content.navigation.map((item) => (
             <li>
-              <a href={item.url} class="text-white/60 hover:text-sage text-sm transition-colors duration-200">
+              <a href={url(item.url)} class="text-white/60 hover:text-sage text-sm transition-colors duration-200">
                 {item.label}
               </a>
             </li>
@@ -97,7 +98,7 @@ import content from '../data/content.json';
         </ul>
 
         <div class="mt-6 pt-6 border-t border-white/10">
-          <a href="/contact" class="btn btn-sm bg-sage text-forest hover:bg-sage-light font-semibold w-full text-center">
+          <a href={url('/contact')} class="btn btn-sm bg-sage text-forest hover:bg-sage-light font-semibold w-full text-center">
             Réserver
           </a>
         </div>
@@ -121,7 +122,7 @@ import content from '../data/content.json';
       <p>&copy; {new Date().getFullYear()} {content.site.name} — Commune de Ménil</p>
       <div class="flex items-center gap-4">
         {content.footerLinks.map((link) => (
-          <a href={link.url} class="hover:text-white/60 transition-colors">{link.label}</a>
+          <a href={url(link.url)} class="hover:text-white/60 transition-colors">{link.label}</a>
         ))}
       </div>
     </div>

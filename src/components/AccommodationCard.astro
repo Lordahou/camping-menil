@@ -1,4 +1,6 @@
 ---
+import { url } from '../utils/paths';
+
 interface Props {
   title: string;
   subtitle: string;
@@ -10,13 +12,13 @@ interface Props {
   url?: string;
 }
 
-const { title, subtitle, description, image, imageAlt, features, capacity, url = '/hebergements' } = Astro.props;
+const { title, subtitle, description, image, imageAlt, features, capacity, url: linkUrl = '/hebergements' } = Astro.props;
 ---
 
 <article class="card group">
   <div class="relative overflow-hidden aspect-[4/3]">
     <img
-      src={image}
+      src={url(image)}
       alt={imageAlt}
       class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
       loading="lazy"
@@ -39,7 +41,7 @@ const { title, subtitle, description, image, imageAlt, features, capacity, url =
       ))}
     </div>
 
-    <a href={url} class="btn btn-outline btn-sm w-full text-center">
+    <a href={url(linkUrl)} class="btn btn-outline btn-sm w-full text-center">
       Découvrir
       <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
     </a>

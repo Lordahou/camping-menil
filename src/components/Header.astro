@@ -1,5 +1,6 @@
 ---
 import content from '../data/content.json';
+import { url } from '../utils/paths';
 
 const currentPath = Astro.url.pathname;
 ---
@@ -13,7 +14,7 @@ const currentPath = Astro.url.pathname;
     <div class="flex items-center justify-between h-20 lg:h-24" id="header-inner">
 
       <!-- Logo -->
-      <a href="/" class="flex items-center gap-3 group" aria-label="Accueil - Camping du Bac de Ménil">
+      <a href={url('/')} class="flex items-center gap-3 group" aria-label="Accueil - Camping du Bac de Ménil">
         <div class="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/30 transition-all duration-300">
           <svg class="w-6 h-6 text-white header-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
             <path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6" stroke-linecap="round" stroke-linejoin="round"/>
@@ -30,9 +31,9 @@ const currentPath = Astro.url.pathname;
       <nav class="hidden lg:flex items-center gap-1" aria-label="Navigation principale">
         {content.navigation.map((item) => (
           <a
-            href={item.url}
+            href={url(item.url)}
             class={`px-3 xl:px-4 py-2 text-sm font-medium rounded-full transition-all duration-300 header-link ${
-              currentPath === item.url || currentPath === item.url + '/'
+              currentPath === url(item.url) || currentPath === url(item.url) + '/'
                 ? 'bg-white/20 text-white'
                 : 'text-white/85 hover:text-white hover:bg-white/10'
             }`}
@@ -45,7 +46,7 @@ const currentPath = Astro.url.pathname;
       <!-- CTA + Mobile Menu -->
       <div class="flex items-center gap-3">
         <a
-          href="/contact"
+          href={url('/contact')}
           class="hidden md:inline-flex btn btn-sm bg-white text-forest font-semibold hover:bg-cream hover:text-forest border-white header-cta"
         >
           Réserver
@@ -90,7 +91,7 @@ const currentPath = Astro.url.pathname;
     <nav class="flex-1 flex flex-col items-center justify-center gap-2 px-6" aria-label="Menu mobile">
       {content.navigation.map((item, i) => (
         <a
-          href={item.url}
+          href={url(item.url)}
           class="text-white/90 hover:text-white text-2xl font-heading py-2 transition-all duration-300 hover:translate-x-2"
           style={`animation-delay: ${i * 50}ms`}
         >
@@ -98,7 +99,7 @@ const currentPath = Astro.url.pathname;
         </a>
       ))}
       <div class="mt-8 flex flex-col items-center gap-4">
-        <a href="/contact" class="btn btn-primary btn-lg">Réserver mon séjour</a>
+        <a href={url('/contact')} class="btn btn-primary btn-lg">Réserver mon séjour</a>
         <a href={`tel:${content.contact.phone.replace(/\s/g, '')}`} class="text-white/70 text-sm flex items-center gap-2">
           <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
           {content.contact.phone}

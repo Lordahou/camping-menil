@@ -5,6 +5,7 @@ import SectionTitle from '../components/SectionTitle.astro';
 import PricingTable from '../components/PricingTable.astro';
 import CTABanner from '../components/CTABanner.astro';
 import content from '../data/content.json';
+import { url } from '../utils/paths';
 ---
 
 <BaseLayout
@@ -26,7 +27,7 @@ import content from '../data/content.json';
         <p class="text-forest text-sm leading-relaxed">
           <strong>Note :</strong> {content.tarifs.note}
           Les prix indiqués sont des tarifs de base indicatifs. Pour obtenir un devis personnalisé,
-          n'hésitez pas à <a href="/contact" class="text-green underline hover:text-forest">nous contacter</a>.
+          n'hésitez pas à <a href={url('/contact')} class="text-green underline hover:text-forest">nous contacter</a>.
         </p>
       </div>
     </div>
