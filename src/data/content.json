@@ -34,10 +34,16 @@
     "maisonEclusiere": "Toute l'année"
   },
   "hero": {
-    "title": "Échappez-vous au bord de la Mayenne",
+    "title": "Échappez-vous au bord de la Mayenne !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",
     "subtitle": "Un camping nature d'exception, entre rivière et chemins de halage",
-    "cta1": { "text": "Réserver mon séjour", "url": "/contact" },
-    "cta2": { "text": "Découvrir le camping", "url": "/le-camping" },
+    "cta1": {
+      "text": "Réserver mon séjour",
+      "url": "/contact"
+    },
+    "cta2": {
+      "text": "Découvrir le camping",
+      "url": "/le-camping"
+    },
     "image": "/images/hero/camping-menil-panorama.jpg",
     "imageAlt": "Vue panoramique du village de Ménil au bord de la Mayenne"
   },
@@ -81,7 +87,13 @@
       "description": "Au bord de la Mayenne, sous les arbres, les 34 emplacements du camping offrent espace et ombre. Tente, caravane ou camping-car : chaque emplacement dispose de l'électricité et du Wi-Fi. Un emplacement PMR est disponible.",
       "capacity": "Tentes, caravanes, camping-cars",
       "count": 34,
-      "features": ["Électricité", "Wi-Fi gratuit", "Accès rivière", "Ombragé", "1 emplacement PMR"],
+      "features": [
+        "Électricité",
+        "Wi-Fi gratuit",
+        "Accès rivière",
+        "Ombragé",
+        "1 emplacement PMR"
+      ],
       "checkin": "À partir de 12h00",
       "checkout": "Avant 12h00",
       "image": "/images/hebergements/emplacements.jpg",
@@ -94,7 +106,14 @@
       "description": "Entièrement équipés, les 5 chalets du Camping du Bac accueillent de 2 à 6 personnes avec une terrasse couverte donnant sur la nature. Cuisine équipée, 2 chambres, TV. Disponibles toute l'année. Un chalet est entièrement adapté PMR.",
       "capacity": "2 à 6 personnes",
       "count": 5,
-      "features": ["Cuisine équipée", "2 chambres", "Terrasse couverte", "TV", "Toute l'année", "1 chalet PMR"],
+      "features": [
+        "Cuisine équipée",
+        "2 chambres",
+        "Terrasse couverte",
+        "TV",
+        "Toute l'année",
+        "1 chalet PMR"
+      ],
       "checkin": "À partir de 16h00",
       "checkout": "Avant 10h00",
       "image": "/images/hebergements/chalets.jpg",
@@ -107,7 +126,11 @@
       "description": "Conçues pour les cyclistes de la Vélo Francette, ces 2 tentes bivouac offrent un abri simple et efficace avec électricité incluse. Aucun matériel à transporter : on arrive, on pose les sacoches, on dort.",
       "capacity": "2 personnes",
       "count": 2,
-      "features": ["Électricité incluse", "Idéal Vélo Francette", "Solution légère"],
+      "features": [
+        "Électricité incluse",
+        "Idéal Vélo Francette",
+        "Solution légère"
+      ],
       "image": "/images/hebergements/bivouac.jpg",
       "imageAlt": "Tente bivouac pour cyclistes au camping"
     },
@@ -118,20 +141,58 @@
       "description": "Ancienne maison d'éclusier entièrement rénovée, ce gîte de caractère vous plonge dans l'histoire fluviale de la Mayenne. 3 chambres, jusqu'à 8 personnes, jardin privatif au bord du chemin de halage, local vélos intégré. Disponible toute l'année. Une adresse rare.",
       "capacity": "Jusqu'à 8 personnes",
       "count": 1,
-      "features": ["3 chambres", "Jardin privatif", "Local vélos", "Toute l'année", "Patrimoine fluvial"],
+      "features": [
+        "3 chambres",
+        "Jardin privatif",
+        "Local vélos",
+        "Toute l'année",
+        "Patrimoine fluvial"
+      ],
       "image": "/images/hebergements/maison-eclusiere.jpg",
       "imageAlt": "Maison éclusière de caractère à Ménil"
     }
   ],
   "services": [
-    { "icon": "wifi", "title": "Wi-Fi gratuit", "description": "Connexion sur tout le camping" },
-    { "icon": "electric", "title": "Électricité", "description": "Bornes sur chaque emplacement" },
-    { "icon": "laundry", "title": "Machine à laver", "description": "Lave-linge en libre-service" },
-    { "icon": "accessible", "title": "Accessibilité PMR", "description": "Emplacement, chalet et sanitaires adaptés" },
-    { "icon": "pets", "title": "Animaux acceptés", "description": "Tenus en laisse, carnet de vaccination à jour" },
-    { "icon": "bike-parking", "title": "Accueil Vélo", "description": "Local vélos et services dédiés cyclistes" },
-    { "icon": "playground", "title": "Aire de jeux", "description": "Espace de jeux pour les enfants" },
-    { "icon": "fishing", "title": "Pêche", "description": "Spots de pêche au bord de la Mayenne" }
+    {
+      "icon": "wifi",
+      "title": "Wi-Fi gratuit",
+      "description": "Connexion sur tout le camping"
+    },
+    {
+      "icon": "electric",
+      "title": "Électricité",
+      "description": "Bornes sur chaque emplacement"
+    },
+    {
+      "icon": "laundry",
+      "title": "Machine à laver",
+      "description": "Lave-linge en libre-service"
+    },
+    {
+      "icon": "accessible",
+      "title": "Accessibilité PMR",
+      "description": "Emplacement, chalet et sanitaires adaptés"
+    },
+    {
+      "icon": "pets",
+      "title": "Animaux acceptés",
+      "description": "Tenus en laisse, carnet de vaccination à jour"
+    },
+    {
+      "icon": "bike-parking",
+      "title": "Accueil Vélo",
+      "description": "Local vélos et services dédiés cyclistes"
+    },
+    {
+      "icon": "playground",
+      "title": "Aire de jeux",
+      "description": "Espace de jeux pour les enfants"
+    },
+    {
+      "icon": "fishing",
+      "title": "Pêche",
+      "description": "Spots de pêche au bord de la Mayenne"
+    }
   ],
   "activities": [
     {
@@ -213,11 +274,26 @@
     "schedules": {
       "lowSeason": {
         "period": "10 avril — 3 juillet & 1er — 30 septembre",
-        "times": ["9h30", "10h30", "11h30", "14h30", "16h00", "17h30"]
+        "times": [
+          "9h30",
+          "10h30",
+          "11h30",
+          "14h30",
+          "16h00",
+          "17h30"
+        ]
       },
       "highSeason": {
         "period": "5 juillet — 24 août",
-        "times": ["9h30", "10h30", "12h00", "14h30", "16h00", "17h00", "18h30"]
+        "times": [
+          "9h30",
+          "10h30",
+          "12h00",
+          "14h30",
+          "16h00",
+          "17h00",
+          "18h30"
+        ]
       }
     }
   },
@@ -227,11 +303,26 @@
       "title": "Emplacements",
       "description": "Par nuit — Électricité incluse",
       "items": [
-        { "label": "Adulte", "price": "À partir de 5,50 €" },
-        { "label": "Enfant (2-12 ans)", "price": "À partir de 3,00 €" },
-        { "label": "Emplacement", "price": "À partir de 3,50 €" },
-        { "label": "Électricité", "price": "À partir de 3,50 €" },
-        { "label": "Animal", "price": "À partir de 1,50 €" }
+        {
+          "label": "Adulte",
+          "price": "À partir de 5,50 €"
+        },
+        {
+          "label": "Enfant (2-12 ans)",
+          "price": "À partir de 3,00 €"
+        },
+        {
+          "label": "Emplacement",
+          "price": "À partir de 3,50 €"
+        },
+        {
+          "label": "Électricité",
+          "price": "À partir de 3,50 €"
+        },
+        {
+          "label": "Animal",
+          "price": "À partir de 1,50 €"
+        }
       ],
       "footnote": "Taxe de séjour en sus selon réglementation communale en vigueur."
     },
@@ -239,32 +330,74 @@
       "title": "Chalets",
       "description": "Location à la semaine ou au week-end",
       "items": [
-        { "label": "Semaine haute saison", "price": "À partir de 450 €" },
-        { "label": "Semaine basse saison", "price": "À partir de 280 €" },
-        { "label": "Week-end (2 nuits)", "price": "À partir de 130 €" },
-        { "label": "Nuit supplémentaire", "price": "À partir de 60 €" },
-        { "label": "Caution (chèque)", "price": "250 €" },
-        { "label": "Forfait ménage", "price": "60 €" }
+        {
+          "label": "Semaine haute saison",
+          "price": "À partir de 450 €"
+        },
+        {
+          "label": "Semaine basse saison",
+          "price": "À partir de 280 €"
+        },
+        {
+          "label": "Week-end (2 nuits)",
+          "price": "À partir de 130 €"
+        },
+        {
+          "label": "Nuit supplémentaire",
+          "price": "À partir de 60 €"
+        },
+        {
+          "label": "Caution (chèque)",
+          "price": "250 €"
+        },
+        {
+          "label": "Forfait ménage",
+          "price": "60 €"
+        }
       ]
     },
     "bivouac": {
       "title": "Tentes Bivouac",
       "description": "Par nuit — Électricité incluse",
       "items": [
-        { "label": "Par nuit (2 pers.)", "price": "À partir de 11 €" }
+        {
+          "label": "Par nuit (2 pers.)",
+          "price": "À partir de 11 €"
+        }
       ]
     },
     "rentals": {
       "title": "Location loisirs",
       "description": "À l'accueil du camping",
       "items": [
-        { "label": "Pédalo 3 places", "price": "Nous consulter" },
-        { "label": "Pédalo 5 places", "price": "Nous consulter" },
-        { "label": "Canoë 1 place", "price": "Nous consulter" },
-        { "label": "Canoë 2 places", "price": "Nous consulter" },
-        { "label": "VTC adulte", "price": "Nous consulter" },
-        { "label": "VTC enfant", "price": "Nous consulter" },
-        { "label": "Paddle", "price": "Nous consulter" }
+        {
+          "label": "Pédalo 3 places",
+          "price": "Nous consulter"
+        },
+        {
+          "label": "Pédalo 5 places",
+          "price": "Nous consulter"
+        },
+        {
+          "label": "Canoë 1 place",
+          "price": "Nous consulter"
+        },
+        {
+          "label": "Canoë 2 places",
+          "price": "Nous consulter"
+        },
+        {
+          "label": "VTC adulte",
+          "price": "Nous consulter"
+        },
+        {
+          "label": "VTC enfant",
+          "price": "Nous consulter"
+        },
+        {
+          "label": "Paddle",
+          "price": "Nous consulter"
+        }
       ],
       "footnote": "Tarifs loisirs communiqués à l'accueil du camping ou sur simple demande par téléphone."
     },
@@ -321,16 +454,43 @@
     }
   ],
   "navigation": [
-    { "label": "Le camping", "url": "/le-camping" },
-    { "label": "Hébergements", "url": "/hebergements" },
-    { "label": "Services", "url": "/services" },
-    { "label": "Tarifs", "url": "/tarifs" },
-    { "label": "Activités", "url": "/activites" },
-    { "label": "Galerie", "url": "/galerie" },
-    { "label": "Infos pratiques", "url": "/infos-pratiques" }
+    {
+      "label": "Le camping",
+      "url": "/le-camping"
+    },
+    {
+      "label": "Hébergements",
+      "url": "/hebergements"
+    },
+    {
+      "label": "Services",
+      "url": "/services"
+    },
+    {
+      "label": "Tarifs",
+      "url": "/tarifs"
+    },
+    {
+      "label": "Activités",
+      "url": "/activites"
+    },
+    {
+      "label": "Galerie",
+      "url": "/galerie"
+    },
+    {
+      "label": "Infos pratiques",
+      "url": "/infos-pratiques"
+    }
   ],
   "footerLinks": [
-    { "label": "Mentions légales", "url": "/mentions-legales" },
-    { "label": "Politique de confidentialité", "url": "/politique-confidentialite" }
+    {
+      "label": "Mentions légales",
+      "url": "/mentions-legales"
+    },
+    {
+      "label": "Politique de confidentialité",
+      "url": "/politique-confidentialite"
+    }
   ]
 }
