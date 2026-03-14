@@ -266,14 +266,14 @@
     }
   ],
   "bac": {
-    "title": "Le Bac de Ménil — L'expérience à ne pas manquer",
+    "title": "Le Bac de Ménil - L'expérience à ne pas manquer",
     "description": "Le Bac de Ménil est l'un des derniers bacs à traction manuelle encore en activité en France. Cette traversée de la Mayenne, opérée par un passeur selon des horaires saisonniers, est inscrite dans l'histoire du village.",
     "details": "Accessible aux piétons, cyclistes, motos et animaux. Non accessible aux voitures. Fermeture temporaire en cas de rafales > 40 km/h, crues ou épisodes de canicule.",
     "price": "À partir de 1,50 €",
     "restrictions": "Non accessible aux voitures. Fermeture en cas de rafales > 40 km/h, crues ou canicule.",
     "schedules": {
       "lowSeason": {
-        "period": "10 avril — 3 juillet & 1er — 30 septembre",
+        "period": "10 avril - 3 juillet & 1er - 30 septembre",
         "times": [
           "9h30",
           "10h30",
@@ -284,7 +284,7 @@
         ]
       },
       "highSeason": {
-        "period": "5 juillet — 24 août",
+        "period": "5 juillet - 24 août",
         "times": [
           "9h30",
           "10h30",
