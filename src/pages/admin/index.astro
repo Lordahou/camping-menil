@@ -76,10 +76,30 @@ const contentJson = JSON.stringify(content);
     .btn-sm { padding: .35rem .75rem; font-size: .8rem; }
     .btn-export { background: var(--river); color: white; }
     .btn-export:hover { background: #1e5f8a; }
+    .btn-save { background: var(--sage); color: white; }
+    .btn-save:hover { background: var(--green); }
+    .btn-publish { background: #e8590c; color: white; }
+    .btn-publish:hover { background: #d04a08; }
+    .btn-publish:disabled { opacity: .5; cursor: not-allowed; }
     .btn-logout { background: transparent; color: white; border: 1px solid rgba(255,255,255,.2); }
     .btn-logout:hover { background: rgba(255,255,255,.1); }
     .btn-back { background: transparent; color: white; border: none; font-size: .85rem; opacity: .7; }
     .btn-back:hover { opacity: 1; }
+
+    /* Modal */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 200; align-items: center; justify-content: center; padding: 1rem; }
+    .modal-overlay.open { display: flex; }
+    .modal { background: white; border-radius: 12px; padding: 2rem; width: 100%; max-width: 480px; box-shadow: 0 20px 60px rgba(0,0,0,.3); }
+    .modal h3 { color: var(--forest); margin-bottom: .25rem; }
+    .modal .modal-desc { color: #888; font-size: .85rem; margin-bottom: 1.25rem; }
+    .modal .form-group { margin-bottom: 1rem; }
+    .modal .modal-actions { display: flex; gap: .75rem; justify-content: flex-end; margin-top: 1.5rem; }
+    .modal .status-msg { font-size: .85rem; margin-top: .75rem; padding: .6rem .85rem; border-radius: var(--radius); }
+    .modal .status-msg.success { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
+    .modal .status-msg.error { background: #fef2f2; color: var(--danger); border: 1px solid #fecaca; }
+    .modal .status-msg.loading { background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; }
+    .saved-badge { background: var(--moss); color: var(--forest); font-size: .7rem; padding: .15rem .5rem; border-radius: 10px; font-weight: 600; display: none; }
+    .saved-badge.visible { display: inline-block; }
 
     /* Feature tags (for accommodations) */
     .features-input { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; margin-top: .25rem; }
@@ -148,9 +168,14 @@ const contentJson = JSON.stringify(content);
       <div class="unsaved-dot" id="unsaved-dot" title="Modifications non exportées"></div>
     </div>
     <div class="topbar-actions">
-      <button class="btn btn-export btn-sm" id="btn-export" onclick="exportContent()">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Exporter JSON
+      <span class="saved-badge" id="saved-badge">Brouillon sauvegardé</span>
+      <button class="btn btn-save btn-sm" onclick="saveLocal()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        Enregistrer
+      </button>
+      <button class="btn btn-publish btn-sm" onclick="openPublishModal()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+        Publier
       </button>
       <a href={url('/')} class="btn btn-logout btn-sm">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
@@ -201,6 +226,11 @@ const contentJson = JSON.stringify(content);
       <a href="#environs" data-section="environs">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
         Aux environs
+      </a>
+      <div style="border-top:1px solid #e5e5e5;margin:.75rem 0"></div>
+      <a href="#parametres" data-section="parametres">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+        Paramètres GitHub
       </a>
     </nav>
 
@@ -483,7 +513,78 @@ const contentJson = JSON.stringify(content);
         <button class="btn btn-secondary btn-sm" onclick="addSurrounding()">+ Ajouter un lieu</button>
       </div>
 
+      <!-- PARAMETRES -->
+      <div class="section-panel" id="panel-parametres">
+        <h2>Paramètres GitHub</h2>
+        <p class="section-desc">Configuration pour publier directement sur le site</p>
+
+        <div class="item-card">
+          <div class="item-header"><span class="item-title">Connexion GitHub</span></div>
+          <p style="font-size:.85rem;color:#666;margin-bottom:1rem">
+            Pour publier vos modifications, vous avez besoin d'un <strong>Personal Access Token</strong> GitHub
+            avec les droits <code>repo</code> et <code>workflow</code>.
+          </p>
+          <div class="form-group">
+            <label>Token GitHub (Personal Access Token)</label>
+            <input type="password" id="github-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Propriétaire / Organisation</label>
+              <input type="text" id="github-owner" value="Lordahou">
+            </div>
+            <div class="form-group">
+              <label>Nom du dépôt</label>
+              <input type="text" id="github-repo" value="camping-menil">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Branche principale</label>
+            <input type="text" id="github-branch" value="main">
+          </div>
+          <div class="form-group">
+            <label>Chemin du fichier content.json</label>
+            <input type="text" id="github-path" value="src/data/content.json">
+          </div>
+          <button class="btn btn-secondary btn-sm" onclick="saveGitHubConfig()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            Sauvegarder la configuration
+          </button>
+        </div>
+
+        <div class="item-card" style="margin-top:1rem">
+          <div class="item-header"><span class="item-title">Exporter en local</span></div>
+          <p style="font-size:.85rem;color:#666;margin-bottom:1rem">
+            Télécharger le fichier content.json modifié sur votre ordinateur (alternative à la publication GitHub).
+          </p>
+          <button class="btn btn-export btn-sm" onclick="exportContent()">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Télécharger content.json
+          </button>
+        </div>
+      </div>
+
     </main>
+  </div>
+</div>
+
+<!-- Publish Modal -->
+<div class="modal-overlay" id="publish-modal">
+  <div class="modal">
+    <h3>Publier les modifications</h3>
+    <p class="modal-desc">Un commit sera créé sur GitHub et le site sera automatiquement reconstruit.</p>
+    <div class="form-group">
+      <label>Message de publication</label>
+      <input type="text" id="publish-message" value="Mise à jour du contenu du site" placeholder="Description des modifications...">
+    </div>
+    <div id="publish-status"></div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary btn-sm" onclick="closePublishModal()">Annuler</button>
+      <button class="btn btn-publish btn-sm" id="btn-do-publish" onclick="publishToGitHub()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+        Publier maintenant
+      </button>
+    </div>
   </div>
 </div>
 
@@ -492,9 +593,16 @@ const contentJson = JSON.stringify(content);
 
 <script is:inline define:vars={{ contentJson, basePath: import.meta.env.BASE_URL }}>
 // ─── State ──────────────────────────────────────────────────────────────
+const originalContent = contentJson;
 let data = JSON.parse(contentJson);
 let hasChanges = false;
 const PASSWORD_HASH = '310a70698c30bd3a2fe34393d9d9d739856b655ca070ccd0bed2e5c654bbb97b';
+
+// Load saved draft from localStorage if available
+const savedDraft = localStorage.getItem('admin_content_draft');
+if (savedDraft) {
+  try { data = JSON.parse(savedDraft); } catch(e) { /* ignore bad data */ }
+}
 
 // ─── Auth ───────────────────────────────────────────────────────────────
 async function sha256(text) {
@@ -519,7 +627,12 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
 function showAdmin() {
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('admin-panel').style.display = 'block';
+  loadGitHubConfig();
   populateAllForms();
+  // Show draft badge if we loaded from localStorage
+  if (savedDraft) {
+    document.getElementById('saved-badge').classList.add('visible');
+  }
 }
 
 // Check if already logged in
@@ -887,19 +1000,154 @@ function removeSurrounding(i) {
   renderSurroundings(); markChanged();
 }
 
-// ─── Export ──────────────────────────────────────────────────────────────
+// ─── Save (localStorage) ────────────────────────────────────────────────
+function saveLocal() {
+  localStorage.setItem('admin_content_draft', JSON.stringify(data));
+  hasChanges = false;
+  document.getElementById('unsaved-dot').classList.remove('visible');
+  document.getElementById('saved-badge').classList.add('visible');
+  showToast('Brouillon enregistré localement');
+}
+
+// ─── Export (download) ──────────────────────────────────────────────────
 function exportContent() {
   const json = JSON.stringify(data, null, 2);
   const blob = new Blob([json], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
+  const u = URL.createObjectURL(blob);
   const a = document.createElement('a');
-  a.href = url;
+  a.href = u;
   a.download = 'content.json';
   a.click();
-  URL.revokeObjectURL(url);
-  hasChanges = false;
-  document.getElementById('unsaved-dot').classList.remove('visible');
-  showToast('Fichier content.json téléchargé avec succès');
+  URL.revokeObjectURL(u);
+  showToast('Fichier content.json téléchargé');
+}
+
+// ─── GitHub config ──────────────────────────────────────────────────────
+function loadGitHubConfig() {
+  const cfg = localStorage.getItem('admin_github_config');
+  if (cfg) {
+    try {
+      const c = JSON.parse(cfg);
+      document.getElementById('github-token').value = c.token || '';
+      document.getElementById('github-owner').value = c.owner || 'Lordahou';
+      document.getElementById('github-repo').value = c.repo || 'camping-menil';
+      document.getElementById('github-branch').value = c.branch || 'main';
+      document.getElementById('github-path').value = c.path || 'src/data/content.json';
+    } catch(e) {}
+  }
+}
+function saveGitHubConfig() {
+  const cfg = {
+    token: document.getElementById('github-token').value,
+    owner: document.getElementById('github-owner').value,
+    repo: document.getElementById('github-repo').value,
+    branch: document.getElementById('github-branch').value,
+    path: document.getElementById('github-path').value,
+  };
+  localStorage.setItem('admin_github_config', JSON.stringify(cfg));
+  showToast('Configuration GitHub sauvegardée');
+}
+function getGitHubConfig() {
+  const cfg = localStorage.getItem('admin_github_config');
+  if (!cfg) return null;
+  try { return JSON.parse(cfg); } catch(e) { return null; }
+}
+
+// ─── Publish modal ──────────────────────────────────────────────────────
+function openPublishModal() {
+  const cfg = getGitHubConfig();
+  if (!cfg || !cfg.token) {
+    showToast('Configurez votre token GitHub dans Paramètres d\'abord');
+    // Navigate to settings
+    document.querySelectorAll('.sidebar a').forEach(l => l.classList.remove('active'));
+    document.querySelector('[data-section="parametres"]').classList.add('active');
+    document.querySelectorAll('.section-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('panel-parametres').classList.add('active');
+    return;
+  }
+  document.getElementById('publish-status').innerHTML = '';
+  document.getElementById('btn-do-publish').disabled = false;
+  document.getElementById('publish-modal').classList.add('open');
+}
+function closePublishModal() {
+  document.getElementById('publish-modal').classList.remove('open');
+}
+
+// ─── Publish to GitHub ──────────────────────────────────────────────────
+async function publishToGitHub() {
+  const cfg = getGitHubConfig();
+  if (!cfg || !cfg.token) return;
+
+  const statusEl = document.getElementById('publish-status');
+  const btnPublish = document.getElementById('btn-do-publish');
+  btnPublish.disabled = true;
+
+  statusEl.innerHTML = '<div class="status-msg loading">Publication en cours...</div>';
+
+  const apiBase = 'https://api.github.com';
+  const headers = {
+    'Authorization': 'token ' + cfg.token,
+    'Accept': 'application/vnd.github.v3+json',
+    'Content-Type': 'application/json',
+  };
+
+  try {
+    // 1. Get current file SHA (needed to update)
+    const getRes = await fetch(
+      apiBase + '/repos/' + cfg.owner + '/' + cfg.repo + '/contents/' + cfg.path + '?ref=' + cfg.branch,
+      { headers }
+    );
+
+    if (!getRes.ok && getRes.status !== 404) {
+      const err = await getRes.json();
+      throw new Error(err.message || 'Erreur lors de la lecture du fichier');
+    }
+
+    let currentSha = null;
+    if (getRes.ok) {
+      const fileData = await getRes.json();
+      currentSha = fileData.sha;
+    }
+
+    // 2. Encode content in base64
+    const jsonContent = JSON.stringify(data, null, 2) + '\n';
+    const base64Content = btoa(unescape(encodeURIComponent(jsonContent)));
+
+    // 3. Create/update file via commit
+    const commitMessage = document.getElementById('publish-message').value || 'Mise à jour du contenu';
+    const putBody = {
+      message: commitMessage,
+      content: base64Content,
+      branch: cfg.branch,
+    };
+    if (currentSha) putBody.sha = currentSha;
+
+    const putRes = await fetch(
+      apiBase + '/repos/' + cfg.owner + '/' + cfg.repo + '/contents/' + cfg.path,
+      { method: 'PUT', headers, body: JSON.stringify(putBody) }
+    );
+
+    if (!putRes.ok) {
+      const err = await putRes.json();
+      throw new Error(err.message || 'Erreur lors de la publication');
+    }
+
+    const result = await putRes.json();
+    const commitUrl = result.commit.html_url;
+
+    // 4. Success — clear draft
+    localStorage.removeItem('admin_content_draft');
+    hasChanges = false;
+    document.getElementById('unsaved-dot').classList.remove('visible');
+    document.getElementById('saved-badge').classList.remove('visible');
+
+    statusEl.innerHTML = '<div class="status-msg success">Publié avec succès ! Le site sera reconstruit automatiquement.<br><a href="' + commitUrl + '" target="_blank" style="color:#065f46;text-decoration:underline">Voir le commit</a></div>';
+    showToast('Modifications publiées sur GitHub');
+
+  } catch (err) {
+    statusEl.innerHTML = '<div class="status-msg error">Erreur : ' + esc(err.message) + '</div>';
+    btnPublish.disabled = false;
+  }
 }
 
 // ─── Utilities ──────────────────────────────────────────────────────────
@@ -918,6 +1166,11 @@ function showToast(msg) {
 // Warn before leaving with unsaved changes
 window.addEventListener('beforeunload', (e) => {
   if (hasChanges) { e.preventDefault(); e.returnValue = ''; }
+});
+
+// Close modal on overlay click
+document.getElementById('publish-modal').addEventListener('click', (e) => {
+  if (e.target === e.currentTarget) closePublishModal();
 });
 </script>
 
