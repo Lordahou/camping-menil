@@ -198,6 +198,21 @@ const contentJson = JSON.stringify(content);
     .unsaved-dot.visible { display: block; }
     @keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: .4; } }
 
+    /* Image picker */
+    .image-picker { border: 2px dashed #d0d5d0; border-radius: var(--radius); padding: .75rem; background: #fafbfa; transition: all .2s; }
+    .image-picker:hover { border-color: var(--sage); }
+    .image-picker.has-image { border-style: solid; border-color: #e0e4e0; }
+    .image-picker-preview { position: relative; width: 100%; max-height: 200px; border-radius: 8px; overflow: hidden; margin-bottom: .6rem; background: #f0f0f0; display: flex; align-items: center; justify-content: center; }
+    .image-picker-preview img { width: 100%; max-height: 200px; object-fit: cover; display: block; border-radius: 8px; }
+    .image-picker-preview .no-image { color: #bbb; font-size: .85rem; padding: 2.5rem 1rem; text-align: center; }
+    .image-picker-preview .no-image svg { display: block; margin: 0 auto .5rem; opacity: .4; }
+    .image-picker-actions { display: flex; gap: .5rem; align-items: center; flex-wrap: wrap; }
+    .image-picker-actions .btn-upload { background: var(--moss); color: var(--forest); border: none; padding: .4rem .85rem; border-radius: 8px; font-size: .8rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: .4rem; transition: all .2s; }
+    .image-picker-actions .btn-upload:hover { background: var(--sage); color: white; }
+    .image-picker-path { flex: 1; font-size: .75rem; color: #999; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+    .image-picker-badge { background: var(--warning); color: #333; font-size: .65rem; font-weight: 700; padding: .15rem .5rem; border-radius: 10px; white-space: nowrap; }
+    .image-picker input[type="file"] { display: none; }
+
     /* Auto-save indicator */
     .autosave-hint { font-size: .7rem; color: rgba(255,255,255,.5); }
 
@@ -316,7 +331,7 @@ const contentJson = JSON.stringify(content);
           Paramètres GitHub
         </a>
       </div>
-      <div class="sidebar-version">v1.4.0</div>
+      <div class="sidebar-version">v1.7.0</div>
     </nav>
 
     <!-- Content Area -->
@@ -483,8 +498,8 @@ const contentJson = JSON.stringify(content);
           </div>
         </div>
         <div class="form-group">
-          <label>Image (chemin)</label>
-          <input type="text" data-path="hero.image">
+          <label>Image</label>
+          <div class="image-picker" id="hero-image-picker"></div>
         </div>
         <div class="form-group">
           <label>Texte alternatif de l'image</label>
@@ -744,6 +759,7 @@ const contentJson = JSON.stringify(content);
         </div>
         <div class="transfer-steps" id="transfer-steps">
           <div class="transfer-step" id="step-read">Lecture du fichier actuel...</div>
+          <div class="transfer-step" id="step-images">Envoi des images...</div>
           <div class="transfer-step" id="step-encode">Préparation des données...</div>
           <div class="transfer-step" id="step-push">Envoi du commit sur GitHub...</div>
           <div class="transfer-step" id="step-deploy">Déclenchement du redéploiement...</div>
@@ -941,6 +957,111 @@ function markChanged() {
   }, 30000);
 }
 
+// ─── Image Picker ───────────────────────────────────────────────────────
+const pendingImageUploads = {}; // key: imagePath → { base64, mimeType }
+
+function getImageSrc(imagePath) {
+  // If there's a pending upload with a data URL preview, show that
+  if (pendingImageUploads[imagePath] && pendingImageUploads[imagePath].dataUrl) {
+    return pendingImageUploads[imagePath].dataUrl;
+  }
+  // Otherwise resolve from existing path
+  if (imagePath && imagePath.startsWith('/')) {
+    return basePath.replace(/\/$/, '') + imagePath;
+  }
+  return imagePath || '';
+}
+
+function renderImagePicker(containerId, imagePath, onPathChange) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  const src = getImageSrc(imagePath);
+  const hasPending = pendingImageUploads[imagePath];
+  const hasImg = !!imagePath;
+
+  container.className = 'image-picker' + (hasImg ? ' has-image' : '');
+  container.innerHTML = `
+    <div class="image-picker-preview">
+      ${hasImg && src ? `<img src="${esc(src)}" alt="Aperçu" onerror="this.parentElement.innerHTML='<div class=\\'no-image\\'>Image introuvable</div>'">` :
+        `<div class="no-image"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>Aucune image sélectionnée</div>`}
+    </div>
+    <div class="image-picker-actions">
+      <label class="btn-upload"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Importer
+        <input type="file" accept="image/*" onchange="handleImageUpload(this, '${containerId}')">
+      </label>
+      <span class="image-picker-path">${imagePath ? esc(imagePath) : 'Aucun fichier'}</span>
+      ${hasPending ? '<span class="image-picker-badge">Nouvelle</span>' : ''}
+    </div>
+  `;
+  // Store callback for later use
+  container._onPathChange = onPathChange;
+}
+
+function handleImageUpload(input, containerId) {
+  const file = input.files[0];
+  if (!file) return;
+  const container = document.getElementById(containerId);
+  if (!container) return;
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const dataUrl = e.target.result;
+    // Generate a clean filename
+    const ext = file.name.split('.').pop().toLowerCase();
+    const cleanName = file.name.replace(/\.[^.]+$/, '').toLowerCase()
+      .replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+
+    // Determine destination folder based on context
+    let folder = '/images/';
+    const target = container.dataset.imageTarget;
+    if (target === 'accommodations') folder = '/images/hebergements/';
+    else if (target === 'activities') folder = '/images/activites/';
+    else if (containerId === 'hero-image-picker') folder = '/images/hero/';
+
+    const newPath = folder + cleanName + '.' + ext;
+
+    // Extract base64 data (strip "data:image/...;base64," prefix)
+    const base64Data = dataUrl.split(',')[1];
+    pendingImageUploads[newPath] = {
+      base64: base64Data,
+      mimeType: file.type,
+      dataUrl: dataUrl
+    };
+
+    // Update data model
+    if (container._onPathChange) {
+      container._onPathChange(newPath);
+    }
+    markChanged();
+  };
+  reader.readAsDataURL(file);
+}
+
+function initHeroImagePicker() {
+  renderImagePicker('hero-image-picker', data.hero?.image || '', (newPath) => {
+    data.hero.image = newPath;
+    initHeroImagePicker();
+  });
+}
+
+function initAccommodationImagePickers() {
+  data.accommodations.forEach((a, i) => {
+    renderImagePicker('acc-image-picker-' + i, a.image || '', (newPath) => {
+      data.accommodations[i].image = newPath;
+      renderImagePicker('acc-image-picker-' + i, newPath, data.accommodations[i]._imgCb);
+    });
+  });
+}
+
+function initActivityImagePickers() {
+  data.activities.forEach((a, i) => {
+    renderImagePicker('act-image-picker-' + i, a.image || '', (newPath) => {
+      data.activities[i].image = newPath;
+      renderImagePicker('act-image-picker-' + i, newPath, data.activities[i]._imgCb);
+    });
+  });
+}
+
 // ─── Populate simple fields ─────────────────────────────────────────────
 function populateAllForms() {
   document.querySelectorAll('[data-path]').forEach(input => {
@@ -962,6 +1083,7 @@ function populateAllForms() {
   renderFaq();
   renderTestimonials();
   renderSurroundings();
+  initHeroImagePicker();
 }
 
 // ─── Highlights ─────────────────────────────────────────────────────────
@@ -1030,10 +1152,10 @@ function renderAccommodations() {
           <div class="form-group"><label>Check-in</label><input type="text" value="${esc(a.checkin||'')}" oninput="data.accommodations[${i}].checkin=this.value;markChanged()"></div>
           <div class="form-group"><label>Check-out</label><input type="text" value="${esc(a.checkout||'')}" oninput="data.accommodations[${i}].checkout=this.value;markChanged()"></div>
         </div>
-        <div class="form-row">
-          <div class="form-group"><label>Image (chemin)</label><input type="text" value="${esc(a.image)}" oninput="data.accommodations[${i}].image=this.value;markChanged()"></div>
-          <div class="form-group"><label>Texte alternatif</label><input type="text" value="${esc(a.imageAlt||'')}" oninput="data.accommodations[${i}].imageAlt=this.value;markChanged()"></div>
+        <div class="form-group"><label>Image</label>
+          <div class="image-picker" id="acc-image-picker-${i}" data-image-target="accommodations" data-image-index="${i}"></div>
         </div>
+        <div class="form-group"><label>Texte alternatif</label><input type="text" value="${esc(a.imageAlt||'')}" oninput="data.accommodations[${i}].imageAlt=this.value;markChanged()"></div>
         <div class="form-group"><label>Caractéristiques</label>
           <div class="features-input">${featuresHtml}
             <div style="display:flex;gap:.35rem">
@@ -1045,6 +1167,7 @@ function renderAccommodations() {
       </div>
     </div>`;
   });
+  initAccommodationImagePickers();
 }
 function addFeature(accIdx) {
   const input = document.getElementById('feat-input-' + accIdx);
@@ -1114,13 +1237,14 @@ function renderActivities() {
           <div class="form-group"><label>Catégorie</label><input type="text" value="${esc(a.category||'')}" oninput="data.activities[${i}].category=this.value;markChanged()"></div>
         </div>
         <div class="form-group"><label>Description</label><textarea oninput="data.activities[${i}].description=this.value;markChanged()">${esc(a.description)}</textarea></div>
-        <div class="form-row">
-          <div class="form-group"><label>Image (chemin)</label><input type="text" value="${esc(a.image)}" oninput="data.activities[${i}].image=this.value;markChanged()"></div>
-          <div class="form-group"><label>Tarif</label><input type="text" value="${esc(a.price||'')}" oninput="data.activities[${i}].price=this.value;markChanged()"></div>
+        <div class="form-group"><label>Image</label>
+          <div class="image-picker" id="act-image-picker-${i}" data-image-target="activities" data-image-index="${i}"></div>
         </div>
+        <div class="form-group"><label>Tarif</label><input type="text" value="${esc(a.price||'')}" oninput="data.activities[${i}].price=this.value;markChanged()"></div>
       </div>
     </div>`;
   });
+  initActivityImagePickers();
 }
 function addActivity() {
   data.activities.push({ title: '', description: '', image: '', category: '', price: '' });
@@ -1502,7 +1626,50 @@ async function publishToGitHub() {
     }
     setStep('step-read', 'done');
 
-    // Step 2: Encode content
+    // Step 2: Upload pending images
+    const imageKeys = Object.keys(pendingImageUploads);
+    if (imageKeys.length > 0) {
+      setStep('step-images', 'active');
+      for (const imgPath of imageKeys) {
+        const imgData = pendingImageUploads[imgPath];
+        // Path in the repo: "public" + imgPath (e.g., public/images/hebergements/photo.jpg)
+        const repoPath = 'public' + imgPath;
+
+        // Check if file already exists (to get SHA for update)
+        const imgGetRes = await fetch(
+          apiBase + '/repos/' + cfg.owner + '/' + cfg.repo + '/contents/' + repoPath + '?ref=' + cfg.branch,
+          { headers }
+        );
+        let imgSha = null;
+        if (imgGetRes.ok) {
+          const imgFileData = await imgGetRes.json();
+          imgSha = imgFileData.sha;
+        }
+
+        const imgPutBody = {
+          message: 'Ajout image: ' + imgPath.split('/').pop(),
+          content: imgData.base64,
+          branch: cfg.branch,
+        };
+        if (imgSha) imgPutBody.sha = imgSha;
+
+        const imgPutRes = await fetch(
+          apiBase + '/repos/' + cfg.owner + '/' + cfg.repo + '/contents/' + repoPath,
+          { method: 'PUT', headers, body: JSON.stringify(imgPutBody) }
+        );
+        if (!imgPutRes.ok) {
+          const err = await imgPutRes.json();
+          throw new Error('Erreur upload image ' + imgPath.split('/').pop() + ': ' + (err.message || ''));
+        }
+      }
+      // Clear pending uploads after successful upload
+      for (const key of imageKeys) delete pendingImageUploads[key];
+      setStep('step-images', 'done');
+    } else {
+      setStep('step-images', 'done');
+    }
+
+    // Step 3: Encode content
     setStep('step-encode', 'active');
     const jsonContent = JSON.stringify(data, null, 2) + '\n';
     const base64Content = btoa(unescape(encodeURIComponent(jsonContent)));
@@ -1602,7 +1769,8 @@ Object.assign(window, {
   addSurrounding, confirmRemoveSurrounding,
   saveGitHubConfig, testGitHubConnection, exportContent,
   openTokenModal, closeTokenModal,
-  markChanged
+  markChanged, handleImageUpload,
+  data, pendingImageUploads
 });
 </script>
 
