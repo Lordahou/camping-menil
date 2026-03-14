@@ -138,13 +138,13 @@ $pageDescription = 'Canoë, pédalo, paddle, vélo, pêche, randonnée... Décou
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
         <?php foreach ($surroundings as $s): ?>
-          <div class="card rounded-2xl shadow-soft hover:shadow-md transition-all p-6 bg-white">
+          <a href="<?= e($s['url'] ?? '#') ?>" target="_blank" rel="noopener noreferrer" class="block card rounded-2xl shadow-soft hover:shadow-md hover:border-sage/30 transition-all p-6 bg-white group no-underline">
             <div class="flex items-start justify-between mb-3">
-              <h3 class="font-heading text-lg text-forest"><?= e($s['title'] ?? '') ?></h3>
+              <h3 class="font-heading text-lg text-forest group-hover:text-sage transition-colors"><?= e($s['title'] ?? '') ?></h3>
               <span class="badge bg-sage/10 text-forest text-xs font-semibold px-3 py-1 rounded-full whitespace-nowrap ml-3"><?= e($s['distance'] ?? '') ?></span>
             </div>
             <p class="text-gray-500 text-sm leading-relaxed"><?= e($s['description'] ?? '') ?></p>
-          </div>
+          </a>
         <?php endforeach; ?>
       </div>
     </div>

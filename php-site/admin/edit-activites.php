@@ -93,6 +93,10 @@ $surroundings = $content['surroundings'] ?? [];
                                 <label>Description</label>
                                 <textarea name="surroundings[<?= $i ?>][description]" rows="2"><?= e($sur['description'] ?? '') ?></textarea>
                             </div>
+                            <div class="form-group">
+                                <label>URL du site officiel</label>
+                                <input type="url" name="surroundings[<?= $i ?>][url]" value="<?= e($sur['url'] ?? '') ?>" placeholder="https://...">
+                            </div>
                         </div>
                         <?php endforeach; ?>
                     </div>
@@ -129,6 +133,7 @@ var surroundingTemplate = '<div class="item-row">'
     + '<div class="form-group"><label>Distance</label><input type="text" name="surroundings[__INDEX__][distance]"></div>'
     + '</div>'
     + '<div class="form-group"><label>Description</label><textarea name="surroundings[__INDEX__][description]" rows="2"></textarea></div>'
+    + '<div class="form-group"><label>URL du site officiel</label><input type="url" name="surroundings[__INDEX__][url]" placeholder="https://..."></div>'
     + '</div>';
 </script>
 </body>

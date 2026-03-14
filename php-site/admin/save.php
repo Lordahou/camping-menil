@@ -245,7 +245,8 @@ switch ($section) {
                 $item = [
                     'title' => trim($sur['title'] ?? ''),
                     'distance' => trim($sur['distance'] ?? ''),
-                    'description' => trim($sur['description'] ?? '')
+                    'description' => trim($sur['description'] ?? ''),
+                    'url' => trim($sur['url'] ?? '')
                 ];
                 if ($item['title'] !== '') {
                     $surroundings[] = $item;
