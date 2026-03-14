@@ -5,6 +5,7 @@ import SectionTitle from '../components/SectionTitle.astro';
 import ServiceIcon from '../components/ServiceIcon.astro';
 import CTABanner from '../components/CTABanner.astro';
 import content from '../data/content.json';
+import { url } from '../utils/paths';
 ---
 
 <BaseLayout
@@ -42,7 +43,7 @@ import content from '../data/content.json';
         <div class="reveal">
           <div class="relative rounded-2xl overflow-hidden shadow-xl">
             <img
-              src="/images/galerie/galerie-5.jpg"
+              src={url('/images/galerie/galerie-5.jpg')}
               alt="Bloc sanitaire du camping"
               class="w-full aspect-[4/3] object-cover"
               loading="lazy"
@@ -138,7 +139,7 @@ import content from '../data/content.json';
         <div class="order-1 lg:order-2 reveal">
           <div class="relative rounded-2xl overflow-hidden shadow-xl">
             <img
-              src="/images/galerie/galerie-6.jpg"
+              src={url('/images/galerie/galerie-6.jpg')}
               alt="Accessibilité du camping"
               class="w-full aspect-[4/3] object-cover"
               loading="lazy"
