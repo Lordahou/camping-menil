@@ -141,7 +141,7 @@ $currentYear = date('Y');
   <!-- Bottom Bar -->
   <div class="border-t border-white/10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/40">
-      <p>&copy; <?= e($currentYear) ?> <?= e($site['name'] ?? SITE_NAME) ?> — Commune de Ménil</p>
+      <p>&copy; <?= e($currentYear) ?> <?= e($site['name'] ?? SITE_NAME) ?> — <a href="/admin/login.php" class="hover:text-white/60 transition-colors" title="Administration">Commune de Ménil</a></p>
       <div class="flex items-center gap-4">
         <?php foreach ($footerLinks as $link): ?>
           <a href="<?= e($link['url'] ?? '#') ?>" class="hover:text-white/60 transition-colors"><?= e($link['label'] ?? '') ?></a>
