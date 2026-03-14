@@ -808,12 +808,6 @@ const contentJson = JSON.stringify(content);
 </div>
 
 <script is:inline define:vars={{ contentJson, basePath: import.meta.env.BASE_URL }}>
-// ─── Error handler (debug) ─────────────────────────────────────────────
-window.onerror = function(msg, url, line, col, error) {
-  alert('Erreur JS ligne ' + line + ': ' + msg);
-  return false;
-};
-
 // ─── State ──────────────────────────────────────────────────────────────
 const originalContent = contentJson;
 let data = JSON.parse(contentJson);
@@ -1591,6 +1585,24 @@ window.addEventListener('beforeunload', (e) => {
 // Close modal on overlay click
 document.getElementById('publish-modal').addEventListener('click', (e) => {
   if (e.target === e.currentTarget) closePublishModal();
+});
+
+// ─── Expose functions to global scope (needed because Astro wraps in IIFE) ──
+Object.assign(window, {
+  saveLocal, openPublishModal, closePublishModal, publishToGitHub,
+  navigateTo, showConfirm, closeConfirm,
+  addHighlight, confirmRemoveHighlight,
+  addFeature, removeFeature,
+  addActivity, confirmRemoveActivity,
+  addService, confirmRemoveService,
+  addScheduleTime, removeScheduleTime,
+  addTarifItem, removeTarifItem,
+  addFaq, confirmRemoveFaq,
+  addTestimonial, confirmRemoveTestimonial,
+  addSurrounding, confirmRemoveSurrounding,
+  saveGitHubConfig, testGitHubConnection, exportContent,
+  openTokenModal, closeTokenModal,
+  markChanged
 });
 </script>
 
