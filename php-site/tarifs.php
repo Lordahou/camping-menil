@@ -5,7 +5,7 @@ $content = loadContent();
 
 $tarifs = $content['tarifs'] ?? [];
 
-$pageTitle = 'Tarifs';
+$pageTitle = 'Tarifs camping Mayenne 2026 — emplacement chalet location';
 $pageDescription = 'Tarifs des emplacements, chalets, tentes bivouac et locations de loisirs au Camping du Bac de Ménil. Réservez votre séjour au bord de la Mayenne.';
 ?>
 <!DOCTYPE html>
@@ -25,17 +25,17 @@ $pageDescription = 'Tarifs des emplacements, chalets, tentes bivouac et location
     </div>
     <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
       <h1 class="font-heading text-4xl sm:text-5xl lg:text-6xl text-white mb-4">Nos Tarifs</h1>
-      <p class="text-lg sm:text-xl text-white/80 max-w-2xl mx-auto font-light">Des tarifs adaptés à tous les budgets, au bord de la Mayenne</p>
+      <p class="text-lg sm:text-xl text-white/80 max-w-2xl mx-auto font-light">Des tarifs accessibles, dans un cadre exceptionnel</p>
     </div>
   </section>
 
   <!-- Note disclaimer -->
   <section class="py-8 bg-cream">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="bg-moss/50 rounded-2xl p-6 text-center reveal">
-        <p class="text-forest text-sm font-medium">
-          <svg class="w-5 h-5 inline-block mr-1 -mt-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <div class="bg-sage/10 rounded-2xl p-6 border border-sage/20 text-center reveal">
+        <p class="text-forest text-sm leading-relaxed">
           <?= e($tarifs['note'] ?? 'Tarifs indicatifs — Consultez-nous pour les tarifs à jour.') ?>
+          N'hésitez pas à <a href="/contact" class="text-green underline hover:text-forest">nous contacter</a>.
         </p>
       </div>
     </div>
@@ -65,6 +65,9 @@ $pageDescription = 'Tarifs des emplacements, chalets, tentes bivouac et location
               <?php endforeach; ?>
             </div>
           </div>
+          <?php if (!empty($cat['footnote'])): ?>
+            <p class="text-gray-400 text-xs mt-3 px-2"><?= e($cat['footnote']) ?></p>
+          <?php endif; ?>
         </div>
       </div>
     </section>
@@ -89,6 +92,9 @@ $pageDescription = 'Tarifs des emplacements, chalets, tentes bivouac et location
             <p class="text-gray-500 text-sm">ANCV acceptés</p>
           </div>
         </div>
+        <?php if (!empty($tarifs['paymentNote'])): ?>
+          <p class="text-gray-400 text-xs text-center mt-6"><?= e($tarifs['paymentNote']) ?></p>
+        <?php endif; ?>
       </div>
     </div>
   </section>

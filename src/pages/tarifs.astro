@@ -9,12 +9,12 @@ import { url } from '../utils/paths';
 ---
 
 <BaseLayout
-  title="Tarifs — Emplacements, chalets, tentes bivouac, locations"
+  title="Tarifs camping Mayenne 2026 — emplacement chalet location"
   description="Consultez les tarifs du Camping du Bac de Ménil : emplacements à partir de 5,50 €, chalets dès 280 € la semaine, tentes bivouac à 11 €/nuit. Réservez en ligne."
 >
   <Hero
     title="Tarifs"
-    subtitle="Des tarifs accessibles pour des vacances au bord de la Mayenne"
+    subtitle="Des tarifs accessibles, dans un cadre exceptionnel"
     image="/images/galerie/galerie-2.jpg"
     imageAlt="Tarifs du Camping du Bac de Ménil"
     size="medium"
@@ -25,9 +25,8 @@ import { url } from '../utils/paths';
     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center reveal">
       <div class="bg-sage/10 rounded-2xl p-6 border border-sage/20">
         <p class="text-forest text-sm leading-relaxed">
-          <strong>Note :</strong> {content.tarifs.note}
-          Les prix indiqués sont des tarifs de base indicatifs. Pour obtenir un devis personnalisé,
-          n'hésitez pas à <a href={url('/contact')} class="text-green underline hover:text-forest">nous contacter</a>.
+          {content.tarifs.note}
+          N'hésitez pas à <a href={url('/contact')} class="text-green underline hover:text-forest">nous contacter</a>.
         </p>
       </div>
     </div>
@@ -48,6 +47,7 @@ import { url } from '../utils/paths';
             description={content.tarifs.emplacements.description}
             items={content.tarifs.emplacements.items}
           />
+          <p class="text-gray-400 text-xs mt-3 px-2">{content.tarifs.emplacements.footnote}</p>
         </div>
         <div class="reveal reveal-delay-2">
           <PricingTable
@@ -70,6 +70,7 @@ import { url } from '../utils/paths';
             description={content.tarifs.rentals.description}
             items={content.tarifs.rentals.items}
           />
+          <p class="text-gray-400 text-xs mt-3 px-2">{content.tarifs.rentals.footnote}</p>
         </div>
       </div>
     </div>
@@ -108,6 +109,7 @@ import { url } from '../utils/paths';
           <h3 class="text-forest text-sm font-semibold">Chèques vacances</h3>
         </div>
       </div>
+      <p class="text-gray-400 text-xs text-center mt-6">{content.tarifs.paymentNote}</p>
     </div>
   </section>
 

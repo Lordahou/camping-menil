@@ -9,12 +9,12 @@ import { url } from '../utils/paths';
 ---
 
 <BaseLayout
-  title="Activités & alentours — Canoë, vélo, pêche, patrimoine"
+  title="Activités & alentours — Canoë paddle pêche vélo Mayenne — Bac de Ménil — Vélo Francette"
   description="Activités au Camping du Bac : canoë, paddle, pédalo, vélo, pêche, randonnée. Découvrez le Bac de Ménil et les alentours : Château-Gontier, Refuge de l'Arche, châteaux."
 >
   <Hero
     title="Activités & alentours"
-    subtitle="Sur l'eau, à vélo ou à pied : explorez la Mayenne et ses trésors"
+    subtitle="Sur l'eau, à vélo, à pied ou en bac — la Mayenne et ses rives n'ont pas fini de vous surprendre"
     image="/images/activites/canoe.jpg"
     imageAlt="Activités nautiques sur la Mayenne au Camping du Bac"
     size="medium"
@@ -25,8 +25,8 @@ import { url } from '../utils/paths';
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <SectionTitle
         badge="Activités & loisirs"
-        title="Des activités pour tous"
-        subtitle="Nautisme, vélo, randonnée, pêche... Il y en a pour tous les goûts"
+        title="Des activités pour toutes les envies"
+        subtitle="Que vous soyez sportif, curieux, flâneur ou amoureux de patrimoine, le Camping du Bac est un point de départ idéal. Activités sur place, location de matériel à l'accueil, et un territoire riche à explorer dans toutes les directions."
       />
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {content.activities.map((a, i) => (
@@ -57,15 +57,15 @@ import { url } from '../utils/paths';
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <div class="reveal">
           <span class="badge bg-white/15 text-white/90 mb-4">Expérience unique</span>
-          <h2 class="text-white mb-6">Le Bac de Ménil</h2>
+          <h2 class="text-white mb-6">{content.bac.title}</h2>
           <p class="text-white/80 text-lg leading-relaxed mb-4">
             {content.bac.description}
           </p>
+          <p class="text-white/70 text-sm leading-relaxed mb-4">
+            {content.bac.details}
+          </p>
           <p class="text-white/60 text-sm mb-4">
             {content.bac.price}
-          </p>
-          <p class="text-white/50 text-xs">
-            {content.bac.restrictions}
           </p>
         </div>
         <div class="reveal reveal-delay-2">
@@ -111,6 +111,7 @@ import { url } from '../utils/paths';
           description={content.tarifs.rentals.description}
           items={content.tarifs.rentals.items}
         />
+        <p class="text-gray-400 text-xs mt-3 px-2 text-center">Tous les tarifs sont disponibles à l'accueil du camping ou sur simple demande. Réservation recommandée en haute saison.</p>
       </div>
     </div>
   </section>

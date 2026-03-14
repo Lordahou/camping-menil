@@ -14,8 +14,8 @@ $surroundings = $content['surroundings'] ?? [];
 $bac = $content['bac'] ?? [];
 $contact = $content['contact'] ?? [];
 
-$pageTitle = $site['name'] ?? SITE_NAME;
-$pageDescription = $site['description'] ?? '';
+$pageTitle = 'Camping municipal Ménil Mayenne — Bord de Mayenne — Vélo Francette — Bac de Ménil';
+$pageDescription = 'Camping municipal 2 étoiles au bord de la Mayenne à Ménil (53). Emplacements, chalets, tentes bivouac, maison éclusière. Vélo Francette, Bac de Ménil. Note 9.6/10. Réservez en ligne.';
 ?>
 <!DOCTYPE html>
 <html lang="fr">

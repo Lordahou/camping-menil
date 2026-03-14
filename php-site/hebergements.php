@@ -5,7 +5,7 @@ $content = loadContent();
 
 $accommodations = $content['accommodations'] ?? [];
 
-$pageTitle = 'Hébergements';
+$pageTitle = 'Nos hébergements — Camping emplacement chalet gîte Mayenne Château-Gontier';
 $pageDescription = 'Emplacements, chalets, tentes bivouac et maison éclusière au Camping du Bac de Ménil. Trouvez l\'hébergement idéal au bord de la Mayenne.';
 ?>
 <!DOCTYPE html>
@@ -25,7 +25,15 @@ $pageDescription = 'Emplacements, chalets, tentes bivouac et maison éclusière 
     </div>
     <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
       <h1 class="font-heading text-4xl sm:text-5xl lg:text-6xl text-white mb-4">Nos hébergements</h1>
-      <p class="text-lg sm:text-xl text-white/80 max-w-2xl mx-auto font-light">Emplacements, chalets, tentes bivouac ou maison éclusière : trouvez votre coin de paradis</p>
+      <p class="text-lg sm:text-xl text-white/80 max-w-2xl mx-auto font-light">Du simple emplacement au gîte de caractère — trouvez votre façon de vivre le bord de Mayenne</p>
+    </div>
+  </section>
+
+  <!-- Intro -->
+  <section class="py-20 lg:py-28 bg-cream reveal">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="font-heading text-3xl lg:text-4xl text-forest mb-6">Un hébergement pour chaque façon de voyager</h2>
+      <p class="text-gray-600 text-lg leading-relaxed">Campeur avec tente et vélo, famille en quête de confort, couple cherchant un gîte de caractère ou groupe souhaitant privatiser une maison historique : le Camping du Bac a pensé à chacun d'entre vous.</p>
     </div>
   </section>
 

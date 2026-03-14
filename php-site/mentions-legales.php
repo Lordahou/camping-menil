@@ -50,7 +50,11 @@ $noindex = true;
 
         <div>
           <h2 class="font-heading text-2xl text-forest mb-4">Hébergement du site</h2>
-          <p>Ce site est hébergé par la commune de Ménil ou son prestataire technique.</p>
+          <p><strong>GitHub, Inc.</strong></p>
+          <p>88 Colin P Kelly Jr St<br>
+          San Francisco, CA 94107<br>
+          États-Unis</p>
+          <p><a href="https://github.com" target="_blank" rel="noopener noreferrer" class="text-green hover:text-forest transition-colors">https://github.com</a></p>
         </div>
 
         <div>

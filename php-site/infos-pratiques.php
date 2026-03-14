@@ -10,7 +10,7 @@ $faq = $content['faq'] ?? [];
 $phone = $contact['phone'] ?? '';
 $phoneTel = formatPhone($phone);
 
-$pageTitle = 'Infos pratiques';
+$pageTitle = 'Infos pratiques — Accès camping Ménil — horaires ouverture — règlement intérieur';
 $pageDescription = 'Dates d\'ouverture, accès, règlement intérieur, FAQ... Toutes les informations pratiques pour votre séjour au Camping du Bac de Ménil.';
 ?>
 <!DOCTYPE html>
@@ -30,7 +30,7 @@ $pageDescription = 'Dates d\'ouverture, accès, règlement intérieur, FAQ... To
     </div>
     <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
       <h1 class="font-heading text-4xl sm:text-5xl lg:text-6xl text-white mb-4">Infos pratiques</h1>
-      <p class="text-lg sm:text-xl text-white/80 max-w-2xl mx-auto font-light">Tout ce qu'il faut savoir pour préparer votre séjour</p>
+      <p class="text-lg sm:text-xl text-white/80 max-w-2xl mx-auto font-light">Tout ce qu'il faut savoir pour préparer votre séjour en toute sérénité</p>
     </div>
   </section>
 
