@@ -14,68 +14,103 @@ const contentJson = JSON.stringify(content);
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
       --forest: #1a3c2a; --green: #3a7d5c; --sage: #6db88a; --moss: #d4e8dc;
-      --cream: #faf8f4; --cream-dark: #f0ece4; --river: #2a7ab5;
-      --danger: #dc3545; --warning: #ffc107; --radius: 8px;
+      --cream: #f8faf8; --cream-dark: #f0ece4; --river: #2a7ab5;
+      --danger: #dc3545; --warning: #ffc107; --radius: 10px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,.06);
+      --shadow-md: 0 4px 12px rgba(0,0,0,.08);
+      --shadow-lg: 0 12px 40px rgba(0,0,0,.12);
     }
-    body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: var(--cream); color: #333; line-height: 1.5; }
-
+    body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: var(--cream); color: #333; line-height: 1.6; }
 
     /* Admin Layout */
     .admin { display: none; min-height: 100vh; }
-    .topbar { background: var(--forest); color: white; padding: .75rem 1.5rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
-    .topbar h1 { font-size: 1.1rem; font-weight: 600; }
-    .topbar-actions { display: flex; align-items: center; gap: .75rem; }
-    .admin-body { display: flex; min-height: calc(100vh - 52px); }
+    .topbar { background: linear-gradient(135deg, var(--forest) 0%, #244f38 100%); color: white; padding: .85rem 1.5rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; box-shadow: 0 2px 12px rgba(0,0,0,.15); }
+    .topbar-left { display: flex; align-items: center; gap: 1rem; }
+    .topbar-logo { width: 32px; height: 32px; background: rgba(255,255,255,.15); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+    .topbar h1 { font-size: 1.1rem; font-weight: 600; letter-spacing: -.01em; }
+    .topbar h1 span { font-weight: 400; opacity: .7; font-size: .85rem; margin-left: .5rem; }
+    .topbar-actions { display: flex; align-items: center; gap: .5rem; }
+    .admin-body { display: flex; min-height: calc(100vh - 56px); }
 
     /* Sidebar */
-    .sidebar { width: 240px; background: white; border-right: 1px solid #e5e5e5; padding: 1rem 0; flex-shrink: 0; overflow-y: auto; }
-    .sidebar a { display: flex; align-items: center; gap: .65rem; padding: .6rem 1.25rem; color: #555; font-size: .85rem; text-decoration: none; transition: all .15s; border-left: 3px solid transparent; }
-    .sidebar a:hover { background: var(--moss); color: var(--forest); }
-    .sidebar a.active { background: var(--moss); color: var(--forest); font-weight: 600; border-left-color: var(--sage); }
-    .sidebar a svg { width: 18px; height: 18px; flex-shrink: 0; }
+    .sidebar { width: 250px; background: white; border-right: 1px solid #e8ebe8; padding: .75rem 0; flex-shrink: 0; overflow-y: auto; position: sticky; top: 56px; height: calc(100vh - 56px); box-shadow: var(--shadow-sm); }
+    .sidebar-section { padding: 0 .75rem; margin-bottom: .25rem; }
+    .sidebar-section-label { font-size: .65rem; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; color: #999; padding: .75rem .75rem .35rem; }
+    .sidebar a { display: flex; align-items: center; gap: .65rem; padding: .55rem .85rem; color: #666; font-size: .84rem; text-decoration: none; transition: all .2s; border-radius: 8px; margin: 1px 0; }
+    .sidebar a:hover { background: var(--moss); color: var(--forest); transform: translateX(2px); }
+    .sidebar a.active { background: var(--moss); color: var(--forest); font-weight: 600; box-shadow: inset 3px 0 0 var(--sage); }
+    .sidebar a svg { width: 18px; height: 18px; flex-shrink: 0; opacity: .7; }
+    .sidebar a.active svg { opacity: 1; }
 
     /* Content */
-    .content { flex: 1; padding: 2rem; max-width: 900px; }
-    .content h2 { color: var(--forest); font-size: 1.4rem; margin-bottom: .35rem; }
-    .content .section-desc { color: #888; font-size: .875rem; margin-bottom: 1.5rem; }
-    .section-panel { display: none; }
+    .content { flex: 1; padding: 2rem 2.5rem; max-width: 920px; }
+    .content h2 { color: var(--forest); font-size: 1.5rem; margin-bottom: .35rem; font-weight: 700; letter-spacing: -.02em; }
+    .content .section-desc { color: #888; font-size: .875rem; margin-bottom: 1.75rem; }
+    .section-panel { display: none; animation: fadeIn .3s ease; }
     .section-panel.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Dashboard */
+    .dashboard-welcome { background: linear-gradient(135deg, var(--forest) 0%, var(--green) 100%); color: white; border-radius: 16px; padding: 2rem 2.5rem; margin-bottom: 2rem; position: relative; overflow: hidden; }
+    .dashboard-welcome::after { content: ''; position: absolute; right: -30px; top: -30px; width: 180px; height: 180px; background: rgba(255,255,255,.06); border-radius: 50%; }
+    .dashboard-welcome h2 { color: white; font-size: 1.6rem; margin-bottom: .35rem; }
+    .dashboard-welcome p { opacity: .85; font-size: .95rem; }
+    .dashboard-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+    .stat-card { background: white; border-radius: var(--radius); padding: 1.25rem; text-align: center; border: 1px solid #e8ebe8; box-shadow: var(--shadow-sm); transition: all .2s; cursor: default; }
+    .stat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+    .stat-card .stat-number { font-size: 1.8rem; font-weight: 700; color: var(--forest); line-height: 1; }
+    .stat-card .stat-label { font-size: .75rem; color: #888; margin-top: .35rem; text-transform: uppercase; letter-spacing: .5px; }
+    .quick-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: .75rem; }
+    .quick-link { background: white; border: 1px solid #e8ebe8; border-radius: var(--radius); padding: 1rem 1.25rem; display: flex; align-items: center; gap: .75rem; text-decoration: none; color: #333; font-size: .9rem; font-weight: 500; transition: all .2s; cursor: pointer; }
+    .quick-link:hover { background: var(--moss); border-color: var(--sage); transform: translateX(4px); }
+    .quick-link svg { color: var(--sage); flex-shrink: 0; }
 
     /* Form elements */
     .form-group { margin-bottom: 1.25rem; }
-    .form-group label { display: block; font-size: .8rem; font-weight: 600; color: #555; margin-bottom: .35rem; text-transform: uppercase; letter-spacing: .3px; }
-    .form-group input, .form-group textarea, .form-group select { width: 100%; padding: .6rem .85rem; border: 1px solid #ddd; border-radius: var(--radius); font-size: .875rem; font-family: inherit; transition: border-color .2s; background: white; }
-    .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--sage); box-shadow: 0 0 0 3px rgba(109,184,138,.15); }
+    .form-group label { display: block; font-size: .75rem; font-weight: 600; color: #777; margin-bottom: .4rem; text-transform: uppercase; letter-spacing: .4px; }
+    .form-group input, .form-group textarea, .form-group select { width: 100%; padding: .65rem .9rem; border: 1.5px solid #e0e4e0; border-radius: var(--radius); font-size: .875rem; font-family: inherit; transition: all .2s; background: white; }
+    .form-group input:hover, .form-group textarea:hover { border-color: #c0c8c0; }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus { outline: none; border-color: var(--sage); box-shadow: 0 0 0 3px rgba(109,184,138,.15); }
     .form-group textarea { min-height: 80px; resize: vertical; }
+    .form-group .help-text { font-size: .75rem; color: #aaa; margin-top: .3rem; }
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
     .form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+    .section-subheading { font-size: 1rem; color: var(--forest); margin: 1.75rem 0 .85rem; padding-bottom: .5rem; border-bottom: 2px solid var(--moss); display: flex; align-items: center; gap: .5rem; }
 
     /* Cards for items */
-    .item-card { background: white; border: 1px solid #e5e5e5; border-radius: var(--radius); padding: 1.25rem; margin-bottom: 1rem; position: relative; }
-    .item-card .item-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; padding-bottom: .75rem; border-bottom: 1px solid #f0f0f0; }
-    .item-card .item-title { font-weight: 600; color: var(--forest); font-size: .95rem; }
+    .item-card { background: white; border: 1px solid #e8ebe8; border-radius: 12px; padding: 1.25rem; margin-bottom: 1rem; position: relative; box-shadow: var(--shadow-sm); transition: all .2s; }
+    .item-card:hover { box-shadow: var(--shadow-md); }
+    .item-card .item-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; padding-bottom: .75rem; border-bottom: 1px solid #f0f0f0; cursor: pointer; user-select: none; }
+    .item-card .item-header:hover .item-title { color: var(--green); }
+    .item-card .item-title { font-weight: 600; color: var(--forest); font-size: .95rem; transition: color .2s; display: flex; align-items: center; gap: .5rem; }
+    .item-card .item-title::before { content: ''; display: inline-block; width: 6px; height: 6px; border: 2px solid var(--sage); border-top: 0; border-left: 0; transform: rotate(45deg); transition: transform .2s; flex-shrink: 0; }
+    .item-card.collapsed .item-title::before { transform: rotate(-45deg); }
+    .item-card.collapsed .item-body { display: none; }
     .item-card .item-number { background: var(--moss); color: var(--forest); width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .75rem; font-weight: 700; }
 
     /* Buttons */
-    .btn { display: inline-flex; align-items: center; gap: .5rem; padding: .55rem 1.1rem; border: none; border-radius: var(--radius); font-size: .85rem; font-weight: 600; cursor: pointer; transition: all .15s; font-family: inherit; }
+    .btn { display: inline-flex; align-items: center; gap: .5rem; padding: .55rem 1.1rem; border: none; border-radius: var(--radius); font-size: .85rem; font-weight: 600; cursor: pointer; transition: all .2s; font-family: inherit; }
+    .btn:active { transform: scale(.97); }
     .btn-primary { background: var(--sage); color: white; }
-    .btn-primary:hover { background: var(--green); }
+    .btn-primary:hover { background: var(--green); box-shadow: 0 2px 8px rgba(58,125,92,.3); }
     .btn-secondary { background: #f5f5f5; color: #555; border: 1px solid #ddd; }
-    .btn-secondary:hover { background: #eee; }
-    .btn-danger { background: white; color: var(--danger); border: 1px solid #fecaca; }
+    .btn-secondary:hover { background: #eee; border-color: #ccc; }
+    .btn-danger { background: white; color: var(--danger); border: 1px solid #fecaca; font-size: .75rem; }
     .btn-danger:hover { background: #fef2f2; }
-    .btn-sm { padding: .35rem .75rem; font-size: .8rem; }
+    .btn-sm { padding: .4rem .85rem; font-size: .8rem; }
     .btn-export { background: var(--river); color: white; }
-    .btn-export:hover { background: #1e5f8a; }
-    .btn-save { background: var(--sage); color: white; }
-    .btn-save:hover { background: var(--green); }
-    .btn-publish { background: #e8590c; color: white; }
-    .btn-publish:hover { background: #d04a08; }
-    .btn-publish:disabled { opacity: .5; cursor: not-allowed; }
-    .btn-logout { background: transparent; color: white; border: 1px solid rgba(255,255,255,.2); }
-    .btn-logout:hover { background: rgba(255,255,255,.1); }
+    .btn-export:hover { background: #1e5f8a; box-shadow: 0 2px 8px rgba(42,122,181,.3); }
+    .btn-save { background: var(--sage); color: white; border-radius: 8px; }
+    .btn-save:hover { background: var(--green); box-shadow: 0 2px 8px rgba(58,125,92,.3); }
+    .btn-publish { background: linear-gradient(135deg, #e8590c, #d04a08); color: white; border-radius: 8px; }
+    .btn-publish:hover { box-shadow: 0 2px 8px rgba(232,89,12,.4); transform: translateY(-1px); }
+    .btn-publish:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+    .btn-logout { background: rgba(255,255,255,.1); color: white; border: 1px solid rgba(255,255,255,.2); border-radius: 8px; }
+    .btn-logout:hover { background: rgba(255,255,255,.2); }
     .btn-back { background: transparent; color: white; border: none; font-size: .85rem; opacity: .7; }
     .btn-back:hover { opacity: 1; }
+    .btn-reset { background: transparent; color: #999; border: 1px solid #ddd; font-size: .75rem; }
+    .btn-reset:hover { color: var(--danger); border-color: #fecaca; }
 
     /* Modal */
     .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 200; align-items: center; justify-content: center; padding: 1rem; }
@@ -89,8 +124,20 @@ const contentJson = JSON.stringify(content);
     .modal .status-msg.success { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
     .modal .status-msg.error { background: #fef2f2; color: var(--danger); border: 1px solid #fecaca; }
     .modal .status-msg.loading { background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; }
-    .saved-badge { background: var(--moss); color: var(--forest); font-size: .7rem; padding: .15rem .5rem; border-radius: 10px; font-weight: 600; display: none; }
-    .saved-badge.visible { display: inline-block; }
+    .saved-badge { background: rgba(255,255,255,.15); color: white; font-size: .7rem; padding: .2rem .6rem; border-radius: 10px; font-weight: 600; display: none; border: 1px solid rgba(255,255,255,.2); }
+    .saved-badge.visible { display: inline-flex; align-items: center; gap: .3rem; }
+
+    /* Confirm dialog */
+    .confirm-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.4); z-index: 300; align-items: center; justify-content: center; }
+    .confirm-overlay.open { display: flex; }
+    .confirm-box { background: white; border-radius: 14px; padding: 1.75rem; width: 100%; max-width: 380px; box-shadow: var(--shadow-lg); text-align: center; animation: confirmIn .2s ease; }
+    .confirm-box h4 { color: var(--forest); margin-bottom: .5rem; font-size: 1.05rem; }
+    .confirm-box p { color: #888; font-size: .85rem; margin-bottom: 1.25rem; }
+    .confirm-box .confirm-actions { display: flex; gap: .5rem; justify-content: center; }
+    @keyframes confirmIn { from { transform: scale(.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+    /* Keyboard shortcut hint */
+    .kbd { display: inline-block; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2); border-radius: 4px; padding: .05rem .35rem; font-size: .65rem; font-family: monospace; margin-left: .25rem; vertical-align: middle; }
 
     /* Feature tags (for accommodations) */
     .features-input { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; margin-top: .25rem; }
@@ -141,50 +188,69 @@ const contentJson = JSON.stringify(content);
     @keyframes save-check { 0% { transform: scale(0); } 50% { transform: scale(1.3); } 100% { transform: scale(1); } }
 
     /* Toast */
-    .toast { position: fixed; bottom: 2rem; right: 2rem; background: var(--forest); color: white; padding: .85rem 1.5rem; border-radius: var(--radius); font-size: .875rem; box-shadow: 0 10px 40px rgba(0,0,0,.2); transform: translateY(120%); transition: transform .3s; z-index: 100; }
-    .toast.show { transform: translateY(0); }
+    .toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(120%); background: var(--forest); color: white; padding: .85rem 1.5rem; border-radius: 12px; font-size: .875rem; box-shadow: var(--shadow-lg); transition: transform .4s cubic-bezier(.175,.885,.32,1.275); z-index: 100; display: flex; align-items: center; gap: .5rem; white-space: nowrap; }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+    .toast svg { flex-shrink: 0; }
 
     /* Unsaved indicator */
-    .unsaved-dot { width: 8px; height: 8px; background: var(--warning); border-radius: 50%; display: none; }
+    .unsaved-dot { width: 8px; height: 8px; background: var(--warning); border-radius: 50%; display: none; animation: pulse-dot 2s infinite; }
     .unsaved-dot.visible { display: block; }
+    @keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: .4; } }
+
+    /* Auto-save indicator */
+    .autosave-hint { font-size: .7rem; color: rgba(255,255,255,.5); }
+
+    /* Empty state */
+    .empty-state { text-align: center; padding: 2.5rem 1rem; color: #aaa; }
+    .empty-state svg { margin-bottom: .75rem; opacity: .4; }
+    .empty-state p { font-size: .9rem; margin-bottom: .25rem; }
+    .empty-state .empty-hint { font-size: .8rem; }
 
     /* Responsive */
     @media (max-width: 768px) {
-      .sidebar { display: none; position: fixed; top: 52px; left: 0; bottom: 0; z-index: 40; width: 260px; box-shadow: 4px 0 20px rgba(0,0,0,.1); }
+      .sidebar { display: none; position: fixed; top: 56px; left: 0; bottom: 0; z-index: 40; width: 260px; box-shadow: 4px 0 20px rgba(0,0,0,.1); }
       .sidebar.open { display: block; }
       .content { padding: 1rem; }
       .form-row, .form-row-3 { grid-template-columns: 1fr; }
       .tarif-item { grid-template-columns: 1fr 120px 28px; }
+      .dashboard-stats { grid-template-columns: repeat(2, 1fr); }
+      .quick-links { grid-template-columns: 1fr; }
+      .topbar-actions .btn span.btn-label { display: none; }
     }
   </style>
 </head>
 <body>
 
-<!-- Login Screen -->
 <!-- Admin Panel -->
 <div id="admin-panel" class="admin" style="display:block">
   <!-- Top Bar -->
   <div class="topbar">
-    <div style="display:flex;align-items:center;gap:1rem">
+    <div class="topbar-left">
       <button class="btn-back" id="menu-toggle" style="display:none" onclick="document.querySelector('.sidebar').classList.toggle('open')">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
       </button>
-      <h1>Administration</h1>
-      <div class="unsaved-dot" id="unsaved-dot" title="Modifications non exportées"></div>
+      <div class="topbar-logo">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+      </div>
+      <h1>Camping du Bac <span>Administration</span></h1>
+      <div class="unsaved-dot" id="unsaved-dot" title="Modifications non enregistrées"></div>
     </div>
     <div class="topbar-actions">
-      <span class="saved-badge" id="saved-badge">Brouillon sauvegardé</span>
-      <button class="btn btn-save btn-sm" onclick="saveLocal()">
+      <span class="saved-badge" id="saved-badge">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+        Brouillon sauvegardé
+      </span>
+      <button class="btn btn-save btn-sm" onclick="saveLocal()" title="Ctrl+S">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
-        Enregistrer
+        <span class="btn-label">Enregistrer</span>
       </button>
       <button class="btn btn-publish btn-sm" onclick="openPublishModal()">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
-        Publier
+        <span class="btn-label">Publier</span>
       </button>
-      <a href={url('/')} class="btn btn-logout btn-sm">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-        Quitter
+      <a href={url('/')} class="btn btn-logout btn-sm" title="Retour au site">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        <span class="btn-label">Voir le site</span>
       </a>
     </div>
   </div>
@@ -192,62 +258,90 @@ const contentJson = JSON.stringify(content);
   <div class="admin-body">
     <!-- Sidebar -->
     <nav class="sidebar" id="sidebar">
-      <a href="#general" class="active" data-section="general">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
-        Général
-      </a>
-      <a href="#hero" data-section="hero">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-        Accueil / Hero
-      </a>
-      <a href="#hebergements" data-section="hebergements">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-        Hébergements
-      </a>
-      <a href="#tarifs" data-section="tarifs">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
-        Tarifs
-      </a>
-      <a href="#activites" data-section="activites">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18.5" cy="17.5" r="3.5"/><circle cx="5.5" cy="17.5" r="3.5"/><path d="M15 6a1 1 0 100-2 1 1 0 000 2zm1 1.5l-3 4.5h4l2 4.5M5.5 17.5L8 10l4 2 3-3.5"/></svg>
-        Activités
-      </a>
-      <a href="#services" data-section="services">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-        Services
-      </a>
-      <a href="#bac" data-section="bac">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h20M5 20V8l7-5 7 5v12"/><rect x="9" y="12" width="6" height="8"/></svg>
-        Le Bac
-      </a>
-      <a href="#faq" data-section="faq">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-        FAQ
-      </a>
-      <a href="#temoignages" data-section="temoignages">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-        Témoignages
-      </a>
-      <a href="#environs" data-section="environs">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-        Aux environs
-      </a>
-      <div style="border-top:1px solid #e5e5e5;margin:.75rem 0"></div>
-      <a href="#parametres" data-section="parametres">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-        Paramètres GitHub
-      </a>
+      <div class="sidebar-section">
+        <div class="sidebar-section-label">Tableau de bord</div>
+        <a href="#dashboard" class="active" data-section="dashboard">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+          Accueil
+        </a>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-section-label">Contenu du site</div>
+        <a href="#general" data-section="general">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+          Général
+        </a>
+        <a href="#hero" data-section="hero">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          Accueil / Hero
+        </a>
+        <a href="#hebergements" data-section="hebergements">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          Hébergements
+        </a>
+        <a href="#tarifs" data-section="tarifs">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+          Tarifs
+        </a>
+        <a href="#activites" data-section="activites">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18.5" cy="17.5" r="3.5"/><circle cx="5.5" cy="17.5" r="3.5"/><path d="M15 6a1 1 0 100-2 1 1 0 000 2zm1 1.5l-3 4.5h4l2 4.5M5.5 17.5L8 10l4 2 3-3.5"/></svg>
+          Activités
+        </a>
+        <a href="#services" data-section="services">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          Services
+        </a>
+        <a href="#bac" data-section="bac">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h20M5 20V8l7-5 7 5v12"/><rect x="9" y="12" width="6" height="8"/></svg>
+          Le Bac
+        </a>
+        <a href="#faq" data-section="faq">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          FAQ
+        </a>
+        <a href="#temoignages" data-section="temoignages">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          Témoignages
+        </a>
+        <a href="#environs" data-section="environs">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Aux environs
+        </a>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-section-label">Configuration</div>
+        <a href="#parametres" data-section="parametres">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          Paramètres GitHub
+        </a>
+      </div>
     </nav>
 
     <!-- Content Area -->
     <main class="content" id="content-area">
 
+      <!-- DASHBOARD -->
+      <div class="section-panel active" id="panel-dashboard">
+        <div class="dashboard-welcome">
+          <h2>Bienvenue sur votre espace admin</h2>
+          <p>Gérez le contenu de votre site Camping du Bac en toute simplicité.</p>
+        </div>
+
+        <div class="dashboard-stats" id="dashboard-stats"></div>
+
+        <h3 class="section-subheading">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>
+          Accès rapide
+        </h3>
+        <div class="quick-links" id="quick-links"></div>
+      </div>
+
       <!-- GENERAL -->
-      <div class="section-panel active" id="panel-general">
+      <div class="section-panel" id="panel-general">
         <h2>Informations générales</h2>
         <p class="section-desc">Nom du camping, coordonnées, dates d'ouverture</p>
 
-        <h3 style="font-size:1rem;color:var(--forest);margin-bottom:.75rem">Identité du site</h3>
+        <h3 class="section-subheading">Identité du site</h3>
         <div class="form-row">
           <div class="form-group">
             <label>Nom du camping</label>
@@ -291,7 +385,7 @@ const contentJson = JSON.stringify(content);
           </div>
         </div>
 
-        <h3 style="font-size:1rem;color:var(--forest);margin:1.5rem 0 .75rem">Contact</h3>
+        <h3 class="section-subheading">Contact</h3>
         <div class="form-row">
           <div class="form-group">
             <label>Adresse</label>
@@ -331,7 +425,7 @@ const contentJson = JSON.stringify(content);
           <input type="email" data-path="contact.emailMairie">
         </div>
 
-        <h3 style="font-size:1rem;color:var(--forest);margin:1.5rem 0 .75rem">Dates d'ouverture</h3>
+        <h3 class="section-subheading">Dates d'ouverture</h3>
         <div class="form-row">
           <div class="form-group">
             <label>Emplacements — début</label>
@@ -395,7 +489,7 @@ const contentJson = JSON.stringify(content);
           <input type="text" data-path="hero.imageAlt">
         </div>
 
-        <h3 style="font-size:1rem;color:var(--forest);margin:1.5rem 0 .75rem">Points forts (highlights)</h3>
+        <h3 class="section-subheading">Points forts (highlights)</h3>
         <div id="highlights-list"></div>
         <button class="btn btn-secondary btn-sm" onclick="addHighlight()">+ Ajouter un point fort</button>
       </div>
@@ -465,7 +559,7 @@ const contentJson = JSON.stringify(content);
           </div>
         </div>
 
-        <h3 style="font-size:1rem;color:var(--forest);margin:1.5rem 0 .75rem">Horaires basse saison</h3>
+        <h3 class="section-subheading">Horaires basse saison</h3>
         <div class="form-group">
           <label>Période</label>
           <input type="text" data-path="bac.schedules.lowSeason.period">
@@ -479,7 +573,7 @@ const contentJson = JSON.stringify(content);
           </div>
         </div>
 
-        <h3 style="font-size:1rem;color:var(--forest);margin:1.5rem 0 .75rem">Horaires haute saison</h3>
+        <h3 class="section-subheading">Horaires haute saison</h3>
         <div class="form-group">
           <label>Période</label>
           <input type="text" data-path="bac.schedules.highSeason.period">
@@ -623,14 +717,32 @@ const contentJson = JSON.stringify(content);
   </div>
 </div>
 
+<!-- Confirm dialog -->
+<div class="confirm-overlay" id="confirm-dialog">
+  <div class="confirm-box">
+    <h4 id="confirm-title">Supprimer cet élément ?</h4>
+    <p id="confirm-message">Cette action est irréversible.</p>
+    <div class="confirm-actions">
+      <button class="btn btn-secondary btn-sm" onclick="closeConfirm()">Annuler</button>
+      <button class="btn btn-danger btn-sm" id="confirm-btn" style="background:var(--danger);color:white;border:none">Supprimer</button>
+    </div>
+  </div>
+</div>
+
 <!-- Toast notification -->
-<div class="toast" id="toast"></div>
+<div class="toast" id="toast">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+  <span id="toast-text"></span>
+</div>
 
 <script is:inline define:vars={{ contentJson, basePath: import.meta.env.BASE_URL }}>
 // ─── State ──────────────────────────────────────────────────────────────
 const originalContent = contentJson;
 let data = JSON.parse(contentJson);
 let hasChanges = false;
+let autoSaveTimer = null;
+let pendingConfirm = null;
+
 // Load saved draft from localStorage if available
 const savedDraft = localStorage.getItem('admin_content_draft');
 if (savedDraft) {
@@ -641,6 +753,7 @@ if (savedDraft) {
 function initAdmin() {
   loadGitHubConfig();
   populateAllForms();
+  renderDashboard();
   if (savedDraft) {
     document.getElementById('saved-badge').classList.add('visible');
   }
@@ -648,17 +761,47 @@ function initAdmin() {
 
 initAdmin();
 
+// ─── Dashboard ──────────────────────────────────────────────────────────
+function renderDashboard() {
+  const stats = [
+    { number: data.accommodations?.length || 0, label: 'Hébergements' },
+    { number: data.activities?.length || 0, label: 'Activités' },
+    { number: data.services?.length || 0, label: 'Services' },
+    { number: data.faq?.length || 0, label: 'FAQ' },
+    { number: data.testimonials?.length || 0, label: 'Témoignages' },
+    { number: data.surroundings?.length || 0, label: 'Aux environs' },
+  ];
+  document.getElementById('dashboard-stats').innerHTML = stats.map(s =>
+    `<div class="stat-card"><div class="stat-number">${s.number}</div><div class="stat-label">${s.label}</div></div>`
+  ).join('');
+
+  const links = [
+    { section: 'general', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09a1.65 1.65 0 001.51-1 1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06a1.65 1.65 0 001.82.33 1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82 1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>', label: 'Modifier les infos générales' },
+    { section: 'hero', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>', label: 'Page d\'accueil' },
+    { section: 'hebergements', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>', label: 'Gérer les hébergements' },
+    { section: 'tarifs', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>', label: 'Mettre à jour les tarifs' },
+    { section: 'parametres', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>', label: 'Configurer GitHub' },
+  ];
+  document.getElementById('quick-links').innerHTML = links.map(l =>
+    `<div class="quick-link" onclick="navigateTo('${l.section}')">${l.icon} ${l.label}</div>`
+  ).join('');
+}
+
 // ─── Navigation ─────────────────────────────────────────────────────────
+function navigateTo(section) {
+  document.querySelectorAll('.sidebar a').forEach(l => l.classList.remove('active'));
+  const link = document.querySelector('[data-section="' + section + '"]');
+  if (link) link.classList.add('active');
+  document.querySelectorAll('.section-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + section).classList.add('active');
+  document.getElementById('sidebar').classList.remove('open');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
 document.querySelectorAll('.sidebar a').forEach(link => {
   link.addEventListener('click', (e) => {
     e.preventDefault();
-    const section = link.dataset.section;
-    document.querySelectorAll('.sidebar a').forEach(l => l.classList.remove('active'));
-    link.classList.add('active');
-    document.querySelectorAll('.section-panel').forEach(p => p.classList.remove('active'));
-    document.getElementById('panel-' + section).classList.add('active');
-    // Close mobile sidebar
-    document.getElementById('sidebar').classList.remove('open');
+    navigateTo(link.dataset.section);
   });
 });
 
@@ -666,6 +809,42 @@ document.querySelectorAll('.sidebar a').forEach(link => {
 if (window.innerWidth <= 768) document.getElementById('menu-toggle').style.display = 'block';
 window.addEventListener('resize', () => {
   document.getElementById('menu-toggle').style.display = window.innerWidth <= 768 ? 'block' : 'none';
+});
+
+// ─── Keyboard shortcuts ────────────────────────────────────────────────
+document.addEventListener('keydown', (e) => {
+  if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+    e.preventDefault();
+    saveLocal();
+  }
+});
+
+// ─── Confirm dialog ────────────────────────────────────────────────────
+function showConfirm(title, message, callback) {
+  document.getElementById('confirm-title').textContent = title;
+  document.getElementById('confirm-message').textContent = message;
+  pendingConfirm = callback;
+  document.getElementById('confirm-dialog').classList.add('open');
+  document.getElementById('confirm-btn').onclick = () => {
+    closeConfirm();
+    if (pendingConfirm) pendingConfirm();
+  };
+}
+function closeConfirm() {
+  document.getElementById('confirm-dialog').classList.remove('open');
+  pendingConfirm = null;
+}
+document.getElementById('confirm-dialog').addEventListener('click', (e) => {
+  if (e.target === e.currentTarget) closeConfirm();
+});
+
+// ─── Collapsible cards ─────────────────────────────────────────────────
+document.addEventListener('click', (e) => {
+  const header = e.target.closest('.item-card .item-header');
+  if (!header) return;
+  // Don't collapse if clicking a button inside header
+  if (e.target.closest('button')) return;
+  header.closest('.item-card').classList.toggle('collapsed');
 });
 
 // ─── Data helpers ───────────────────────────────────────────────────────
@@ -681,6 +860,12 @@ function setPath(obj, path, val) {
 function markChanged() {
   hasChanges = true;
   document.getElementById('unsaved-dot').classList.add('visible');
+  // Auto-save after 30 seconds of inactivity
+  if (autoSaveTimer) clearTimeout(autoSaveTimer);
+  autoSaveTimer = setTimeout(() => {
+    localStorage.setItem('admin_content_draft', JSON.stringify(data));
+    document.getElementById('saved-badge').classList.add('visible');
+  }, 30000);
 }
 
 // ─── Populate simple fields ─────────────────────────────────────────────
@@ -715,20 +900,22 @@ function renderHighlights() {
       <div class="item-header"><span class="item-title">${h.title || 'Point fort ' + (i+1)}</span>
         <div style="display:flex;gap:.5rem;align-items:center">
           <span class="item-number">${i+1}</span>
-          <button class="btn btn-danger btn-sm" onclick="removeHighlight(${i})">Supprimer</button>
+          <button class="btn btn-danger btn-sm" onclick="confirmRemoveHighlight(${i})">Supprimer</button>
         </div>
       </div>
-      <div class="form-row-3">
-        <div class="form-group"><label>Icône</label>
-          <select onchange="data.highlights[${i}].icon=this.value;markChanged()">
-            ${['river','bike','star','boat','location','activity'].map(ic => `<option value="${ic}" ${h.icon===ic?'selected':''}>${ic}</option>`).join('')}
-          </select>
-        </div>
-        <div class="form-group"><label>Titre</label>
-          <input type="text" value="${esc(h.title)}" oninput="data.highlights[${i}].title=this.value;markChanged()">
-        </div>
-        <div class="form-group" style="grid-column:span 1"><label>Description</label>
-          <input type="text" value="${esc(h.description)}" oninput="data.highlights[${i}].description=this.value;markChanged()">
+      <div class="item-body">
+        <div class="form-row-3">
+          <div class="form-group"><label>Icône</label>
+            <select onchange="data.highlights[${i}].icon=this.value;markChanged()">
+              ${['river','bike','star','boat','location','activity'].map(ic => `<option value="${ic}" ${h.icon===ic?'selected':''}>${ic}</option>`).join('')}
+            </select>
+          </div>
+          <div class="form-group"><label>Titre</label>
+            <input type="text" value="${esc(h.title)}" oninput="data.highlights[${i}].title=this.value;markChanged()">
+          </div>
+          <div class="form-group" style="grid-column:span 1"><label>Description</label>
+            <input type="text" value="${esc(h.description)}" oninput="data.highlights[${i}].description=this.value;markChanged()">
+          </div>
         </div>
       </div>
     </div>`;
@@ -738,9 +925,11 @@ function addHighlight() {
   data.highlights.push({ icon: 'star', title: '', description: '' });
   renderHighlights(); markChanged();
 }
-function removeHighlight(i) {
-  data.highlights.splice(i, 1);
-  renderHighlights(); markChanged();
+function confirmRemoveHighlight(i) {
+  showConfirm('Supprimer ce point fort ?', 'L\'élément "' + (data.highlights[i].title || 'Point fort') + '" sera supprimé.', () => {
+    data.highlights.splice(i, 1);
+    renderHighlights(); markChanged();
+  });
 }
 
 // ─── Accommodations ─────────────────────────────────────────────────────
@@ -757,25 +946,27 @@ function renderAccommodations() {
         <span class="item-title">${a.title || 'Hébergement ' + (i+1)}</span>
         <span class="item-number">${i+1}</span>
       </div>
-      <div class="form-row">
-        <div class="form-group"><label>Titre</label><input type="text" value="${esc(a.title)}" oninput="data.accommodations[${i}].title=this.value;markChanged()"></div>
-        <div class="form-group"><label>Sous-titre</label><input type="text" value="${esc(a.subtitle)}" oninput="data.accommodations[${i}].subtitle=this.value;markChanged()"></div>
-      </div>
-      <div class="form-group"><label>Description</label><textarea oninput="data.accommodations[${i}].description=this.value;markChanged()">${esc(a.description)}</textarea></div>
-      <div class="form-row-3">
-        <div class="form-group"><label>Capacité</label><input type="text" value="${esc(a.capacity)}" oninput="data.accommodations[${i}].capacity=this.value;markChanged()"></div>
-        <div class="form-group"><label>Check-in</label><input type="text" value="${esc(a.checkin||'')}" oninput="data.accommodations[${i}].checkin=this.value;markChanged()"></div>
-        <div class="form-group"><label>Check-out</label><input type="text" value="${esc(a.checkout||'')}" oninput="data.accommodations[${i}].checkout=this.value;markChanged()"></div>
-      </div>
-      <div class="form-row">
-        <div class="form-group"><label>Image (chemin)</label><input type="text" value="${esc(a.image)}" oninput="data.accommodations[${i}].image=this.value;markChanged()"></div>
-        <div class="form-group"><label>Texte alternatif</label><input type="text" value="${esc(a.imageAlt||'')}" oninput="data.accommodations[${i}].imageAlt=this.value;markChanged()"></div>
-      </div>
-      <div class="form-group"><label>Caractéristiques</label>
-        <div class="features-input">${featuresHtml}
-          <div style="display:flex;gap:.35rem">
-            <input type="text" id="feat-input-${i}" placeholder="Ajouter..." style="width:140px;padding:.3rem .6rem;font-size:.8rem;border:1px solid #ddd;border-radius:20px">
-            <button class="btn btn-secondary btn-sm" onclick="addFeature(${i})">+</button>
+      <div class="item-body">
+        <div class="form-row">
+          <div class="form-group"><label>Titre</label><input type="text" value="${esc(a.title)}" oninput="data.accommodations[${i}].title=this.value;markChanged()"></div>
+          <div class="form-group"><label>Sous-titre</label><input type="text" value="${esc(a.subtitle)}" oninput="data.accommodations[${i}].subtitle=this.value;markChanged()"></div>
+        </div>
+        <div class="form-group"><label>Description</label><textarea oninput="data.accommodations[${i}].description=this.value;markChanged()">${esc(a.description)}</textarea></div>
+        <div class="form-row-3">
+          <div class="form-group"><label>Capacité</label><input type="text" value="${esc(a.capacity)}" oninput="data.accommodations[${i}].capacity=this.value;markChanged()"></div>
+          <div class="form-group"><label>Check-in</label><input type="text" value="${esc(a.checkin||'')}" oninput="data.accommodations[${i}].checkin=this.value;markChanged()"></div>
+          <div class="form-group"><label>Check-out</label><input type="text" value="${esc(a.checkout||'')}" oninput="data.accommodations[${i}].checkout=this.value;markChanged()"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Image (chemin)</label><input type="text" value="${esc(a.image)}" oninput="data.accommodations[${i}].image=this.value;markChanged()"></div>
+          <div class="form-group"><label>Texte alternatif</label><input type="text" value="${esc(a.imageAlt||'')}" oninput="data.accommodations[${i}].imageAlt=this.value;markChanged()"></div>
+        </div>
+        <div class="form-group"><label>Caractéristiques</label>
+          <div class="features-input">${featuresHtml}
+            <div style="display:flex;gap:.35rem">
+              <input type="text" id="feat-input-${i}" placeholder="Ajouter..." style="width:140px;padding:.3rem .6rem;font-size:.8rem;border:1px solid #ddd;border-radius:20px">
+              <button class="btn btn-secondary btn-sm" onclick="addFeature(${i})">+</button>
+            </div>
           </div>
         </div>
       </div>
@@ -838,20 +1029,22 @@ function renderActivities() {
   c.innerHTML = '';
   data.activities.forEach((a, i) => {
     c.innerHTML += `<div class="item-card">
-      <div class="item-header"><span class="item-title">${esc(a.title)}</span>
+      <div class="item-header"><span class="item-title">${esc(a.title) || 'Activité ' + (i+1)}</span>
         <div style="display:flex;gap:.5rem;align-items:center">
           <span class="item-number">${i+1}</span>
-          <button class="btn btn-danger btn-sm" onclick="removeActivity(${i})">Supprimer</button>
+          <button class="btn btn-danger btn-sm" onclick="confirmRemoveActivity(${i})">Supprimer</button>
         </div>
       </div>
-      <div class="form-row">
-        <div class="form-group"><label>Titre</label><input type="text" value="${esc(a.title)}" oninput="data.activities[${i}].title=this.value;markChanged()"></div>
-        <div class="form-group"><label>Catégorie</label><input type="text" value="${esc(a.category||'')}" oninput="data.activities[${i}].category=this.value;markChanged()"></div>
-      </div>
-      <div class="form-group"><label>Description</label><textarea oninput="data.activities[${i}].description=this.value;markChanged()">${esc(a.description)}</textarea></div>
-      <div class="form-row">
-        <div class="form-group"><label>Image (chemin)</label><input type="text" value="${esc(a.image)}" oninput="data.activities[${i}].image=this.value;markChanged()"></div>
-        <div class="form-group"><label>Tarif</label><input type="text" value="${esc(a.price||'')}" oninput="data.activities[${i}].price=this.value;markChanged()"></div>
+      <div class="item-body">
+        <div class="form-row">
+          <div class="form-group"><label>Titre</label><input type="text" value="${esc(a.title)}" oninput="data.activities[${i}].title=this.value;markChanged()"></div>
+          <div class="form-group"><label>Catégorie</label><input type="text" value="${esc(a.category||'')}" oninput="data.activities[${i}].category=this.value;markChanged()"></div>
+        </div>
+        <div class="form-group"><label>Description</label><textarea oninput="data.activities[${i}].description=this.value;markChanged()">${esc(a.description)}</textarea></div>
+        <div class="form-row">
+          <div class="form-group"><label>Image (chemin)</label><input type="text" value="${esc(a.image)}" oninput="data.activities[${i}].image=this.value;markChanged()"></div>
+          <div class="form-group"><label>Tarif</label><input type="text" value="${esc(a.price||'')}" oninput="data.activities[${i}].price=this.value;markChanged()"></div>
+        </div>
       </div>
     </div>`;
   });
@@ -860,9 +1053,11 @@ function addActivity() {
   data.activities.push({ title: '', description: '', image: '', category: '', price: '' });
   renderActivities(); markChanged();
 }
-function removeActivity(i) {
-  data.activities.splice(i, 1);
-  renderActivities(); markChanged();
+function confirmRemoveActivity(i) {
+  showConfirm('Supprimer cette activité ?', 'L\'activité "' + (data.activities[i].title || 'Sans titre') + '" sera supprimée.', () => {
+    data.activities.splice(i, 1);
+    renderActivities(); markChanged();
+  });
 }
 
 // ─── Services ───────────────────────────────────────────────────────────
@@ -871,20 +1066,22 @@ function renderServices() {
   c.innerHTML = '';
   data.services.forEach((s, i) => {
     c.innerHTML += `<div class="item-card">
-      <div class="item-header"><span class="item-title">${esc(s.title)}</span>
+      <div class="item-header"><span class="item-title">${esc(s.title) || 'Service ' + (i+1)}</span>
         <div style="display:flex;gap:.5rem;align-items:center">
           <span class="item-number">${i+1}</span>
-          <button class="btn btn-danger btn-sm" onclick="removeService(${i})">Supprimer</button>
+          <button class="btn btn-danger btn-sm" onclick="confirmRemoveService(${i})">Supprimer</button>
         </div>
       </div>
-      <div class="form-row-3">
-        <div class="form-group"><label>Icône</label>
-          <select onchange="data.services[${i}].icon=this.value;markChanged()">
-            ${['wifi','electric','laundry','accessible','pets','bike-parking','playground','fishing','shower','parking','bbq'].map(ic => `<option value="${ic}" ${s.icon===ic?'selected':''}>${ic}</option>`).join('')}
-          </select>
+      <div class="item-body">
+        <div class="form-row-3">
+          <div class="form-group"><label>Icône</label>
+            <select onchange="data.services[${i}].icon=this.value;markChanged()">
+              ${['wifi','electric','laundry','accessible','pets','bike-parking','playground','fishing','shower','parking','bbq'].map(ic => `<option value="${ic}" ${s.icon===ic?'selected':''}>${ic}</option>`).join('')}
+            </select>
+          </div>
+          <div class="form-group"><label>Titre</label><input type="text" value="${esc(s.title)}" oninput="data.services[${i}].title=this.value;markChanged()"></div>
+          <div class="form-group"><label>Description</label><input type="text" value="${esc(s.description)}" oninput="data.services[${i}].description=this.value;markChanged()"></div>
         </div>
-        <div class="form-group"><label>Titre</label><input type="text" value="${esc(s.title)}" oninput="data.services[${i}].title=this.value;markChanged()"></div>
-        <div class="form-group"><label>Description</label><input type="text" value="${esc(s.description)}" oninput="data.services[${i}].description=this.value;markChanged()"></div>
       </div>
     </div>`;
   });
@@ -893,9 +1090,11 @@ function addService() {
   data.services.push({ icon: 'wifi', title: '', description: '' });
   renderServices(); markChanged();
 }
-function removeService(i) {
-  data.services.splice(i, 1);
-  renderServices(); markChanged();
+function confirmRemoveService(i) {
+  showConfirm('Supprimer ce service ?', 'Le service "' + (data.services[i].title || 'Sans titre') + '" sera supprimé.', () => {
+    data.services.splice(i, 1);
+    renderServices(); markChanged();
+  });
 }
 
 // ─── Schedule times ─────────────────────────────────────────────────────
@@ -933,11 +1132,13 @@ function renderFaq() {
       <div class="item-header"><span class="item-title">${esc(f.question).substring(0,50)}${f.question.length>50?'...':''}</span>
         <div style="display:flex;gap:.5rem;align-items:center">
           <span class="item-number">${i+1}</span>
-          <button class="btn btn-danger btn-sm" onclick="removeFaq(${i})">Supprimer</button>
+          <button class="btn btn-danger btn-sm" onclick="confirmRemoveFaq(${i})">Supprimer</button>
         </div>
       </div>
-      <div class="form-group"><label>Question</label><input type="text" value="${esc(f.question)}" oninput="data.faq[${i}].question=this.value;markChanged()"></div>
-      <div class="form-group"><label>Réponse</label><textarea style="min-height:100px" oninput="data.faq[${i}].answer=this.value;markChanged()">${esc(f.answer)}</textarea></div>
+      <div class="item-body">
+        <div class="form-group"><label>Question</label><input type="text" value="${esc(f.question)}" oninput="data.faq[${i}].question=this.value;markChanged()"></div>
+        <div class="form-group"><label>Réponse</label><textarea style="min-height:100px" oninput="data.faq[${i}].answer=this.value;markChanged()">${esc(f.answer)}</textarea></div>
+      </div>
     </div>`;
   });
 }
@@ -945,9 +1146,11 @@ function addFaq() {
   data.faq.push({ question: '', answer: '' });
   renderFaq(); markChanged();
 }
-function removeFaq(i) {
-  data.faq.splice(i, 1);
-  renderFaq(); markChanged();
+function confirmRemoveFaq(i) {
+  showConfirm('Supprimer cette question ?', 'La question sera supprimée de la FAQ.', () => {
+    data.faq.splice(i, 1);
+    renderFaq(); markChanged();
+  });
 }
 
 // ─── Testimonials ───────────────────────────────────────────────────────
@@ -956,17 +1159,19 @@ function renderTestimonials() {
   c.innerHTML = '';
   data.testimonials.forEach((t, i) => {
     c.innerHTML += `<div class="item-card">
-      <div class="item-header"><span class="item-title">${esc(t.author)}</span>
+      <div class="item-header"><span class="item-title">${esc(t.author) || 'Témoignage ' + (i+1)}</span>
         <div style="display:flex;gap:.5rem;align-items:center">
           <span class="item-number">${i+1}</span>
-          <button class="btn btn-danger btn-sm" onclick="removeTestimonial(${i})">Supprimer</button>
+          <button class="btn btn-danger btn-sm" onclick="confirmRemoveTestimonial(${i})">Supprimer</button>
         </div>
       </div>
-      <div class="form-group"><label>Témoignage</label><textarea oninput="data.testimonials[${i}].text=this.value;markChanged()">${esc(t.text)}</textarea></div>
-      <div class="form-row-3">
-        <div class="form-group"><label>Auteur</label><input type="text" value="${esc(t.author)}" oninput="data.testimonials[${i}].author=this.value;markChanged()"></div>
-        <div class="form-group"><label>Source</label><input type="text" value="${esc(t.origin||'')}" oninput="data.testimonials[${i}].origin=this.value;markChanged()"></div>
-        <div class="form-group"><label>Note (1-5)</label><input type="number" min="1" max="5" value="${t.rating}" oninput="data.testimonials[${i}].rating=Number(this.value);markChanged()"></div>
+      <div class="item-body">
+        <div class="form-group"><label>Témoignage</label><textarea oninput="data.testimonials[${i}].text=this.value;markChanged()">${esc(t.text)}</textarea></div>
+        <div class="form-row-3">
+          <div class="form-group"><label>Auteur</label><input type="text" value="${esc(t.author)}" oninput="data.testimonials[${i}].author=this.value;markChanged()"></div>
+          <div class="form-group"><label>Source</label><input type="text" value="${esc(t.origin||'')}" oninput="data.testimonials[${i}].origin=this.value;markChanged()"></div>
+          <div class="form-group"><label>Note (1-5)</label><input type="number" min="1" max="5" value="${t.rating}" oninput="data.testimonials[${i}].rating=Number(this.value);markChanged()"></div>
+        </div>
       </div>
     </div>`;
   });
@@ -975,9 +1180,11 @@ function addTestimonial() {
   data.testimonials.push({ text: '', author: '', origin: 'Google', rating: 5 });
   renderTestimonials(); markChanged();
 }
-function removeTestimonial(i) {
-  data.testimonials.splice(i, 1);
-  renderTestimonials(); markChanged();
+function confirmRemoveTestimonial(i) {
+  showConfirm('Supprimer ce témoignage ?', 'Le témoignage de "' + (data.testimonials[i].author || 'Anonyme') + '" sera supprimé.', () => {
+    data.testimonials.splice(i, 1);
+    renderTestimonials(); markChanged();
+  });
 }
 
 // ─── Surroundings ───────────────────────────────────────────────────────
@@ -986,18 +1193,20 @@ function renderSurroundings() {
   c.innerHTML = '';
   data.surroundings.forEach((s, i) => {
     c.innerHTML += `<div class="item-card">
-      <div class="item-header"><span class="item-title">${esc(s.title)}</span>
+      <div class="item-header"><span class="item-title">${esc(s.title) || 'Lieu ' + (i+1)}</span>
         <div style="display:flex;gap:.5rem;align-items:center">
           <span class="item-number">${i+1}</span>
-          <button class="btn btn-danger btn-sm" onclick="removeSurrounding(${i})">Supprimer</button>
+          <button class="btn btn-danger btn-sm" onclick="confirmRemoveSurrounding(${i})">Supprimer</button>
         </div>
       </div>
-      <div class="form-row-3">
-        <div class="form-group"><label>Nom</label><input type="text" value="${esc(s.title)}" oninput="data.surroundings[${i}].title=this.value;markChanged()"></div>
-        <div class="form-group"><label>Distance</label><input type="text" value="${esc(s.distance)}" oninput="data.surroundings[${i}].distance=this.value;markChanged()"></div>
-        <div class="form-group"><label>URL</label><input type="url" value="${esc(s.url||'')}" oninput="data.surroundings[${i}].url=this.value;markChanged()"></div>
+      <div class="item-body">
+        <div class="form-row-3">
+          <div class="form-group"><label>Nom</label><input type="text" value="${esc(s.title)}" oninput="data.surroundings[${i}].title=this.value;markChanged()"></div>
+          <div class="form-group"><label>Distance</label><input type="text" value="${esc(s.distance)}" oninput="data.surroundings[${i}].distance=this.value;markChanged()"></div>
+          <div class="form-group"><label>URL</label><input type="url" value="${esc(s.url||'')}" oninput="data.surroundings[${i}].url=this.value;markChanged()"></div>
+        </div>
+        <div class="form-group"><label>Description</label><input type="text" value="${esc(s.description)}" oninput="data.surroundings[${i}].description=this.value;markChanged()"></div>
       </div>
-      <div class="form-group"><label>Description</label><input type="text" value="${esc(s.description)}" oninput="data.surroundings[${i}].description=this.value;markChanged()"></div>
     </div>`;
   });
 }
@@ -1005,9 +1214,11 @@ function addSurrounding() {
   data.surroundings.push({ title: '', distance: '', description: '', url: '' });
   renderSurroundings(); markChanged();
 }
-function removeSurrounding(i) {
-  data.surroundings.splice(i, 1);
-  renderSurroundings(); markChanged();
+function confirmRemoveSurrounding(i) {
+  showConfirm('Supprimer ce lieu ?', 'Le lieu "' + (data.surroundings[i].title || 'Sans titre') + '" sera supprimé.', () => {
+    data.surroundings.splice(i, 1);
+    renderSurroundings(); markChanged();
+  });
 }
 
 // ─── Save (localStorage) ────────────────────────────────────────────────
@@ -1218,7 +1429,7 @@ function esc(str) {
 
 function showToast(msg) {
   const t = document.getElementById('toast');
-  t.textContent = msg;
+  document.getElementById('toast-text').textContent = msg;
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 3000);
 }
