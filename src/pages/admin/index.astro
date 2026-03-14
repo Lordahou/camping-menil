@@ -110,6 +110,36 @@ const contentJson = JSON.stringify(content);
     .time-tag button { background: none; border: none; color: white; cursor: pointer; font-size: .9rem; opacity: .6; }
     .time-tag button:hover { opacity: 1; }
 
+    /* Transfer animation */
+    .transfer-animation { text-align: center; padding: 1.5rem 0; }
+    .transfer-visual { display: flex; align-items: center; justify-content: center; gap: 1rem; margin: 1.5rem 0; }
+    .transfer-icon { width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+    .transfer-icon.source { background: var(--moss); color: var(--forest); }
+    .transfer-icon.target { background: #f0f0f0; color: #333; }
+    .transfer-icon.target.success { background: #ecfdf5; color: #065f46; animation: pulse-success .5s; }
+    .transfer-pipeline { position: relative; width: 120px; height: 4px; background: #e5e5e5; border-radius: 2px; overflow: hidden; }
+    .transfer-pipeline .particle { position: absolute; width: 20px; height: 100%; background: var(--sage); border-radius: 2px; animation: particle-flow 1s ease-in-out infinite; }
+    .transfer-pipeline .particle:nth-child(2) { animation-delay: .33s; }
+    .transfer-pipeline .particle:nth-child(3) { animation-delay: .66s; }
+    .transfer-pipeline.done { background: var(--sage); }
+    .transfer-pipeline.done .particle { display: none; }
+    .transfer-step { font-size: .8rem; color: #888; margin-top: .75rem; transition: color .2s; }
+    .transfer-step.active { color: var(--forest); font-weight: 600; }
+    .transfer-step.done { color: var(--sage); }
+    .transfer-steps { display: flex; flex-direction: column; gap: .4rem; text-align: left; margin-top: 1.5rem; padding: 0 1rem; }
+    .transfer-step::before { content: ''; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #ddd; margin-right: .5rem; vertical-align: middle; transition: background .2s; }
+    .transfer-step.active::before { background: var(--river); animation: step-pulse .8s infinite; }
+    .transfer-step.done::before { background: var(--sage); }
+    .transfer-step.error::before { background: var(--danger); }
+    .transfer-step.error { color: var(--danger); }
+    @keyframes particle-flow { 0% { left: -20px; opacity: 0; } 20% { opacity: 1; } 80% { opacity: 1; } 100% { left: 100%; opacity: 0; } }
+    @keyframes pulse-success { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
+    @keyframes step-pulse { 0%, 100% { opacity: 1; } 50% { opacity: .4; } }
+
+    /* Save button animation */
+    .btn-save.saving { pointer-events: none; }
+    @keyframes save-check { 0% { transform: scale(0); } 50% { transform: scale(1.3); } 100% { transform: scale(1); } }
+
     /* Toast */
     .toast { position: fixed; bottom: 2rem; right: 2rem; background: var(--forest); color: white; padding: .85rem 1.5rem; border-radius: var(--radius); font-size: .875rem; box-shadow: 0 10px 40px rgba(0,0,0,.2); transform: translateY(120%); transition: transform .3s; z-index: 100; }
     .toast.show { transform: translateY(0); }
@@ -546,19 +576,49 @@ const contentJson = JSON.stringify(content);
 <!-- Publish Modal -->
 <div class="modal-overlay" id="publish-modal">
   <div class="modal">
-    <h3>Publier les modifications</h3>
-    <p class="modal-desc">Un commit sera créé sur GitHub et le site sera automatiquement reconstruit.</p>
-    <div class="form-group">
-      <label>Message de publication</label>
-      <input type="text" id="publish-message" value="Mise à jour du contenu du site" placeholder="Description des modifications...">
+    <div id="publish-form-view">
+      <h3>Publier les modifications</h3>
+      <p class="modal-desc">Un commit sera créé sur GitHub et le site sera automatiquement reconstruit.</p>
+      <div class="form-group">
+        <label>Message de publication</label>
+        <input type="text" id="publish-message" value="Mise à jour du contenu du site" placeholder="Description des modifications...">
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary btn-sm" onclick="closePublishModal()">Annuler</button>
+        <button class="btn btn-publish btn-sm" id="btn-do-publish" onclick="publishToGitHub()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+          Publier maintenant
+        </button>
+      </div>
     </div>
-    <div id="publish-status"></div>
-    <div class="modal-actions">
-      <button class="btn btn-secondary btn-sm" onclick="closePublishModal()">Annuler</button>
-      <button class="btn btn-publish btn-sm" id="btn-do-publish" onclick="publishToGitHub()">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
-        Publier maintenant
-      </button>
+    <div id="publish-transfer-view" style="display:none">
+      <div class="transfer-animation">
+        <h3 style="color:var(--forest);margin-bottom:.25rem" id="transfer-title">Transfert en cours...</h3>
+        <p class="modal-desc" id="transfer-subtitle">Envoi des données vers GitHub</p>
+        <div class="transfer-visual">
+          <div class="transfer-icon source">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="transfer-pipeline" id="transfer-pipeline">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+          </div>
+          <div class="transfer-icon target" id="transfer-target">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          </div>
+        </div>
+        <div class="transfer-steps" id="transfer-steps">
+          <div class="transfer-step" id="step-read">Lecture du fichier actuel...</div>
+          <div class="transfer-step" id="step-encode">Préparation des données...</div>
+          <div class="transfer-step" id="step-push">Envoi du commit sur GitHub...</div>
+          <div class="transfer-step" id="step-deploy">Déclenchement du redéploiement...</div>
+        </div>
+      </div>
+      <div id="publish-status" style="margin-top:1rem"></div>
+      <div class="modal-actions" id="transfer-actions" style="display:none">
+        <button class="btn btn-secondary btn-sm" onclick="closePublishModal()">Fermer</button>
+      </div>
     </div>
   </div>
 </div>
@@ -952,11 +1012,23 @@ function removeSurrounding(i) {
 
 // ─── Save (localStorage) ────────────────────────────────────────────────
 function saveLocal() {
+  const btn = document.querySelector('.btn-save');
+  const originalHTML = btn.innerHTML;
+  btn.classList.add('saving');
+  btn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Enregistré !';
+  btn.style.background = '#065f46';
+
   localStorage.setItem('admin_content_draft', JSON.stringify(data));
   hasChanges = false;
   document.getElementById('unsaved-dot').classList.remove('visible');
   document.getElementById('saved-badge').classList.add('visible');
   showToast('Brouillon enregistré localement');
+
+  setTimeout(() => {
+    btn.innerHTML = originalHTML;
+    btn.style.background = '';
+    btn.classList.remove('saving');
+  }, 1500);
 }
 
 // ─── Export (download) ──────────────────────────────────────────────────
@@ -1008,19 +1080,31 @@ function openPublishModal() {
   const cfg = getGitHubConfig();
   if (!cfg || !cfg.token) {
     showToast('Configurez votre token GitHub dans Paramètres d\'abord');
-    // Navigate to settings
     document.querySelectorAll('.sidebar a').forEach(l => l.classList.remove('active'));
     document.querySelector('[data-section="parametres"]').classList.add('active');
     document.querySelectorAll('.section-panel').forEach(p => p.classList.remove('active'));
     document.getElementById('panel-parametres').classList.add('active');
     return;
   }
+  // Reset views
+  document.getElementById('publish-form-view').style.display = 'block';
+  document.getElementById('publish-transfer-view').style.display = 'none';
   document.getElementById('publish-status').innerHTML = '';
   document.getElementById('btn-do-publish').disabled = false;
+  document.getElementById('transfer-actions').style.display = 'none';
+  // Reset steps
+  document.querySelectorAll('.transfer-step').forEach(s => s.className = 'transfer-step');
+  document.getElementById('transfer-pipeline').classList.remove('done');
+  document.getElementById('transfer-target').classList.remove('success');
   document.getElementById('publish-modal').classList.add('open');
 }
 function closePublishModal() {
   document.getElementById('publish-modal').classList.remove('open');
+}
+
+function setStep(stepId, state) {
+  const el = document.getElementById(stepId);
+  el.className = 'transfer-step ' + state;
 }
 
 // ─── Publish to GitHub ──────────────────────────────────────────────────
@@ -1028,11 +1112,14 @@ async function publishToGitHub() {
   const cfg = getGitHubConfig();
   if (!cfg || !cfg.token) return;
 
-  const statusEl = document.getElementById('publish-status');
-  const btnPublish = document.getElementById('btn-do-publish');
-  btnPublish.disabled = true;
+  // Switch to transfer animation view
+  document.getElementById('publish-form-view').style.display = 'none';
+  document.getElementById('publish-transfer-view').style.display = 'block';
+  document.getElementById('transfer-title').textContent = 'Transfert en cours...';
+  document.getElementById('transfer-subtitle').textContent = 'Envoi des données vers GitHub';
 
-  statusEl.innerHTML = '<div class="status-msg loading">Publication en cours...</div>';
+  const statusEl = document.getElementById('publish-status');
+  statusEl.innerHTML = '';
 
   const apiBase = 'https://api.github.com';
   const headers = {
@@ -1042,7 +1129,8 @@ async function publishToGitHub() {
   };
 
   try {
-    // 1. Get current file SHA (needed to update)
+    // Step 1: Read current file
+    setStep('step-read', 'active');
     const getRes = await fetch(
       apiBase + '/repos/' + cfg.owner + '/' + cfg.repo + '/contents/' + cfg.path + '?ref=' + cfg.branch,
       { headers }
@@ -1058,12 +1146,17 @@ async function publishToGitHub() {
       const fileData = await getRes.json();
       currentSha = fileData.sha;
     }
+    setStep('step-read', 'done');
 
-    // 2. Encode content in base64
+    // Step 2: Encode content
+    setStep('step-encode', 'active');
     const jsonContent = JSON.stringify(data, null, 2) + '\n';
     const base64Content = btoa(unescape(encodeURIComponent(jsonContent)));
+    await new Promise(r => setTimeout(r, 400)); // Small delay for visual feedback
+    setStep('step-encode', 'done');
 
-    // 3. Create/update file via commit
+    // Step 3: Push commit
+    setStep('step-push', 'active');
     const commitMessage = document.getElementById('publish-message').value || 'Mise à jour du contenu';
     const putBody = {
       message: commitMessage,
@@ -1084,19 +1177,36 @@ async function publishToGitHub() {
 
     const result = await putRes.json();
     const commitUrl = result.commit.html_url;
+    setStep('step-push', 'done');
 
-    // 4. Success — clear draft
+    // Step 4: Deploy triggered
+    setStep('step-deploy', 'active');
+    await new Promise(r => setTimeout(r, 600));
+    setStep('step-deploy', 'done');
+
+    // Success animation
+    document.getElementById('transfer-pipeline').classList.add('done');
+    document.getElementById('transfer-target').classList.add('success');
+    document.getElementById('transfer-title').textContent = 'Publié avec succès !';
+    document.getElementById('transfer-subtitle').textContent = 'Le site sera reconstruit automatiquement';
+
     localStorage.removeItem('admin_content_draft');
     hasChanges = false;
     document.getElementById('unsaved-dot').classList.remove('visible');
     document.getElementById('saved-badge').classList.remove('visible');
 
-    statusEl.innerHTML = '<div class="status-msg success">Publié avec succès ! Le site sera reconstruit automatiquement.<br><a href="' + commitUrl + '" target="_blank" style="color:#065f46;text-decoration:underline">Voir le commit</a></div>';
+    statusEl.innerHTML = '<div class="status-msg success"><a href="' + commitUrl + '" target="_blank" style="color:#065f46;text-decoration:underline">Voir le commit sur GitHub</a></div>';
+    document.getElementById('transfer-actions').style.display = 'flex';
     showToast('Modifications publiées sur GitHub');
 
   } catch (err) {
+    // Mark current active step as error
+    document.querySelectorAll('.transfer-step.active').forEach(s => s.className = 'transfer-step error');
+    document.getElementById('transfer-pipeline').classList.add('done');
+    document.getElementById('transfer-title').textContent = 'Erreur de transfert';
+    document.getElementById('transfer-subtitle').textContent = 'La publication a échoué';
     statusEl.innerHTML = '<div class="status-msg error">Erreur : ' + esc(err.message) + '</div>';
-    btnPublish.disabled = false;
+    document.getElementById('transfer-actions').style.display = 'flex';
   }
 }
 
