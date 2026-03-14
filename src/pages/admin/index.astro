@@ -19,15 +19,6 @@ const contentJson = JSON.stringify(content);
     }
     body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: var(--cream); color: #333; line-height: 1.5; }
 
-    /* Login */
-    .login-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: var(--forest); padding: 1rem; }
-    .login-box { background: white; border-radius: 12px; padding: 2.5rem; width: 100%; max-width: 400px; box-shadow: 0 20px 60px rgba(0,0,0,.3); }
-    .login-box h1 { color: var(--forest); font-size: 1.5rem; margin-bottom: .25rem; }
-    .login-box .subtitle { color: #888; font-size: .875rem; margin-bottom: 1.5rem; }
-    .login-box .error { background: #fef2f2; color: var(--danger); border: 1px solid #fecaca; padding: .75rem; border-radius: var(--radius); font-size: .875rem; margin-bottom: 1rem; display: none; }
-    .login-box label { display: block; font-size: .8rem; font-weight: 600; color: #555; margin-bottom: .35rem; }
-    .login-box input { width: 100%; padding: .65rem .85rem; border: 1px solid #ddd; border-radius: var(--radius); font-size: .9rem; margin-bottom: 1rem; transition: border-color .2s; }
-    .login-box input:focus { outline: none; border-color: var(--sage); box-shadow: 0 0 0 3px rgba(109,184,138,.15); }
 
     /* Admin Layout */
     .admin { display: none; min-height: 100vh; }
@@ -140,24 +131,8 @@ const contentJson = JSON.stringify(content);
 <body>
 
 <!-- Login Screen -->
-<div id="login-screen" class="login-page">
-  <div class="login-box">
-    <h1>Camping du Bac</h1>
-    <p class="subtitle">Administration du site</p>
-    <div id="login-error" class="error"></div>
-    <form id="login-form">
-      <label for="login-password">Mot de passe</label>
-      <input type="password" id="login-password" placeholder="Mot de passe" required autofocus>
-      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:.5rem">Se connecter</button>
-    </form>
-    <p style="text-align:center;margin-top:1.25rem">
-      <a href={url('/')} style="color:#888;font-size:.8rem;text-decoration:none">&larr; Retour au site</a>
-    </p>
-  </div>
-</div>
-
 <!-- Admin Panel -->
-<div id="admin-panel" class="admin">
+<div id="admin-panel" class="admin" style="display:block">
   <!-- Top Bar -->
   <div class="topbar">
     <div style="display:flex;align-items:center;gap:1rem">
@@ -596,47 +571,22 @@ const contentJson = JSON.stringify(content);
 const originalContent = contentJson;
 let data = JSON.parse(contentJson);
 let hasChanges = false;
-const PASSWORD_HASH = '5dc69da8d15eb4ccede2868f9c8f74a8d011840697d1660f41d54b7293e69400';
-
 // Load saved draft from localStorage if available
 const savedDraft = localStorage.getItem('admin_content_draft');
 if (savedDraft) {
   try { data = JSON.parse(savedDraft); } catch(e) { /* ignore bad data */ }
 }
 
-// ─── Auth ───────────────────────────────────────────────────────────────
-async function sha256(text) {
-  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
-  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
-}
-
-document.getElementById('login-form').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const pw = document.getElementById('login-password').value;
-  const hash = await sha256(pw);
-  if (hash === PASSWORD_HASH) {
-    sessionStorage.setItem('admin_auth', '1');
-    showAdmin();
-  } else {
-    const err = document.getElementById('login-error');
-    err.textContent = 'Mot de passe incorrect.';
-    err.style.display = 'block';
-  }
-});
-
-function showAdmin() {
-  document.getElementById('login-screen').style.display = 'none';
-  document.getElementById('admin-panel').style.display = 'block';
+// ─── Init ───────────────────────────────────────────────────────────────
+function initAdmin() {
   loadGitHubConfig();
   populateAllForms();
-  // Show draft badge if we loaded from localStorage
   if (savedDraft) {
     document.getElementById('saved-badge').classList.add('visible');
   }
 }
 
-// Check if already logged in
-if (sessionStorage.getItem('admin_auth') === '1') showAdmin();
+initAdmin();
 
 // ─── Navigation ─────────────────────────────────────────────────────────
 document.querySelectorAll('.sidebar a').forEach(link => {
