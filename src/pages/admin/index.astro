@@ -44,7 +44,7 @@ const contentJson = JSON.stringify(content);
     .sidebar a svg { width: 18px; height: 18px; flex-shrink: 0; }
 
     /* Content */
-    .content { flex: 1; padding: 2rem; max-width: 900px; }
+    .content { flex: 1; padding: 2rem 2rem 3.5rem; max-width: 900px; }
     .content h2 { color: var(--forest); font-size: 1.4rem; margin-bottom: .35rem; }
     .content .section-desc { color: #888; font-size: .875rem; margin-bottom: 1.5rem; }
     .section-panel { display: none; }
@@ -60,10 +60,20 @@ const contentJson = JSON.stringify(content);
     .form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
 
     /* Cards for items */
-    .item-card { background: white; border: 1px solid #e5e5e5; border-radius: var(--radius); padding: 1.25rem; margin-bottom: 1rem; position: relative; }
-    .item-card .item-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; padding-bottom: .75rem; border-bottom: 1px solid #f0f0f0; }
+    .item-card { background: white; border: 1px solid #e5e5e5; border-radius: var(--radius); padding: 1.25rem; margin-bottom: 1rem; position: relative; transition: border-color .2s; }
+    .item-card:hover { border-color: #ccc; }
+    .item-card .item-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; padding-bottom: .75rem; border-bottom: 1px solid #f0f0f0; cursor: pointer; user-select: none; }
+    .item-card.collapsed .item-header { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
     .item-card .item-title { font-weight: 600; color: var(--forest); font-size: .95rem; }
-    .item-card .item-number { background: var(--moss); color: var(--forest); width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .75rem; font-weight: 700; }
+    .item-card .item-number { background: var(--moss); color: var(--forest); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; }
+    .item-card .item-body { overflow: hidden; transition: max-height .3s ease, opacity .2s ease; opacity: 1; }
+    .item-card.collapsed .item-body { max-height: 0 !important; opacity: 0; padding-top: 0; }
+    .collapse-chevron { transition: transform .2s; color: #999; flex-shrink: 0; }
+    .item-card.collapsed .collapse-chevron { transform: rotate(-90deg); }
+    .move-buttons { display: flex; flex-direction: column; gap: 1px; }
+    .move-buttons button { background: #f5f5f5; border: 1px solid #e5e5e5; border-radius: 3px; cursor: pointer; padding: 2px 6px; font-size: .7rem; color: #666; line-height: 1; }
+    .move-buttons button:hover { background: var(--moss); color: var(--forest); }
+    .move-buttons button:disabled { opacity: .25; cursor: default; }
 
     /* Buttons */
     .btn { display: inline-flex; align-items: center; gap: .5rem; padding: .55rem 1.1rem; border: none; border-radius: var(--radius); font-size: .85rem; font-weight: 600; cursor: pointer; transition: all .15s; font-family: inherit; }
@@ -120,20 +130,52 @@ const contentJson = JSON.stringify(content);
     .time-tag button:hover { opacity: 1; }
 
     /* Toast */
-    .toast { position: fixed; bottom: 2rem; right: 2rem; background: var(--forest); color: white; padding: .85rem 1.5rem; border-radius: var(--radius); font-size: .875rem; box-shadow: 0 10px 40px rgba(0,0,0,.2); transform: translateY(120%); transition: transform .3s; z-index: 100; }
+    .toast { position: fixed; bottom: 3.5rem; right: 2rem; background: var(--forest); color: white; padding: .85rem 1.5rem; border-radius: var(--radius); font-size: .875rem; box-shadow: 0 10px 40px rgba(0,0,0,.2); transform: translateY(120%); transition: transform .3s; z-index: 100; display: flex; align-items: center; gap: .5rem; }
     .toast.show { transform: translateY(0); }
+    .toast.toast-error { background: var(--danger); }
+    .toast svg { flex-shrink: 0; }
 
-    /* Unsaved indicator */
-    .unsaved-dot { width: 8px; height: 8px; background: var(--warning); border-radius: 50%; display: none; }
-    .unsaved-dot.visible { display: block; }
+    /* Unsaved badge */
+    .unsaved-badge { background: #fef3cd; color: #856404; font-size: .7rem; padding: .2rem .6rem; border-radius: 10px; font-weight: 600; display: none; border: 1px solid var(--warning); }
+    .unsaved-badge.visible { display: inline-block; }
+
+    /* Status bar */
+    .status-bar { position: fixed; bottom: 0; left: 240px; right: 0; background: white; border-top: 1px solid #e5e5e5; padding: .4rem 1.5rem; font-size: .75rem; color: #888; display: flex; align-items: center; justify-content: space-between; z-index: 30; }
+
+    /* Sidebar status dots */
+    .sidebar-status { width: 8px; height: 8px; border-radius: 50%; margin-left: auto; flex-shrink: 0; }
+    .sidebar-status.complete { background: #22c55e; }
+    .sidebar-status.incomplete { background: #f59e0b; }
+
+    /* Form helpers */
+    .form-hint { font-size: .75rem; color: #999; margin-top: .2rem; font-style: italic; }
+    .form-section-label { font-size: .8rem; text-transform: uppercase; letter-spacing: .4px; color: var(--forest); font-weight: 700; margin-bottom: .75rem; margin-top: 1.5rem; padding-bottom: .4rem; border-bottom: 2px solid var(--moss); }
+
+    /* Sidebar backdrop (mobile) */
+    .sidebar-backdrop { display: none; position: fixed; inset: 0; top: 52px; background: rgba(0,0,0,.4); z-index: 35; }
+    .sidebar-backdrop.visible { display: block; }
+
+    /* Spinner */
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spinner { width: 16px; height: 16px; border: 2px solid rgba(30,64,175,.3); border-top-color: #1e40af; border-radius: 50%; animation: spin .6s linear infinite; display: inline-block; vertical-align: middle; margin-right: .35rem; }
 
     /* Responsive */
     @media (max-width: 768px) {
-      .sidebar { display: none; position: fixed; top: 52px; left: 0; bottom: 0; z-index: 40; width: 260px; box-shadow: 4px 0 20px rgba(0,0,0,.1); }
+      .sidebar { display: none; position: fixed; top: 52px; left: 0; bottom: 0; z-index: 40; width: 260px; box-shadow: 4px 0 20px rgba(0,0,0,.1); background: white; }
       .sidebar.open { display: block; }
-      .content { padding: 1rem; }
+      .sidebar a { min-height: 44px; }
+      .content { padding: 1rem 1rem 3.5rem; }
       .form-row, .form-row-3 { grid-template-columns: 1fr; }
-      .tarif-item { grid-template-columns: 1fr 120px 28px; }
+      .tarif-item { grid-template-columns: 1fr 120px 36px; }
+      .tarif-item .btn-remove { min-width: 36px; min-height: 36px; }
+      .btn { min-height: 40px; }
+      .btn-sm { min-height: 38px; padding: .45rem .85rem; }
+      .status-bar { left: 0; }
+    }
+    @media (max-width: 480px) {
+      .topbar { flex-wrap: wrap; gap: .5rem; padding: .5rem .75rem; }
+      .topbar-actions { width: 100%; justify-content: flex-end; gap: .5rem; flex-wrap: wrap; }
+      .topbar-actions .btn-sm { font-size: .75rem; padding: .4rem .65rem; }
     }
   </style>
 </head>
@@ -161,11 +203,11 @@ const contentJson = JSON.stringify(content);
   <!-- Top Bar -->
   <div class="topbar">
     <div style="display:flex;align-items:center;gap:1rem">
-      <button class="btn-back" id="menu-toggle" style="display:none" onclick="document.querySelector('.sidebar').classList.toggle('open')">
+      <button class="btn-back" id="menu-toggle" style="display:none">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
       </button>
       <h1>Administration</h1>
-      <div class="unsaved-dot" id="unsaved-dot" title="Modifications non exportées"></div>
+      <span class="unsaved-badge" id="unsaved-badge">Modifications non sauvegardées</span>
     </div>
     <div class="topbar-actions">
       <span class="saved-badge" id="saved-badge">Brouillon sauvegardé</span>
@@ -189,43 +231,43 @@ const contentJson = JSON.stringify(content);
     <nav class="sidebar" id="sidebar">
       <a href="#general" class="active" data-section="general">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
-        Général
+        Général <span class="sidebar-status" id="status-general"></span>
       </a>
       <a href="#hero" data-section="hero">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-        Accueil / Hero
+        Accueil / Hero <span class="sidebar-status" id="status-hero"></span>
       </a>
       <a href="#hebergements" data-section="hebergements">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-        Hébergements
+        Hébergements <span class="sidebar-status" id="status-hebergements"></span>
       </a>
       <a href="#tarifs" data-section="tarifs">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
-        Tarifs
+        Tarifs <span class="sidebar-status" id="status-tarifs"></span>
       </a>
       <a href="#activites" data-section="activites">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18.5" cy="17.5" r="3.5"/><circle cx="5.5" cy="17.5" r="3.5"/><path d="M15 6a1 1 0 100-2 1 1 0 000 2zm1 1.5l-3 4.5h4l2 4.5M5.5 17.5L8 10l4 2 3-3.5"/></svg>
-        Activités
+        Activités <span class="sidebar-status" id="status-activites"></span>
       </a>
       <a href="#services" data-section="services">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-        Services
+        Services <span class="sidebar-status" id="status-services"></span>
       </a>
       <a href="#bac" data-section="bac">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h20M5 20V8l7-5 7 5v12"/><rect x="9" y="12" width="6" height="8"/></svg>
-        Le Bac
+        Le Bac <span class="sidebar-status" id="status-bac"></span>
       </a>
       <a href="#faq" data-section="faq">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-        FAQ
+        FAQ <span class="sidebar-status" id="status-faq"></span>
       </a>
       <a href="#temoignages" data-section="temoignages">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-        Témoignages
+        Témoignages <span class="sidebar-status" id="status-temoignages"></span>
       </a>
       <a href="#environs" data-section="environs">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-        Aux environs
+        Aux environs <span class="sidebar-status" id="status-environs"></span>
       </a>
       <div style="border-top:1px solid #e5e5e5;margin:.75rem 0"></div>
       <a href="#parametres" data-section="parametres">
@@ -233,6 +275,7 @@ const contentJson = JSON.stringify(content);
         Paramètres GitHub
       </a>
     </nav>
+    <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
 
     <!-- Content Area -->
     <main class="content" id="content-area">
@@ -242,7 +285,7 @@ const contentJson = JSON.stringify(content);
         <h2>Informations générales</h2>
         <p class="section-desc">Nom du camping, coordonnées, dates d'ouverture</p>
 
-        <h3 style="font-size:1rem;color:var(--forest);margin-bottom:.75rem">Identité du site</h3>
+        <p class="form-section-label">Identité du site</p>
         <div class="form-row">
           <div class="form-group">
             <label>Nom du camping</label>
@@ -251,6 +294,7 @@ const contentJson = JSON.stringify(content);
           <div class="form-group">
             <label>Nom court</label>
             <input type="text" data-path="site.shortName">
+            <p class="form-hint">Utilisé dans le pied de page et les onglets du navigateur</p>
           </div>
         </div>
         <div class="form-group">
@@ -260,11 +304,13 @@ const contentJson = JSON.stringify(content);
         <div class="form-group">
           <label>Description (SEO)</label>
           <textarea data-path="site.description"></textarea>
+          <p class="form-hint">Affichée dans les résultats Google, idéalement 150-160 caractères</p>
         </div>
         <div class="form-row-3">
           <div class="form-group">
             <label>Note</label>
             <input type="text" data-path="site.rating">
+            <p class="form-hint">Format libre, ex : 9.6/10</p>
           </div>
           <div class="form-group">
             <label>Source de la note</label>
@@ -283,10 +329,11 @@ const contentJson = JSON.stringify(content);
           <div class="form-group">
             <label>URL de réservation</label>
             <input type="url" data-path="site.bookingUrl">
+            <p class="form-hint">Lien vers le système de réservation externe</p>
           </div>
         </div>
 
-        <h3 style="font-size:1rem;color:var(--forest);margin:1.5rem 0 .75rem">Contact</h3>
+        <p class="form-section-label">Contact</p>
         <div class="form-row">
           <div class="form-group">
             <label>Adresse</label>
@@ -326,7 +373,7 @@ const contentJson = JSON.stringify(content);
           <input type="email" data-path="contact.emailMairie">
         </div>
 
-        <h3 style="font-size:1rem;color:var(--forest);margin:1.5rem 0 .75rem">Dates d'ouverture</h3>
+        <p class="form-section-label">Dates d'ouverture</p>
         <div class="form-row">
           <div class="form-group">
             <label>Emplacements — début</label>
@@ -384,13 +431,15 @@ const contentJson = JSON.stringify(content);
         <div class="form-group">
           <label>Image (chemin)</label>
           <input type="text" data-path="hero.image">
+          <p class="form-hint">Chemin relatif vers l'image, ex : /images/hero/camping-panorama.jpg</p>
         </div>
         <div class="form-group">
           <label>Texte alternatif de l'image</label>
           <input type="text" data-path="hero.imageAlt">
+          <p class="form-hint">Description de l'image pour l'accessibilité et le référencement</p>
         </div>
 
-        <h3 style="font-size:1rem;color:var(--forest);margin:1.5rem 0 .75rem">Points forts (highlights)</h3>
+        <p class="form-section-label">Points forts (highlights)</p>
         <div id="highlights-list"></div>
         <button class="btn btn-secondary btn-sm" onclick="addHighlight()">+ Ajouter un point fort</button>
       </div>
@@ -460,7 +509,7 @@ const contentJson = JSON.stringify(content);
           </div>
         </div>
 
-        <h3 style="font-size:1rem;color:var(--forest);margin:1.5rem 0 .75rem">Horaires basse saison</h3>
+        <p class="form-section-label">Horaires basse saison</p>
         <div class="form-group">
           <label>Période</label>
           <input type="text" data-path="bac.schedules.lowSeason.period">
@@ -474,7 +523,7 @@ const contentJson = JSON.stringify(content);
           </div>
         </div>
 
-        <h3 style="font-size:1rem;color:var(--forest);margin:1.5rem 0 .75rem">Horaires haute saison</h3>
+        <p class="form-section-label">Horaires haute saison</p>
         <div class="form-group">
           <label>Période</label>
           <input type="text" data-path="bac.schedules.highSeason.period">
@@ -527,6 +576,7 @@ const contentJson = JSON.stringify(content);
           <div class="form-group">
             <label>Token GitHub (Personal Access Token)</label>
             <input type="password" id="github-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+            <p class="form-hint">Créez-le sur github.com &gt; Settings &gt; Developer settings &gt; Personal access tokens</p>
           </div>
           <div class="form-row">
             <div class="form-group">
@@ -545,6 +595,7 @@ const contentJson = JSON.stringify(content);
           <div class="form-group">
             <label>Chemin du fichier content.json</label>
             <input type="text" id="github-path" value="src/data/content.json">
+            <p class="form-hint">Chemin dans le dépôt, par défaut src/data/content.json</p>
           </div>
           <button class="btn btn-secondary btn-sm" onclick="saveGitHubConfig()">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
@@ -566,6 +617,25 @@ const contentJson = JSON.stringify(content);
 
     </main>
   </div>
+  <div class="status-bar" id="status-bar">
+    <span id="status-bar-text">Prêt</span>
+    <span id="status-bar-time"></span>
+  </div>
+</div>
+
+<!-- Confirm Delete Modal -->
+<div class="modal-overlay" id="confirm-modal">
+  <div class="modal">
+    <h3 style="color:var(--danger)">Confirmer la suppression</h3>
+    <p class="modal-desc" id="confirm-message">Voulez-vous vraiment supprimer cet élément ?</p>
+    <div class="modal-actions">
+      <button class="btn btn-secondary btn-sm" onclick="closeConfirmModal()">Annuler</button>
+      <button class="btn btn-danger btn-sm" id="btn-confirm-delete" onclick="executeDelete()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+        Supprimer
+      </button>
+    </div>
+  </div>
 </div>
 
 <!-- Publish Modal -->
@@ -573,6 +643,7 @@ const contentJson = JSON.stringify(content);
   <div class="modal">
     <h3>Publier les modifications</h3>
     <p class="modal-desc">Un commit sera créé sur GitHub et le site sera automatiquement reconstruit.</p>
+    <div id="publish-summary" style="background:var(--cream);padding:.6rem .85rem;border-radius:var(--radius);font-size:.8rem;color:#555;margin-bottom:1rem;display:none"></div>
     <div class="form-group">
       <label>Message de publication</label>
       <input type="text" id="publish-message" value="Mise à jour du contenu du site" placeholder="Description des modifications...">
@@ -596,6 +667,10 @@ const contentJson = JSON.stringify(content);
 const originalContent = contentJson;
 let data = JSON.parse(contentJson);
 let hasChanges = false;
+let autoSaveTimer = null;
+let lastSaveTime = null;
+let pendingDeleteAction = null;
+const expandedCards = new Set();
 const PASSWORD_HASH = '310a70698c30bd3a2fe34393d9d9d739856b655ca070ccd0bed2e5c654bbb97b';
 
 // Load saved draft from localStorage if available
@@ -629,13 +704,12 @@ function showAdmin() {
   document.getElementById('admin-panel').style.display = 'block';
   loadGitHubConfig();
   populateAllForms();
-  // Show draft badge if we loaded from localStorage
   if (savedDraft) {
     document.getElementById('saved-badge').classList.add('visible');
+    document.getElementById('saved-badge').textContent = 'Brouillon chargé';
   }
 }
 
-// Check if already logged in
 if (sessionStorage.getItem('admin_auth') === '1') showAdmin();
 
 // ─── Navigation ─────────────────────────────────────────────────────────
@@ -647,15 +721,25 @@ document.querySelectorAll('.sidebar a').forEach(link => {
     link.classList.add('active');
     document.querySelectorAll('.section-panel').forEach(p => p.classList.remove('active'));
     document.getElementById('panel-' + section).classList.add('active');
-    // Close mobile sidebar
     document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebar-backdrop').classList.remove('visible');
   });
 });
 
-// Mobile menu toggle
-if (window.innerWidth <= 768) document.getElementById('menu-toggle').style.display = 'block';
-window.addEventListener('resize', () => {
+// ─── Mobile menu ────────────────────────────────────────────────────────
+function updateMenuToggle() {
   document.getElementById('menu-toggle').style.display = window.innerWidth <= 768 ? 'block' : 'none';
+}
+updateMenuToggle();
+window.addEventListener('resize', updateMenuToggle);
+
+document.getElementById('menu-toggle').addEventListener('click', () => {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebar-backdrop').classList.toggle('visible');
+});
+document.getElementById('sidebar-backdrop').addEventListener('click', () => {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebar-backdrop').classList.remove('visible');
 });
 
 // ─── Data helpers ───────────────────────────────────────────────────────
@@ -670,7 +754,108 @@ function setPath(obj, path, val) {
 }
 function markChanged() {
   hasChanges = true;
-  document.getElementById('unsaved-dot').classList.add('visible');
+  document.getElementById('unsaved-badge').classList.add('visible');
+  document.getElementById('saved-badge').classList.remove('visible');
+  // Debounced auto-save
+  clearTimeout(autoSaveTimer);
+  autoSaveTimer = setTimeout(autoSaveLocal, 2000);
+  updateSidebarStatus();
+}
+function autoSaveLocal() {
+  localStorage.setItem('admin_content_draft', JSON.stringify(data));
+  lastSaveTime = new Date();
+  updateStatusBar();
+  const badge = document.getElementById('saved-badge');
+  badge.textContent = 'Auto-sauvegardé';
+  badge.classList.add('visible');
+  setTimeout(() => badge.classList.remove('visible'), 2500);
+}
+
+// ─── Confirm Delete ─────────────────────────────────────────────────────
+function confirmDelete(itemName, deleteFn) {
+  document.getElementById('confirm-message').textContent = 'Voulez-vous vraiment supprimer « ' + (itemName || 'cet élément') + ' » ?';
+  pendingDeleteAction = deleteFn;
+  document.getElementById('confirm-modal').classList.add('open');
+}
+function closeConfirmModal() {
+  document.getElementById('confirm-modal').classList.remove('open');
+  pendingDeleteAction = null;
+}
+function executeDelete() {
+  if (pendingDeleteAction) pendingDeleteAction();
+  closeConfirmModal();
+}
+document.getElementById('confirm-modal').addEventListener('click', (e) => {
+  if (e.target === e.currentTarget) closeConfirmModal();
+});
+
+// ─── Collapsible Cards ──────────────────────────────────────────────────
+function toggleCard(cardId, e) {
+  if (e && (e.target.closest('button.btn-danger') || e.target.closest('.move-buttons') || e.target.closest('select'))) return;
+  const card = document.getElementById(cardId);
+  if (!card) return;
+  card.classList.toggle('collapsed');
+  if (card.classList.contains('collapsed')) {
+    expandedCards.delete(cardId);
+  } else {
+    expandedCards.add(cardId);
+  }
+}
+
+// ─── Move Items ─────────────────────────────────────────────────────────
+function moveItem(arrayPath, fromIdx, direction) {
+  const arr = getPath(data, arrayPath);
+  const toIdx = fromIdx + direction;
+  if (toIdx < 0 || toIdx >= arr.length) return;
+  [arr[fromIdx], arr[toIdx]] = [arr[toIdx], arr[fromIdx]];
+  // Update expanded cards tracking
+  const prefix = arrayPath.replace(/\./g, '-');
+  const fromId = 'card-' + prefix + '-' + fromIdx;
+  const toId = 'card-' + prefix + '-' + toIdx;
+  const fromExpanded = expandedCards.has(fromId);
+  const toExpanded = expandedCards.has(toId);
+  if (fromExpanded) { expandedCards.delete(fromId); expandedCards.add(toId); }
+  else { expandedCards.delete(toId); }
+  if (toExpanded) { expandedCards.add(fromId); }
+  else { expandedCards.delete(fromId); }
+  markChanged();
+}
+function moveHighlight(i, d) { moveItem('highlights', i, d); renderHighlights(); }
+function moveActivity(i, d) { moveItem('activities', i, d); renderActivities(); }
+function moveService(i, d) { moveItem('services', i, d); renderServices(); }
+function moveFaq(i, d) { moveItem('faq', i, d); renderFaq(); }
+function moveTestimonial(i, d) { moveItem('testimonials', i, d); renderTestimonials(); }
+function moveSurrounding(i, d) { moveItem('surroundings', i, d); renderSurroundings(); }
+
+// ─── Sidebar Status ─────────────────────────────────────────────────────
+function updateSidebarStatus() {
+  const checks = {
+    general: () => data.site.name && data.contact.phone && data.contact.email,
+    hero: () => data.hero.title && data.hero.image,
+    hebergements: () => data.accommodations.length > 0 && data.accommodations.every(a => a.title),
+    tarifs: () => ['emplacements','chalets'].every(k => data.tarifs[k]?.items?.length > 0),
+    activites: () => data.activities.length > 0 && data.activities.every(a => a.title),
+    services: () => data.services.length > 0 && data.services.every(s => s.title),
+    bac: () => data.bac.title && data.bac.description,
+    faq: () => data.faq.length > 0 && data.faq.every(f => f.question && f.answer),
+    temoignages: () => data.testimonials.length > 0 && data.testimonials.every(t => t.text && t.author),
+    environs: () => data.surroundings.length > 0 && data.surroundings.every(s => s.title),
+  };
+  Object.entries(checks).forEach(([section, check]) => {
+    const el = document.getElementById('status-' + section);
+    if (!el) return;
+    try {
+      el.className = 'sidebar-status ' + (check() ? 'complete' : 'incomplete');
+    } catch(e) { el.className = 'sidebar-status incomplete'; }
+  });
+}
+
+// ─── Status Bar ─────────────────────────────────────────────────────────
+function updateStatusBar() {
+  const timeEl = document.getElementById('status-bar-time');
+  if (lastSaveTime) {
+    timeEl.textContent = 'Dernière sauvegarde : ' + lastSaveTime.toLocaleTimeString('fr-FR');
+  }
 }
 
 // ─── Populate simple fields ─────────────────────────────────────────────
@@ -694,21 +879,43 @@ function populateAllForms() {
   renderFaq();
   renderTestimonials();
   renderSurroundings();
+  updateSidebarStatus();
 }
+
+// ─── Card HTML helper ───────────────────────────────────────────────────
+const chevronSvg = '<svg class="collapse-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>';
+
+function cardHeader(cardId, title, index, total, moveFn, deleteFn, deleteLabel) {
+  const collapsed = expandedCards.has(cardId) ? '' : ' collapsed';
+  const moveHtml = moveFn ? `<div class="move-buttons">
+    <button onclick="event.stopPropagation();${moveFn}(${index},-1)" ${index===0?'disabled':''} title="Monter">&#9650;</button>
+    <button onclick="event.stopPropagation();${moveFn}(${index},1)" ${index>=total-1?'disabled':''} title="Descendre">&#9660;</button>
+  </div>` : '';
+
+  return `<div class="item-card${collapsed}" id="${cardId}">
+    <div class="item-header" onclick="toggleCard('${cardId}',event)">
+      <div style="display:flex;align-items:center;gap:.5rem">
+        ${chevronSvg}
+        <span class="item-title">${title}</span>
+      </div>
+      <div style="display:flex;gap:.5rem;align-items:center">
+        ${moveHtml}
+        <span class="item-number">${index+1}</span>
+        ${deleteFn ? `<button class="btn btn-danger btn-sm" onclick="event.stopPropagation();confirmDelete('${esc(deleteLabel || title)}',()=>${deleteFn})">Supprimer</button>` : ''}
+      </div>
+    </div>
+    <div class="item-body">`;
+}
+function cardFooter() { return '</div></div>'; }
 
 // ─── Highlights ─────────────────────────────────────────────────────────
 function renderHighlights() {
   const c = document.getElementById('highlights-list');
   c.innerHTML = '';
   data.highlights.forEach((h, i) => {
-    c.innerHTML += `<div class="item-card">
-      <div class="item-header"><span class="item-title">${h.title || 'Point fort ' + (i+1)}</span>
-        <div style="display:flex;gap:.5rem;align-items:center">
-          <span class="item-number">${i+1}</span>
-          <button class="btn btn-danger btn-sm" onclick="removeHighlight(${i})">Supprimer</button>
-        </div>
-      </div>
-      <div class="form-row-3">
+    const id = 'card-highlights-' + i;
+    c.innerHTML += cardHeader(id, h.title || 'Point fort ' + (i+1), i, data.highlights.length, 'moveHighlight', 'removeHighlight('+i+')', h.title)
+    + `<div class="form-row-3">
         <div class="form-group"><label>Icône</label>
           <select onchange="data.highlights[${i}].icon=this.value;markChanged()">
             ${['river','bike','star','boat','location','activity'].map(ic => `<option value="${ic}" ${h.icon===ic?'selected':''}>${ic}</option>`).join('')}
@@ -717,15 +924,16 @@ function renderHighlights() {
         <div class="form-group"><label>Titre</label>
           <input type="text" value="${esc(h.title)}" oninput="data.highlights[${i}].title=this.value;markChanged()">
         </div>
-        <div class="form-group" style="grid-column:span 1"><label>Description</label>
+        <div class="form-group"><label>Description</label>
           <input type="text" value="${esc(h.description)}" oninput="data.highlights[${i}].description=this.value;markChanged()">
         </div>
-      </div>
-    </div>`;
+      </div>` + cardFooter();
   });
 }
 function addHighlight() {
   data.highlights.push({ icon: 'star', title: '', description: '' });
+  const newId = 'card-highlights-' + (data.highlights.length - 1);
+  expandedCards.add(newId);
   renderHighlights(); markChanged();
 }
 function removeHighlight(i) {
@@ -738,16 +946,13 @@ function renderAccommodations() {
   const c = document.getElementById('accommodations-list');
   c.innerHTML = '';
   data.accommodations.forEach((a, i) => {
+    const id = 'card-accommodations-' + i;
     const featuresHtml = (a.features || []).map((f, fi) =>
       `<span class="feature-tag">${esc(f)}<button onclick="removeFeature(${i},${fi})">&times;</button></span>`
     ).join('');
 
-    c.innerHTML += `<div class="item-card">
-      <div class="item-header">
-        <span class="item-title">${a.title || 'Hébergement ' + (i+1)}</span>
-        <span class="item-number">${i+1}</span>
-      </div>
-      <div class="form-row">
+    c.innerHTML += cardHeader(id, a.title || 'Hébergement ' + (i+1), i, data.accommodations.length, null, null, a.title)
+    + `<div class="form-row">
         <div class="form-group"><label>Titre</label><input type="text" value="${esc(a.title)}" oninput="data.accommodations[${i}].title=this.value;markChanged()"></div>
         <div class="form-group"><label>Sous-titre</label><input type="text" value="${esc(a.subtitle)}" oninput="data.accommodations[${i}].subtitle=this.value;markChanged()"></div>
       </div>
@@ -757,19 +962,21 @@ function renderAccommodations() {
         <div class="form-group"><label>Check-in</label><input type="text" value="${esc(a.checkin||'')}" oninput="data.accommodations[${i}].checkin=this.value;markChanged()"></div>
         <div class="form-group"><label>Check-out</label><input type="text" value="${esc(a.checkout||'')}" oninput="data.accommodations[${i}].checkout=this.value;markChanged()"></div>
       </div>
+      <p class="form-section-label" style="margin-top:1rem">Médias</p>
       <div class="form-row">
-        <div class="form-group"><label>Image (chemin)</label><input type="text" value="${esc(a.image)}" oninput="data.accommodations[${i}].image=this.value;markChanged()"></div>
+        <div class="form-group"><label>Image (chemin)</label><input type="text" value="${esc(a.image)}" oninput="data.accommodations[${i}].image=this.value;markChanged()">
+          <p class="form-hint">Ex : /images/hebergements/chalet.jpg</p></div>
         <div class="form-group"><label>Texte alternatif</label><input type="text" value="${esc(a.imageAlt||'')}" oninput="data.accommodations[${i}].imageAlt=this.value;markChanged()"></div>
       </div>
-      <div class="form-group"><label>Caractéristiques</label>
+      <p class="form-section-label">Caractéristiques</p>
+      <div class="form-group">
         <div class="features-input">${featuresHtml}
           <div style="display:flex;gap:.35rem">
-            <input type="text" id="feat-input-${i}" placeholder="Ajouter..." style="width:140px;padding:.3rem .6rem;font-size:.8rem;border:1px solid #ddd;border-radius:20px">
+            <input type="text" id="feat-input-${i}" placeholder="Ajouter..." style="width:160px;padding:.3rem .6rem;font-size:.8rem;border:1px solid #ddd;border-radius:20px">
             <button class="btn btn-secondary btn-sm" onclick="addFeature(${i})">+</button>
           </div>
         </div>
-      </div>
-    </div>`;
+      </div>` + cardFooter();
   });
 }
 function addFeature(accIdx) {
@@ -797,11 +1004,11 @@ function renderTarifs() {
       <div class="tarif-item">
         <input type="text" value="${esc(item.label)}" oninput="data.tarifs['${key}'].items[${ii}].label=this.value;markChanged()">
         <input type="text" value="${esc(item.price)}" oninput="data.tarifs['${key}'].items[${ii}].price=this.value;markChanged()">
-        <button class="btn-remove" onclick="removeTarifItem('${key}',${ii})">&times;</button>
+        <button class="btn-remove" onclick="confirmDelete('${esc(item.label || 'ce tarif')}',()=>removeTarifItem('${key}',${ii}))">&times;</button>
       </div>`).join('');
 
     c.innerHTML += `<div class="item-card">
-      <div class="item-header"><span class="item-title">${esc(t.title)}</span></div>
+      <div class="item-header" style="cursor:default"><span class="item-title">${esc(t.title)}</span></div>
       <div class="form-row">
         <div class="form-group"><label>Titre</label><input type="text" value="${esc(t.title)}" oninput="data.tarifs['${key}'].title=this.value;markChanged()"></div>
         <div class="form-group"><label>Description</label><input type="text" value="${esc(t.description)}" oninput="data.tarifs['${key}'].description=this.value;markChanged()"></div>
@@ -827,27 +1034,23 @@ function renderActivities() {
   const c = document.getElementById('activities-list');
   c.innerHTML = '';
   data.activities.forEach((a, i) => {
-    c.innerHTML += `<div class="item-card">
-      <div class="item-header"><span class="item-title">${esc(a.title)}</span>
-        <div style="display:flex;gap:.5rem;align-items:center">
-          <span class="item-number">${i+1}</span>
-          <button class="btn btn-danger btn-sm" onclick="removeActivity(${i})">Supprimer</button>
-        </div>
-      </div>
-      <div class="form-row">
+    const id = 'card-activities-' + i;
+    c.innerHTML += cardHeader(id, esc(a.title) || 'Activité ' + (i+1), i, data.activities.length, 'moveActivity', 'removeActivity('+i+')', a.title)
+    + `<div class="form-row">
         <div class="form-group"><label>Titre</label><input type="text" value="${esc(a.title)}" oninput="data.activities[${i}].title=this.value;markChanged()"></div>
         <div class="form-group"><label>Catégorie</label><input type="text" value="${esc(a.category||'')}" oninput="data.activities[${i}].category=this.value;markChanged()"></div>
       </div>
       <div class="form-group"><label>Description</label><textarea oninput="data.activities[${i}].description=this.value;markChanged()">${esc(a.description)}</textarea></div>
       <div class="form-row">
-        <div class="form-group"><label>Image (chemin)</label><input type="text" value="${esc(a.image)}" oninput="data.activities[${i}].image=this.value;markChanged()"></div>
+        <div class="form-group"><label>Image (chemin)</label><input type="text" value="${esc(a.image)}" oninput="data.activities[${i}].image=this.value;markChanged()">
+          <p class="form-hint">Ex : /images/activites/canoe.jpg</p></div>
         <div class="form-group"><label>Tarif</label><input type="text" value="${esc(a.price||'')}" oninput="data.activities[${i}].price=this.value;markChanged()"></div>
-      </div>
-    </div>`;
+      </div>` + cardFooter();
   });
 }
 function addActivity() {
   data.activities.push({ title: '', description: '', image: '', category: '', price: '' });
+  expandedCards.add('card-activities-' + (data.activities.length - 1));
   renderActivities(); markChanged();
 }
 function removeActivity(i) {
@@ -860,27 +1063,22 @@ function renderServices() {
   const c = document.getElementById('services-list');
   c.innerHTML = '';
   data.services.forEach((s, i) => {
-    c.innerHTML += `<div class="item-card">
-      <div class="item-header"><span class="item-title">${esc(s.title)}</span>
-        <div style="display:flex;gap:.5rem;align-items:center">
-          <span class="item-number">${i+1}</span>
-          <button class="btn btn-danger btn-sm" onclick="removeService(${i})">Supprimer</button>
-        </div>
-      </div>
-      <div class="form-row-3">
+    const id = 'card-services-' + i;
+    c.innerHTML += cardHeader(id, esc(s.title) || 'Service ' + (i+1), i, data.services.length, 'moveService', 'removeService('+i+')', s.title)
+    + `<div class="form-row-3">
         <div class="form-group"><label>Icône</label>
-          <select onchange="data.services[${i}].icon=this.value;markChanged()">
+          <select onclick="event.stopPropagation()" onchange="data.services[${i}].icon=this.value;markChanged()">
             ${['wifi','electric','laundry','accessible','pets','bike-parking','playground','fishing','shower','parking','bbq'].map(ic => `<option value="${ic}" ${s.icon===ic?'selected':''}>${ic}</option>`).join('')}
           </select>
         </div>
         <div class="form-group"><label>Titre</label><input type="text" value="${esc(s.title)}" oninput="data.services[${i}].title=this.value;markChanged()"></div>
         <div class="form-group"><label>Description</label><input type="text" value="${esc(s.description)}" oninput="data.services[${i}].description=this.value;markChanged()"></div>
-      </div>
-    </div>`;
+      </div>` + cardFooter();
   });
 }
 function addService() {
   data.services.push({ icon: 'wifi', title: '', description: '' });
+  expandedCards.add('card-services-' + (data.services.length - 1));
   renderServices(); markChanged();
 }
 function removeService(i) {
@@ -919,20 +1117,17 @@ function renderFaq() {
   const c = document.getElementById('faq-list');
   c.innerHTML = '';
   data.faq.forEach((f, i) => {
-    c.innerHTML += `<div class="item-card">
-      <div class="item-header"><span class="item-title">${esc(f.question).substring(0,50)}${f.question.length>50?'...':''}</span>
-        <div style="display:flex;gap:.5rem;align-items:center">
-          <span class="item-number">${i+1}</span>
-          <button class="btn btn-danger btn-sm" onclick="removeFaq(${i})">Supprimer</button>
-        </div>
-      </div>
-      <div class="form-group"><label>Question</label><input type="text" value="${esc(f.question)}" oninput="data.faq[${i}].question=this.value;markChanged()"></div>
-      <div class="form-group"><label>Réponse</label><textarea style="min-height:100px" oninput="data.faq[${i}].answer=this.value;markChanged()">${esc(f.answer)}</textarea></div>
-    </div>`;
+    const id = 'card-faq-' + i;
+    const shortQ = esc(f.question).substring(0,60) + (f.question.length > 60 ? '...' : '');
+    c.innerHTML += cardHeader(id, shortQ || 'Question ' + (i+1), i, data.faq.length, 'moveFaq', 'removeFaq('+i+')', f.question)
+    + `<div class="form-group"><label>Question</label><input type="text" value="${esc(f.question)}" oninput="data.faq[${i}].question=this.value;markChanged()"></div>
+      <div class="form-group"><label>Réponse</label><textarea style="min-height:100px" oninput="data.faq[${i}].answer=this.value;markChanged()">${esc(f.answer)}</textarea></div>`
+    + cardFooter();
   });
 }
 function addFaq() {
   data.faq.push({ question: '', answer: '' });
+  expandedCards.add('card-faq-' + (data.faq.length - 1));
   renderFaq(); markChanged();
 }
 function removeFaq(i) {
@@ -945,24 +1140,19 @@ function renderTestimonials() {
   const c = document.getElementById('testimonials-list');
   c.innerHTML = '';
   data.testimonials.forEach((t, i) => {
-    c.innerHTML += `<div class="item-card">
-      <div class="item-header"><span class="item-title">${esc(t.author)}</span>
-        <div style="display:flex;gap:.5rem;align-items:center">
-          <span class="item-number">${i+1}</span>
-          <button class="btn btn-danger btn-sm" onclick="removeTestimonial(${i})">Supprimer</button>
-        </div>
-      </div>
-      <div class="form-group"><label>Témoignage</label><textarea oninput="data.testimonials[${i}].text=this.value;markChanged()">${esc(t.text)}</textarea></div>
+    const id = 'card-testimonials-' + i;
+    c.innerHTML += cardHeader(id, esc(t.author) || 'Témoignage ' + (i+1), i, data.testimonials.length, 'moveTestimonial', 'removeTestimonial('+i+')', t.author)
+    + `<div class="form-group"><label>Témoignage</label><textarea oninput="data.testimonials[${i}].text=this.value;markChanged()">${esc(t.text)}</textarea></div>
       <div class="form-row-3">
         <div class="form-group"><label>Auteur</label><input type="text" value="${esc(t.author)}" oninput="data.testimonials[${i}].author=this.value;markChanged()"></div>
         <div class="form-group"><label>Source</label><input type="text" value="${esc(t.origin||'')}" oninput="data.testimonials[${i}].origin=this.value;markChanged()"></div>
         <div class="form-group"><label>Note (1-5)</label><input type="number" min="1" max="5" value="${t.rating}" oninput="data.testimonials[${i}].rating=Number(this.value);markChanged()"></div>
-      </div>
-    </div>`;
+      </div>` + cardFooter();
   });
 }
 function addTestimonial() {
   data.testimonials.push({ text: '', author: '', origin: 'Google', rating: 5 });
+  expandedCards.add('card-testimonials-' + (data.testimonials.length - 1));
   renderTestimonials(); markChanged();
 }
 function removeTestimonial(i) {
@@ -975,24 +1165,20 @@ function renderSurroundings() {
   const c = document.getElementById('surroundings-list');
   c.innerHTML = '';
   data.surroundings.forEach((s, i) => {
-    c.innerHTML += `<div class="item-card">
-      <div class="item-header"><span class="item-title">${esc(s.title)}</span>
-        <div style="display:flex;gap:.5rem;align-items:center">
-          <span class="item-number">${i+1}</span>
-          <button class="btn btn-danger btn-sm" onclick="removeSurrounding(${i})">Supprimer</button>
-        </div>
-      </div>
-      <div class="form-row-3">
+    const id = 'card-surroundings-' + i;
+    c.innerHTML += cardHeader(id, esc(s.title) || 'Lieu ' + (i+1), i, data.surroundings.length, 'moveSurrounding', 'removeSurrounding('+i+')', s.title)
+    + `<div class="form-row-3">
         <div class="form-group"><label>Nom</label><input type="text" value="${esc(s.title)}" oninput="data.surroundings[${i}].title=this.value;markChanged()"></div>
         <div class="form-group"><label>Distance</label><input type="text" value="${esc(s.distance)}" oninput="data.surroundings[${i}].distance=this.value;markChanged()"></div>
         <div class="form-group"><label>URL</label><input type="url" value="${esc(s.url||'')}" oninput="data.surroundings[${i}].url=this.value;markChanged()"></div>
       </div>
-      <div class="form-group"><label>Description</label><input type="text" value="${esc(s.description)}" oninput="data.surroundings[${i}].description=this.value;markChanged()"></div>
-    </div>`;
+      <div class="form-group"><label>Description</label><input type="text" value="${esc(s.description)}" oninput="data.surroundings[${i}].description=this.value;markChanged()"></div>`
+    + cardFooter();
   });
 }
 function addSurrounding() {
   data.surroundings.push({ title: '', distance: '', description: '', url: '' });
+  expandedCards.add('card-surroundings-' + (data.surroundings.length - 1));
   renderSurroundings(); markChanged();
 }
 function removeSurrounding(i) {
@@ -1003,9 +1189,12 @@ function removeSurrounding(i) {
 // ─── Save (localStorage) ────────────────────────────────────────────────
 function saveLocal() {
   localStorage.setItem('admin_content_draft', JSON.stringify(data));
+  lastSaveTime = new Date();
   hasChanges = false;
-  document.getElementById('unsaved-dot').classList.remove('visible');
+  document.getElementById('unsaved-badge').classList.remove('visible');
+  document.getElementById('saved-badge').textContent = 'Brouillon sauvegardé';
   document.getElementById('saved-badge').classList.add('visible');
+  updateStatusBar();
   showToast('Brouillon enregistré localement');
 }
 
@@ -1053,12 +1242,31 @@ function getGitHubConfig() {
   try { return JSON.parse(cfg); } catch(e) { return null; }
 }
 
+// ─── Change Summary ─────────────────────────────────────────────────────
+function getChangeSummary() {
+  const orig = JSON.parse(originalContent);
+  const sections = [];
+  if (JSON.stringify(orig.site) !== JSON.stringify(data.site) ||
+      JSON.stringify(orig.contact) !== JSON.stringify(data.contact) ||
+      JSON.stringify(orig.openingDates) !== JSON.stringify(data.openingDates)) sections.push('Général');
+  if (JSON.stringify(orig.hero) !== JSON.stringify(data.hero)) sections.push('Hero');
+  if (JSON.stringify(orig.highlights) !== JSON.stringify(data.highlights)) sections.push('Points forts');
+  if (JSON.stringify(orig.accommodations) !== JSON.stringify(data.accommodations)) sections.push('Hébergements');
+  if (JSON.stringify(orig.tarifs) !== JSON.stringify(data.tarifs)) sections.push('Tarifs');
+  if (JSON.stringify(orig.activities) !== JSON.stringify(data.activities)) sections.push('Activités');
+  if (JSON.stringify(orig.services) !== JSON.stringify(data.services)) sections.push('Services');
+  if (JSON.stringify(orig.bac) !== JSON.stringify(data.bac)) sections.push('Le Bac');
+  if (JSON.stringify(orig.faq) !== JSON.stringify(data.faq)) sections.push('FAQ');
+  if (JSON.stringify(orig.testimonials) !== JSON.stringify(data.testimonials)) sections.push('Témoignages');
+  if (JSON.stringify(orig.surroundings) !== JSON.stringify(data.surroundings)) sections.push('Environs');
+  return sections;
+}
+
 // ─── Publish modal ──────────────────────────────────────────────────────
 function openPublishModal() {
   const cfg = getGitHubConfig();
   if (!cfg || !cfg.token) {
-    showToast('Configurez votre token GitHub dans Paramètres d\'abord');
-    // Navigate to settings
+    showToast('Configurez votre token GitHub dans Paramètres d\'abord', 'error');
     document.querySelectorAll('.sidebar a').forEach(l => l.classList.remove('active'));
     document.querySelector('[data-section="parametres"]').classList.add('active');
     document.querySelectorAll('.section-panel').forEach(p => p.classList.remove('active'));
@@ -1067,6 +1275,18 @@ function openPublishModal() {
   }
   document.getElementById('publish-status').innerHTML = '';
   document.getElementById('btn-do-publish').disabled = false;
+
+  // Show change summary
+  const changed = getChangeSummary();
+  const summaryEl = document.getElementById('publish-summary');
+  if (changed.length > 0) {
+    summaryEl.innerHTML = '<strong>' + changed.length + ' section(s) modifiée(s) :</strong> ' + changed.join(', ');
+    summaryEl.style.display = 'block';
+  } else {
+    summaryEl.innerHTML = 'Aucune modification détectée par rapport à la version en ligne.';
+    summaryEl.style.display = 'block';
+  }
+
   document.getElementById('publish-modal').classList.add('open');
 }
 function closePublishModal() {
@@ -1082,7 +1302,7 @@ async function publishToGitHub() {
   const btnPublish = document.getElementById('btn-do-publish');
   btnPublish.disabled = true;
 
-  statusEl.innerHTML = '<div class="status-msg loading">Publication en cours...</div>';
+  statusEl.innerHTML = '<div class="status-msg loading"><span class="spinner"></span> Étape 1/3 — Lecture du fichier actuel...</div>';
 
   const apiBase = 'https://api.github.com';
   const headers = {
@@ -1092,7 +1312,6 @@ async function publishToGitHub() {
   };
 
   try {
-    // 1. Get current file SHA (needed to update)
     const getRes = await fetch(
       apiBase + '/repos/' + cfg.owner + '/' + cfg.repo + '/contents/' + cfg.path + '?ref=' + cfg.branch,
       { headers }
@@ -1109,11 +1328,11 @@ async function publishToGitHub() {
       currentSha = fileData.sha;
     }
 
-    // 2. Encode content in base64
+    statusEl.innerHTML = '<div class="status-msg loading"><span class="spinner"></span> Étape 2/3 — Envoi des modifications...</div>';
+
     const jsonContent = JSON.stringify(data, null, 2) + '\n';
     const base64Content = btoa(unescape(encodeURIComponent(jsonContent)));
 
-    // 3. Create/update file via commit
     const commitMessage = document.getElementById('publish-message').value || 'Mise à jour du contenu';
     const putBody = {
       message: commitMessage,
@@ -1132,13 +1351,14 @@ async function publishToGitHub() {
       throw new Error(err.message || 'Erreur lors de la publication');
     }
 
+    statusEl.innerHTML = '<div class="status-msg loading"><span class="spinner"></span> Étape 3/3 — Finalisation...</div>';
+
     const result = await putRes.json();
     const commitUrl = result.commit.html_url;
 
-    // 4. Success — clear draft
     localStorage.removeItem('admin_content_draft');
     hasChanges = false;
-    document.getElementById('unsaved-dot').classList.remove('visible');
+    document.getElementById('unsaved-badge').classList.remove('visible');
     document.getElementById('saved-badge').classList.remove('visible');
 
     statusEl.innerHTML = '<div class="status-msg success">Publié avec succès ! Le site sera reconstruit automatiquement.<br><a href="' + commitUrl + '" target="_blank" style="color:#065f46;text-decoration:underline">Voir le commit</a></div>';
@@ -1153,12 +1373,17 @@ async function publishToGitHub() {
 // ─── Utilities ──────────────────────────────────────────────────────────
 function esc(str) {
   if (str === undefined || str === null) return '';
-  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 }
 
-function showToast(msg) {
+function showToast(msg, type) {
+  type = type || 'success';
   const t = document.getElementById('toast');
-  t.textContent = msg;
+  t.className = 'toast' + (type === 'error' ? ' toast-error' : '');
+  const icon = type === 'success'
+    ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>'
+    : '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>';
+  t.innerHTML = icon + '<span>' + msg + '</span>';
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 3000);
 }
@@ -1168,7 +1393,7 @@ window.addEventListener('beforeunload', (e) => {
   if (hasChanges) { e.preventDefault(); e.returnValue = ''; }
 });
 
-// Close modal on overlay click
+// Close modals on overlay click
 document.getElementById('publish-modal').addEventListener('click', (e) => {
   if (e.target === e.currentTarget) closePublishModal();
 });
