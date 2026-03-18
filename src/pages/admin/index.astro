@@ -23,7 +23,7 @@ const contentJson = JSON.stringify(content);
     body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: var(--cream); color: #333; line-height: 1.6; }
 
     /* Admin Layout */
-    .admin { display: none; min-height: 100vh; }
+    .admin { min-height: 100vh; }
     .topbar { background: linear-gradient(135deg, var(--forest) 0%, #244f38 100%); color: white; padding: .85rem 1.5rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; box-shadow: 0 2px 12px rgba(0,0,0,.15); }
     .topbar-left { display: flex; align-items: center; gap: 1rem; }
     .topbar-logo { width: 32px; height: 32px; background: rgba(255,255,255,.15); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
@@ -100,18 +100,16 @@ const contentJson = JSON.stringify(content);
     .btn-danger:hover { background: #fef2f2; }
     .btn-sm { padding: .4rem .85rem; font-size: .8rem; }
     .btn-export { background: var(--river); color: white; }
-    .btn-export:hover { background: #1e5f8a; box-shadow: 0 2px 8px rgba(42,122,181,.3); }
+    .btn-export:hover { background: #1e5f8a; }
     .btn-save { background: var(--sage); color: white; border-radius: 8px; }
-    .btn-save:hover { background: var(--green); box-shadow: 0 2px 8px rgba(58,125,92,.3); }
+    .btn-save:hover { background: var(--green); }
     .btn-publish { background: linear-gradient(135deg, #e8590c, #d04a08); color: white; border-radius: 8px; }
     .btn-publish:hover { box-shadow: 0 2px 8px rgba(232,89,12,.4); transform: translateY(-1px); }
     .btn-publish:disabled { opacity: .5; cursor: not-allowed; transform: none; }
     .btn-logout { background: rgba(255,255,255,.1); color: white; border: 1px solid rgba(255,255,255,.2); border-radius: 8px; }
     .btn-logout:hover { background: rgba(255,255,255,.2); }
-    .btn-back { background: transparent; color: white; border: none; font-size: .85rem; opacity: .7; }
+    .btn-back { background: transparent; color: white; border: none; font-size: .85rem; opacity: .7; cursor: pointer; }
     .btn-back:hover { opacity: 1; }
-    .btn-reset { background: transparent; color: #999; border: 1px solid #ddd; font-size: .75rem; }
-    .btn-reset:hover { color: var(--danger); border-color: #fecaca; }
 
     /* Modal */
     .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 200; align-items: center; justify-content: center; padding: 1rem; }
@@ -119,7 +117,6 @@ const contentJson = JSON.stringify(content);
     .modal { background: white; border-radius: 12px; padding: 2rem; width: 100%; max-width: 480px; box-shadow: 0 20px 60px rgba(0,0,0,.3); }
     .modal h3 { color: var(--forest); margin-bottom: .25rem; }
     .modal .modal-desc { color: #888; font-size: .85rem; margin-bottom: 1.25rem; }
-    .modal .form-group { margin-bottom: 1rem; }
     .modal .modal-actions { display: flex; gap: .75rem; justify-content: flex-end; margin-top: 1.5rem; }
     .modal .status-msg { font-size: .85rem; margin-top: .75rem; padding: .6rem .85rem; border-radius: var(--radius); }
     .modal .status-msg.success { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
@@ -137,10 +134,7 @@ const contentJson = JSON.stringify(content);
     .confirm-box .confirm-actions { display: flex; gap: .5rem; justify-content: center; }
     @keyframes confirmIn { from { transform: scale(.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
-    /* Keyboard shortcut hint */
-    .kbd { display: inline-block; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2); border-radius: 4px; padding: .05rem .35rem; font-size: .65rem; font-family: monospace; margin-left: .25rem; vertical-align: middle; }
-
-    /* Feature tags (for accommodations) */
+    /* Feature tags */
     .features-input { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; margin-top: .25rem; }
     .feature-tag { background: var(--moss); color: var(--forest); padding: .25rem .65rem; border-radius: 20px; font-size: .8rem; display: flex; align-items: center; gap: .35rem; }
     .feature-tag button { background: none; border: none; color: var(--forest); cursor: pointer; font-size: 1rem; line-height: 1; opacity: .5; }
@@ -184,14 +178,9 @@ const contentJson = JSON.stringify(content);
     @keyframes pulse-success { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
     @keyframes step-pulse { 0%, 100% { opacity: 1; } 50% { opacity: .4; } }
 
-    /* Save button animation */
-    .btn-save.saving { pointer-events: none; }
-    @keyframes save-check { 0% { transform: scale(0); } 50% { transform: scale(1.3); } 100% { transform: scale(1); } }
-
     /* Toast */
     .toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(120%); background: var(--forest); color: white; padding: .85rem 1.5rem; border-radius: 12px; font-size: .875rem; box-shadow: var(--shadow-lg); transition: transform .4s cubic-bezier(.175,.885,.32,1.275); z-index: 100; display: flex; align-items: center; gap: .5rem; white-space: nowrap; }
     .toast.show { transform: translateX(-50%) translateY(0); }
-    .toast svg { flex-shrink: 0; }
 
     /* Unsaved indicator */
     .unsaved-dot { width: 8px; height: 8px; background: var(--warning); border-radius: 50%; display: none; animation: pulse-dot 2s infinite; }
@@ -213,19 +202,14 @@ const contentJson = JSON.stringify(content);
     .image-picker-badge { background: var(--warning); color: #333; font-size: .65rem; font-weight: 700; padding: .15rem .5rem; border-radius: 10px; white-space: nowrap; }
     .image-picker input[type="file"] { display: none; }
 
-    /* Auto-save indicator */
-    .autosave-hint { font-size: .7rem; color: rgba(255,255,255,.5); }
-
     /* Empty state */
     .empty-state { text-align: center; padding: 2.5rem 1rem; color: #aaa; }
-    .empty-state svg { margin-bottom: .75rem; opacity: .4; }
-    .empty-state p { font-size: .9rem; margin-bottom: .25rem; }
-    .empty-state .empty-hint { font-size: .8rem; }
+    .empty-state p { font-size: .9rem; }
 
     /* Responsive */
     @media (max-width: 768px) {
       .sidebar { display: none; position: fixed; top: 56px; left: 0; bottom: 0; z-index: 40; width: 260px; box-shadow: 4px 0 20px rgba(0,0,0,.1); }
-      .sidebar.open { display: block; }
+      .sidebar.open { display: flex; }
       .content { padding: 1rem; }
       .form-row, .form-row-3 { grid-template-columns: 1fr; }
       .tarif-item { grid-template-columns: 1fr 120px 28px; }
@@ -237,12 +221,11 @@ const contentJson = JSON.stringify(content);
 </head>
 <body>
 
-<!-- Admin Panel -->
-<div id="admin-panel" class="admin" style="display:block">
+<div id="admin-panel" class="admin">
   <!-- Top Bar -->
   <div class="topbar">
     <div class="topbar-left">
-      <button class="btn-back" id="menu-toggle" style="display:none" onclick="document.querySelector('.sidebar').classList.toggle('open')">
+      <button class="btn-back" id="menu-toggle" style="display:none" onclick="document.getElementById('sidebar').classList.toggle('open')">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
       </button>
       <div class="topbar-logo">
@@ -256,11 +239,11 @@ const contentJson = JSON.stringify(content);
         <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
         Brouillon sauvegardé
       </span>
-      <button class="btn btn-save btn-sm" onclick="saveLocal()" title="Ctrl+S">
+      <button class="btn btn-save btn-sm" onclick="window.adminApp.saveLocal()" title="Ctrl+S">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
         <span class="btn-label">Enregistrer</span>
       </button>
-      <button class="btn btn-publish btn-sm" onclick="openPublishModal()">
+      <button class="btn btn-publish btn-sm" onclick="window.adminApp.openPublishModal()">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
         <span class="btn-label">Publier</span>
       </button>
@@ -331,7 +314,7 @@ const contentJson = JSON.stringify(content);
           Paramètres GitHub
         </a>
       </div>
-      <div class="sidebar-version">v1.8.0</div>
+      <div class="sidebar-version">v2.0.0</div>
     </nav>
 
     <!-- Content Area -->
@@ -343,13 +326,8 @@ const contentJson = JSON.stringify(content);
           <h2>Bienvenue sur votre espace admin</h2>
           <p>Gérez le contenu de votre site Camping du Bac en toute simplicité.</p>
         </div>
-
         <div class="dashboard-stats" id="dashboard-stats"></div>
-
-        <h3 class="section-subheading">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>
-          Accès rapide
-        </h3>
+        <h3 class="section-subheading">Accès rapide</h3>
         <div class="quick-links" id="quick-links"></div>
       </div>
 
@@ -357,111 +335,45 @@ const contentJson = JSON.stringify(content);
       <div class="section-panel" id="panel-general">
         <h2>Informations générales</h2>
         <p class="section-desc">Nom du camping, coordonnées, dates d'ouverture</p>
-
         <h3 class="section-subheading">Identité du site</h3>
         <div class="form-row">
-          <div class="form-group">
-            <label>Nom du camping</label>
-            <input type="text" data-path="site.name">
-          </div>
-          <div class="form-group">
-            <label>Nom court</label>
-            <input type="text" data-path="site.shortName">
-          </div>
+          <div class="form-group"><label>Nom du camping</label><input type="text" data-path="site.name"></div>
+          <div class="form-group"><label>Nom court</label><input type="text" data-path="site.shortName"></div>
         </div>
-        <div class="form-group">
-          <label>Slogan</label>
-          <input type="text" data-path="site.tagline">
-        </div>
-        <div class="form-group">
-          <label>Description (SEO)</label>
-          <textarea data-path="site.description"></textarea>
-        </div>
+        <div class="form-group"><label>Slogan</label><input type="text" data-path="site.tagline"></div>
+        <div class="form-group"><label>Description (SEO)</label><textarea data-path="site.description"></textarea></div>
         <div class="form-row-3">
-          <div class="form-group">
-            <label>Note</label>
-            <input type="text" data-path="site.rating">
-          </div>
-          <div class="form-group">
-            <label>Source de la note</label>
-            <input type="text" data-path="site.ratingSource">
-          </div>
-          <div class="form-group">
-            <label>Nombre d'étoiles</label>
-            <input type="number" data-path="site.stars" min="1" max="5">
-          </div>
+          <div class="form-group"><label>Note</label><input type="text" data-path="site.rating"></div>
+          <div class="form-group"><label>Source de la note</label><input type="text" data-path="site.ratingSource"></div>
+          <div class="form-group"><label>Nombre d'étoiles</label><input type="number" data-path="site.stars" min="1" max="5"></div>
         </div>
         <div class="form-row">
-          <div class="form-group">
-            <label>URL du site</label>
-            <input type="url" data-path="site.url">
-          </div>
-          <div class="form-group">
-            <label>URL de réservation</label>
-            <input type="url" data-path="site.bookingUrl">
-          </div>
+          <div class="form-group"><label>URL du site</label><input type="url" data-path="site.url"></div>
+          <div class="form-group"><label>URL de réservation</label><input type="url" data-path="site.bookingUrl"></div>
         </div>
-
         <h3 class="section-subheading">Contact</h3>
         <div class="form-row">
-          <div class="form-group">
-            <label>Adresse</label>
-            <input type="text" data-path="contact.address">
-          </div>
-          <div class="form-group">
-            <label>Ville</label>
-            <input type="text" data-path="contact.city">
-          </div>
+          <div class="form-group"><label>Adresse</label><input type="text" data-path="contact.address"></div>
+          <div class="form-group"><label>Ville</label><input type="text" data-path="contact.city"></div>
         </div>
         <div class="form-row-3">
-          <div class="form-group">
-            <label>Code postal</label>
-            <input type="text" data-path="contact.postalCode">
-          </div>
-          <div class="form-group">
-            <label>Département</label>
-            <input type="text" data-path="contact.department">
-          </div>
-          <div class="form-group">
-            <label>Région</label>
-            <input type="text" data-path="contact.region">
-          </div>
+          <div class="form-group"><label>Code postal</label><input type="text" data-path="contact.postalCode"></div>
+          <div class="form-group"><label>Département</label><input type="text" data-path="contact.department"></div>
+          <div class="form-group"><label>Région</label><input type="text" data-path="contact.region"></div>
         </div>
         <div class="form-row">
-          <div class="form-group">
-            <label>Téléphone</label>
-            <input type="tel" data-path="contact.phone">
-          </div>
-          <div class="form-group">
-            <label>Email</label>
-            <input type="email" data-path="contact.email">
-          </div>
+          <div class="form-group"><label>Téléphone</label><input type="tel" data-path="contact.phone"></div>
+          <div class="form-group"><label>Email</label><input type="email" data-path="contact.email"></div>
         </div>
-        <div class="form-group">
-          <label>Email mairie</label>
-          <input type="email" data-path="contact.emailMairie">
-        </div>
-
+        <div class="form-group"><label>Email mairie</label><input type="email" data-path="contact.emailMairie"></div>
         <h3 class="section-subheading">Dates d'ouverture</h3>
         <div class="form-row">
-          <div class="form-group">
-            <label>Emplacements — début</label>
-            <input type="text" data-path="openingDates.emplacements.start">
-          </div>
-          <div class="form-group">
-            <label>Emplacements — fin</label>
-            <input type="text" data-path="openingDates.emplacements.end">
-          </div>
+          <div class="form-group"><label>Emplacements — début</label><input type="text" data-path="openingDates.emplacements.start"></div>
+          <div class="form-group"><label>Emplacements — fin</label><input type="text" data-path="openingDates.emplacements.end"></div>
         </div>
         <div class="form-row">
-          <div class="form-group">
-            <label>Chalets</label>
-            <input type="text" data-path="openingDates.chalets">
-          </div>
-          <div class="form-group">
-            <label>Maison éclusière</label>
-            <input type="text" data-path="openingDates.maisonEclusiere">
-          </div>
+          <div class="form-group"><label>Chalets</label><input type="text" data-path="openingDates.chalets"></div>
+          <div class="form-group"><label>Maison éclusière</label><input type="text" data-path="openingDates.maisonEclusiere"></div>
         </div>
       </div>
 
@@ -469,46 +381,21 @@ const contentJson = JSON.stringify(content);
       <div class="section-panel" id="panel-hero">
         <h2>Page d'accueil — Hero</h2>
         <p class="section-desc">Titre, sous-titre, boutons et image principale</p>
-        <div class="form-group">
-          <label>Titre principal</label>
-          <input type="text" data-path="hero.title">
-        </div>
-        <div class="form-group">
-          <label>Sous-titre</label>
-          <input type="text" data-path="hero.subtitle">
+        <div class="form-group"><label>Titre principal</label><input type="text" data-path="hero.title"></div>
+        <div class="form-group"><label>Sous-titre</label><input type="text" data-path="hero.subtitle"></div>
+        <div class="form-row">
+          <div class="form-group"><label>Bouton 1 — texte</label><input type="text" data-path="hero.cta1.text"></div>
+          <div class="form-group"><label>Bouton 1 — URL</label><input type="text" data-path="hero.cta1.url"></div>
         </div>
         <div class="form-row">
-          <div class="form-group">
-            <label>Bouton 1 — texte</label>
-            <input type="text" data-path="hero.cta1.text">
-          </div>
-          <div class="form-group">
-            <label>Bouton 1 — URL</label>
-            <input type="text" data-path="hero.cta1.url">
-          </div>
+          <div class="form-group"><label>Bouton 2 — texte</label><input type="text" data-path="hero.cta2.text"></div>
+          <div class="form-group"><label>Bouton 2 — URL</label><input type="text" data-path="hero.cta2.url"></div>
         </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label>Bouton 2 — texte</label>
-            <input type="text" data-path="hero.cta2.text">
-          </div>
-          <div class="form-group">
-            <label>Bouton 2 — URL</label>
-            <input type="text" data-path="hero.cta2.url">
-          </div>
-        </div>
-        <div class="form-group">
-          <label>Image</label>
-          <div class="image-picker" id="hero-image-picker"></div>
-        </div>
-        <div class="form-group">
-          <label>Texte alternatif de l'image</label>
-          <input type="text" data-path="hero.imageAlt">
-        </div>
-
+        <div class="form-group"><label>Image</label><div class="image-picker" id="hero-image-picker"></div></div>
+        <div class="form-group"><label>Texte alternatif de l'image</label><input type="text" data-path="hero.imageAlt"></div>
         <h3 class="section-subheading">Points forts (highlights)</h3>
         <div id="highlights-list"></div>
-        <button class="btn btn-secondary btn-sm" onclick="addHighlight()">+ Ajouter un point fort</button>
+        <button class="btn btn-secondary btn-sm" onclick="window.adminApp.addHighlight()">+ Ajouter un point fort</button>
       </div>
 
       <!-- HEBERGEMENTS -->
@@ -522,14 +409,8 @@ const contentJson = JSON.stringify(content);
       <div class="section-panel" id="panel-tarifs">
         <h2>Tarifs</h2>
         <p class="section-desc">Grilles tarifaires pour chaque type d'hébergement et les locations</p>
-        <div class="form-group">
-          <label>Note générale sur les tarifs</label>
-          <textarea data-path="tarifs.note"></textarea>
-        </div>
-        <div class="form-group">
-          <label>Note sur les moyens de paiement</label>
-          <input type="text" data-path="tarifs.paymentNote">
-        </div>
+        <div class="form-group"><label>Note générale sur les tarifs</label><textarea data-path="tarifs.note"></textarea></div>
+        <div class="form-group"><label>Note sur les moyens de paiement</label><input type="text" data-path="tarifs.paymentNote"></div>
         <div id="tarifs-sections"></div>
       </div>
 
@@ -538,7 +419,7 @@ const contentJson = JSON.stringify(content);
         <h2>Activités</h2>
         <p class="section-desc">Activités disponibles au camping et aux alentours</p>
         <div id="activities-list"></div>
-        <button class="btn btn-secondary btn-sm" onclick="addActivity()">+ Ajouter une activité</button>
+        <button class="btn btn-secondary btn-sm" onclick="window.adminApp.addActivity()">+ Ajouter une activité</button>
       </div>
 
       <!-- SERVICES -->
@@ -546,61 +427,38 @@ const contentJson = JSON.stringify(content);
         <h2>Services</h2>
         <p class="section-desc">Services proposés au camping</p>
         <div id="services-list"></div>
-        <button class="btn btn-secondary btn-sm" onclick="addService()">+ Ajouter un service</button>
+        <button class="btn btn-secondary btn-sm" onclick="window.adminApp.addService()">+ Ajouter un service</button>
       </div>
 
       <!-- BAC -->
       <div class="section-panel" id="panel-bac">
         <h2>Le Bac de Ménil</h2>
         <p class="section-desc">Informations, tarifs et horaires du bac</p>
-        <div class="form-group">
-          <label>Titre</label>
-          <input type="text" data-path="bac.title">
-        </div>
-        <div class="form-group">
-          <label>Description</label>
-          <textarea data-path="bac.description" style="min-height:100px"></textarea>
-        </div>
-        <div class="form-group">
-          <label>Détails</label>
-          <textarea data-path="bac.details"></textarea>
-        </div>
+        <div class="form-group"><label>Titre</label><input type="text" data-path="bac.title"></div>
+        <div class="form-group"><label>Description</label><textarea data-path="bac.description" style="min-height:100px"></textarea></div>
+        <div class="form-group"><label>Détails</label><textarea data-path="bac.details"></textarea></div>
         <div class="form-row">
-          <div class="form-group">
-            <label>Tarif</label>
-            <input type="text" data-path="bac.price">
-          </div>
-          <div class="form-group">
-            <label>Restrictions</label>
-            <input type="text" data-path="bac.restrictions">
-          </div>
+          <div class="form-group"><label>Tarif</label><input type="text" data-path="bac.price"></div>
+          <div class="form-group"><label>Restrictions</label><input type="text" data-path="bac.restrictions"></div>
         </div>
-
         <h3 class="section-subheading">Horaires basse saison</h3>
-        <div class="form-group">
-          <label>Période</label>
-          <input type="text" data-path="bac.schedules.lowSeason.period">
-        </div>
+        <div class="form-group"><label>Période</label><input type="text" data-path="bac.schedules.lowSeason.period"></div>
         <div class="form-group">
           <label>Horaires</label>
           <div class="schedule-times" id="low-season-times"></div>
           <div style="margin-top:.5rem;display:flex;gap:.5rem">
             <input type="text" id="low-season-new" placeholder="ex: 14h30" style="width:120px;padding:.35rem .65rem;border:1px solid #ddd;border-radius:var(--radius);font-size:.85rem">
-            <button class="btn btn-secondary btn-sm" onclick="addScheduleTime('low')">Ajouter</button>
+            <button class="btn btn-secondary btn-sm" onclick="window.adminApp.addScheduleTime('low')">Ajouter</button>
           </div>
         </div>
-
         <h3 class="section-subheading">Horaires haute saison</h3>
-        <div class="form-group">
-          <label>Période</label>
-          <input type="text" data-path="bac.schedules.highSeason.period">
-        </div>
+        <div class="form-group"><label>Période</label><input type="text" data-path="bac.schedules.highSeason.period"></div>
         <div class="form-group">
           <label>Horaires</label>
           <div class="schedule-times" id="high-season-times"></div>
           <div style="margin-top:.5rem;display:flex;gap:.5rem">
             <input type="text" id="high-season-new" placeholder="ex: 17h00" style="width:120px;padding:.35rem .65rem;border:1px solid #ddd;border-radius:var(--radius);font-size:.85rem">
-            <button class="btn btn-secondary btn-sm" onclick="addScheduleTime('high')">Ajouter</button>
+            <button class="btn btn-secondary btn-sm" onclick="window.adminApp.addScheduleTime('high')">Ajouter</button>
           </div>
         </div>
       </div>
@@ -610,7 +468,7 @@ const contentJson = JSON.stringify(content);
         <h2>FAQ</h2>
         <p class="section-desc">Questions fréquentes des visiteurs</p>
         <div id="faq-list"></div>
-        <button class="btn btn-secondary btn-sm" onclick="addFaq()">+ Ajouter une question</button>
+        <button class="btn btn-secondary btn-sm" onclick="window.adminApp.addFaq()">+ Ajouter une question</button>
       </div>
 
       <!-- TEMOIGNAGES -->
@@ -618,7 +476,7 @@ const contentJson = JSON.stringify(content);
         <h2>Témoignages</h2>
         <p class="section-desc">Avis et témoignages des clients</p>
         <div id="testimonials-list"></div>
-        <button class="btn btn-secondary btn-sm" onclick="addTestimonial()">+ Ajouter un témoignage</button>
+        <button class="btn btn-secondary btn-sm" onclick="window.adminApp.addTestimonial()">+ Ajouter un témoignage</button>
       </div>
 
       <!-- ENVIRONS -->
@@ -626,15 +484,13 @@ const contentJson = JSON.stringify(content);
         <h2>Aux environs</h2>
         <p class="section-desc">Sites et attractions à proximité du camping</p>
         <div id="surroundings-list"></div>
-        <button class="btn btn-secondary btn-sm" onclick="addSurrounding()">+ Ajouter un lieu</button>
+        <button class="btn btn-secondary btn-sm" onclick="window.adminApp.addSurrounding()">+ Ajouter un lieu</button>
       </div>
 
       <!-- PARAMETRES -->
       <div class="section-panel" id="panel-parametres">
         <h2>Paramètres GitHub</h2>
         <p class="section-desc">Configuration pour publier directement sur le site</p>
-
-        <!-- Status indicator -->
         <div class="item-card" id="github-status-card" style="border-left:4px solid #ddd">
           <div style="display:flex;align-items:center;gap:.75rem">
             <div id="github-status-icon" style="width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#f0f0f0">
@@ -646,74 +502,48 @@ const contentJson = JSON.stringify(content);
             </div>
           </div>
         </div>
-
         <div class="item-card" style="margin-top:1rem">
           <div class="item-header"><span class="item-title">1. Créer un token GitHub</span></div>
           <div class="item-body">
             <div style="background:#f8faf8;border-radius:10px;padding:1.25rem;margin-bottom:1.25rem">
               <ol style="font-size:.85rem;color:#555;padding-left:1.25rem;display:flex;flex-direction:column;gap:.65rem">
                 <li>Connectez-vous sur <strong>github.com</strong></li>
-                <li>Allez dans <strong>Settings</strong> (icône profil en haut à droite) &rarr; <strong>Developer settings</strong> (tout en bas) &rarr; <strong>Personal access tokens</strong> &rarr; <strong>Tokens (classic)</strong></li>
+                <li>Allez dans <strong>Settings</strong> &rarr; <strong>Developer settings</strong> &rarr; <strong>Personal access tokens</strong> &rarr; <strong>Tokens (classic)</strong></li>
                 <li>Cliquez sur <strong>"Generate new token (classic)"</strong></li>
-                <li>Nom : <code>Camping Admin</code> &mdash; Expiration : au choix (90 jours recommandé)</li>
+                <li>Nom : <code>Camping Admin</code> — Expiration : au choix (90 jours recommandé)</li>
                 <li>Cochez les droits : <strong><code>repo</code></strong> (tout cocher) et <strong><code>workflow</code></strong></li>
                 <li>Cliquez <strong>"Generate token"</strong> et <strong>copiez le token</strong> (commence par <code>ghp_</code>)</li>
               </ol>
             </div>
           </div>
         </div>
-
         <div class="item-card" style="margin-top:1rem">
           <div class="item-header"><span class="item-title">2. Entrer le token ici</span></div>
           <div class="item-body">
             <div class="form-group">
               <label>Token GitHub (Personal Access Token)</label>
               <input type="password" id="github-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" style="font-family:monospace">
-              <p class="help-text">Le token est stocké uniquement dans votre navigateur, jamais envoyé ailleurs que sur GitHub.</p>
+              <p class="help-text">Le token est stocké uniquement dans votre navigateur.</p>
             </div>
             <div class="form-row">
-              <div class="form-group">
-                <label>Propriétaire / Organisation</label>
-                <input type="text" id="github-owner" value="Lordahou">
-              </div>
-              <div class="form-group">
-                <label>Nom du dépôt</label>
-                <input type="text" id="github-repo" value="camping-menil">
-              </div>
+              <div class="form-group"><label>Propriétaire / Organisation</label><input type="text" id="github-owner" value="Lordahou"></div>
+              <div class="form-group"><label>Nom du dépôt</label><input type="text" id="github-repo" value="camping-menil"></div>
             </div>
             <div class="form-row">
-              <div class="form-group">
-                <label>Branche principale</label>
-                <input type="text" id="github-branch" value="main">
-              </div>
-              <div class="form-group">
-                <label>Chemin du fichier content.json</label>
-                <input type="text" id="github-path" value="src/data/content.json">
-              </div>
+              <div class="form-group"><label>Branche principale</label><input type="text" id="github-branch" value="main"></div>
+              <div class="form-group"><label>Chemin du fichier content.json</label><input type="text" id="github-path" value="src/data/content.json"></div>
             </div>
             <div style="display:flex;gap:.75rem;align-items:center">
-              <button class="btn btn-primary btn-sm" onclick="saveGitHubConfig()">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
-                Sauvegarder la configuration
-              </button>
-              <button class="btn btn-secondary btn-sm" onclick="testGitHubConnection()">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-                Tester la connexion
-              </button>
+              <button class="btn btn-primary btn-sm" onclick="window.adminApp.saveGitHubConfig()">Sauvegarder la configuration</button>
+              <button class="btn btn-secondary btn-sm" onclick="window.adminApp.testGitHubConnection()">Tester la connexion</button>
             </div>
           </div>
         </div>
-
         <div class="item-card" style="margin-top:1rem">
           <div class="item-header"><span class="item-title">Alternative : Export local</span></div>
           <div class="item-body">
-            <p style="font-size:.85rem;color:#666;margin-bottom:1rem">
-              Si vous ne souhaitez pas utiliser GitHub, vous pouvez télécharger le fichier <code>content.json</code> modifié et le déposer manuellement dans votre dépôt.
-            </p>
-            <button class="btn btn-export btn-sm" onclick="exportContent()">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              Télécharger content.json
-            </button>
+            <p style="font-size:.85rem;color:#666;margin-bottom:1rem">Téléchargez le fichier <code>content.json</code> modifié et déposez-le manuellement dans votre dépôt.</p>
+            <button class="btn btn-export btn-sm" onclick="window.adminApp.exportContent()">Télécharger content.json</button>
           </div>
         </div>
       </div>
@@ -733,11 +563,8 @@ const contentJson = JSON.stringify(content);
         <input type="text" id="publish-message" value="Mise à jour du contenu du site" placeholder="Description des modifications...">
       </div>
       <div class="modal-actions">
-        <button class="btn btn-secondary btn-sm" onclick="closePublishModal()">Annuler</button>
-        <button class="btn btn-publish btn-sm" id="btn-do-publish" onclick="publishToGitHub()">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
-          Publier maintenant
-        </button>
+        <button class="btn btn-secondary btn-sm" onclick="window.adminApp.closePublishModal()">Annuler</button>
+        <button class="btn btn-publish btn-sm" id="btn-do-publish" onclick="window.adminApp.publishToGitHub()">Publier maintenant</button>
       </div>
     </div>
     <div id="publish-transfer-view" style="display:none">
@@ -749,9 +576,7 @@ const contentJson = JSON.stringify(content);
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
           </div>
           <div class="transfer-pipeline" id="transfer-pipeline">
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
+            <div class="particle"></div><div class="particle"></div><div class="particle"></div>
           </div>
           <div class="transfer-icon target" id="transfer-target">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
@@ -767,7 +592,7 @@ const contentJson = JSON.stringify(content);
       </div>
       <div id="publish-status" style="margin-top:1rem"></div>
       <div class="modal-actions" id="transfer-actions" style="display:none">
-        <button class="btn btn-secondary btn-sm" onclick="closePublishModal()">Fermer</button>
+        <button class="btn btn-secondary btn-sm" onclick="window.adminApp.closePublishModal()">Fermer</button>
       </div>
     </div>
   </div>
@@ -779,7 +604,7 @@ const contentJson = JSON.stringify(content);
     <h4 id="confirm-title">Supprimer cet élément ?</h4>
     <p id="confirm-message">Cette action est irréversible.</p>
     <div class="confirm-actions">
-      <button class="btn btn-secondary btn-sm" onclick="closeConfirm()">Annuler</button>
+      <button class="btn btn-secondary btn-sm" onclick="window.adminApp.closeConfirm()">Annuler</button>
       <button class="btn btn-danger btn-sm" id="confirm-btn" style="background:var(--danger);color:white;border:none">Supprimer</button>
     </div>
   </div>
@@ -793,1012 +618,946 @@ const contentJson = JSON.stringify(content);
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
       </div>
       <h3 style="color:var(--forest);margin-bottom:.35rem">Token GitHub requis</h3>
-      <p class="modal-desc" style="margin-bottom:0">Pour publier vos modifications sur le site, vous devez d'abord configurer votre connexion GitHub.</p>
+      <p class="modal-desc" style="margin-bottom:0">Pour publier, configurez d'abord votre connexion GitHub.</p>
     </div>
-
     <div style="background:#f8faf8;border-radius:10px;padding:1.25rem;margin-bottom:1.25rem">
       <p style="font-size:.85rem;font-weight:600;color:var(--forest);margin-bottom:.75rem">Comment faire ?</p>
       <ol style="font-size:.82rem;color:#555;padding-left:1.25rem;display:flex;flex-direction:column;gap:.5rem">
         <li>Allez sur <strong>github.com</strong> &rarr; Settings &rarr; Developer settings &rarr; Personal access tokens &rarr; <strong>Tokens (classic)</strong></li>
         <li>Cliquez <strong>"Generate new token (classic)"</strong></li>
-        <li>Donnez un nom (ex: "Camping Admin"), cochez les droits <strong><code>repo</code></strong> et <strong><code>workflow</code></strong></li>
-        <li>Copiez le token généré (commence par <code>ghp_</code>)</li>
-        <li>Collez-le dans la section <strong>Paramètres GitHub</strong> de cet admin</li>
+        <li>Cochez les droits <strong><code>repo</code></strong> et <strong><code>workflow</code></strong></li>
+        <li>Copiez le token et collez-le dans <strong>Paramètres GitHub</strong></li>
       </ol>
     </div>
-
     <div class="modal-actions" style="justify-content:center">
-      <button class="btn btn-secondary btn-sm" onclick="closeTokenModal()">Plus tard</button>
-      <button class="btn btn-primary btn-sm" onclick="closeTokenModal();navigateTo('parametres')">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-        Configurer maintenant
-      </button>
+      <button class="btn btn-secondary btn-sm" onclick="window.adminApp.closeTokenModal()">Plus tard</button>
+      <button class="btn btn-primary btn-sm" onclick="window.adminApp.closeTokenModal();window.adminApp.navigateTo('parametres')">Configurer maintenant</button>
     </div>
   </div>
 </div>
 
-<!-- Toast notification -->
+<!-- Toast -->
 <div class="toast" id="toast">
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
   <span id="toast-text"></span>
 </div>
 
-<script is:inline define:vars={{ contentJson, basePath: import.meta.env.BASE_URL }}>
-// ─── State ──────────────────────────────────────────────────────────────
-const originalContent = contentJson;
-let data = JSON.parse(contentJson);
-let hasChanges = false;
-let autoSaveTimer = null;
-let pendingConfirm = null;
 
-// Load saved draft from localStorage if available
-const savedDraft = localStorage.getItem('admin_content_draft');
-if (savedDraft) {
+<script is:inline define:vars={{ contentJson, basePath: import.meta.env.BASE_URL }}>
+(function() {
+  "use strict";
+
+  // ─── Utilities ──────────────────────────────────────────────────────────
+  function esc(str) {
+    if (str == null) return '';
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  function $(id) { return document.getElementById(id); }
+
+  function showToast(msg) {
+    $('toast-text').textContent = msg;
+    $('toast').classList.add('show');
+    setTimeout(function() { $('toast').classList.remove('show'); }, 3000);
+  }
+
+  function getPath(obj, path) {
+    return path.split('.').reduce(function(o, k) { return o && o[k]; }, obj);
+  }
+
+  function setPath(obj, path, val) {
+    var keys = path.split('.');
+    var last = keys.pop();
+    var target = keys.reduce(function(o, k) { o[k] = o[k] || {}; return o[k]; }, obj);
+    target[last] = val;
+  }
+
+  // ─── State ──────────────────────────────────────────────────────────────
+  var data = JSON.parse(contentJson);
+  var hasChanges = false;
+  var autoSaveTimer = null;
+  var pendingConfirm = null;
+  var pendingImageUploads = {};
+  var hasDraft = false;
+
+  // Load draft from localStorage
   try {
-    const parsed = JSON.parse(savedDraft);
-    // Validate draft has required arrays to prevent broken renders
-    if (parsed && Array.isArray(parsed.accommodations) && Array.isArray(parsed.activities)) {
-      data = parsed;
-    } else {
-      localStorage.removeItem('admin_content_draft');
+    var savedDraft = localStorage.getItem('admin_content_draft');
+    if (savedDraft) {
+      var parsed = JSON.parse(savedDraft);
+      if (parsed && Array.isArray(parsed.accommodations) && Array.isArray(parsed.activities)) {
+        data = parsed;
+        hasDraft = true;
+      } else {
+        localStorage.removeItem('admin_content_draft');
+      }
     }
   } catch(e) { localStorage.removeItem('admin_content_draft'); }
-}
 
-// ─── Init ───────────────────────────────────────────────────────────────
-function initAdmin() {
+  // ─── Mark changed ─────────────────────────────────────────────────────
+  function markChanged() {
+    hasChanges = true;
+    $('unsaved-dot').classList.add('visible');
+    if (autoSaveTimer) clearTimeout(autoSaveTimer);
+    autoSaveTimer = setTimeout(function() {
+      localStorage.setItem('admin_content_draft', JSON.stringify(data));
+      $('saved-badge').classList.add('visible');
+    }, 30000);
+  }
+
+  // ─── Navigation ─────────────────────────────────────────────────────────
+  function navigateTo(section) {
+    document.querySelectorAll('.sidebar a').forEach(function(l) { l.classList.remove('active'); });
+    var link = document.querySelector('[data-section="' + section + '"]');
+    if (link) link.classList.add('active');
+    document.querySelectorAll('.section-panel').forEach(function(p) { p.classList.remove('active'); });
+    $('panel-' + section).classList.add('active');
+    $('sidebar').classList.remove('open');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ─── Dashboard ──────────────────────────────────────────────────────────
+  function renderDashboard() {
+    var stats = [
+      { n: (data.accommodations || []).length, l: 'Hébergements' },
+      { n: (data.activities || []).length, l: 'Activités' },
+      { n: (data.services || []).length, l: 'Services' },
+      { n: (data.faq || []).length, l: 'FAQ' },
+      { n: (data.testimonials || []).length, l: 'Témoignages' },
+      { n: (data.surroundings || []).length, l: 'Aux environs' }
+    ];
+    $('dashboard-stats').innerHTML = stats.map(function(s) {
+      return '<div class="stat-card"><div class="stat-number">' + s.n + '</div><div class="stat-label">' + s.l + '</div></div>';
+    }).join('');
+
+    var links = [
+      { s: 'general', l: 'Modifier les infos générales' },
+      { s: 'hero', l: "Page d'accueil" },
+      { s: 'hebergements', l: 'Gérer les hébergements' },
+      { s: 'tarifs', l: 'Mettre à jour les tarifs' },
+      { s: 'parametres', l: 'Configurer GitHub' }
+    ];
+    $('quick-links').innerHTML = links.map(function(lnk) {
+      return '<div class="quick-link" onclick="window.adminApp.navigateTo(\'' + lnk.s + '\')">' + esc(lnk.l) + '</div>';
+    }).join('');
+  }
+
+  // ─── Image Picker ─────────────────────────────────────────────────────
+  function getImageSrc(imagePath) {
+    if (pendingImageUploads[imagePath] && pendingImageUploads[imagePath].dataUrl) {
+      return pendingImageUploads[imagePath].dataUrl;
+    }
+    if (imagePath && imagePath.charAt(0) === '/') {
+      return basePath.replace(/\/$/, '') + imagePath;
+    }
+    return imagePath || '';
+  }
+
+  function renderImagePicker(containerId, imagePath, onPathChange) {
+    var container = $(containerId);
+    if (!container) return;
+    var src = getImageSrc(imagePath);
+    var hasPending = pendingImageUploads[imagePath];
+    var hasImg = !!imagePath;
+
+    container.className = 'image-picker' + (hasImg ? ' has-image' : '');
+
+    var previewHtml;
+    if (hasImg && src) {
+      previewHtml = '<img src="' + esc(src) + '" alt="Aperçu">';
+    } else {
+      previewHtml = '<div class="no-image"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="m21 15-5-5L5 21"></path></svg>Aucune image</div>';
+    }
+
+    container.innerHTML = '<div class="image-picker-preview">' + previewHtml + '</div>' +
+      '<div class="image-picker-actions">' +
+        '<label class="btn-upload"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg> Importer' +
+          '<input type="file" accept="image/*" onchange="window.adminApp.handleImageUpload(this, \'' + containerId + '\')">' +
+        '</label>' +
+        '<span class="image-picker-path">' + (imagePath ? esc(imagePath) : 'Aucun fichier') + '</span>' +
+        (hasPending ? '<span class="image-picker-badge">Nouvelle</span>' : '') +
+      '</div>';
+
+    var img = container.querySelector('img');
+    if (img) {
+      img.onerror = function() { this.parentElement.innerHTML = '<div class="no-image">Image introuvable</div>'; };
+    }
+    container._onPathChange = onPathChange;
+  }
+
+  function handleImageUpload(input, containerId) {
+    var file = input.files[0];
+    if (!file) return;
+    var container = $(containerId);
+    if (!container) return;
+
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      var dataUrl = e.target.result;
+      var ext = file.name.split('.').pop().toLowerCase();
+      var cleanName = file.name.replace(/\.[^.]+$/, '').toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+      var folder = '/images/';
+      var target = container.dataset.imageTarget;
+      if (target === 'accommodations') folder = '/images/hebergements/';
+      else if (target === 'activities') folder = '/images/activites/';
+      else if (containerId === 'hero-image-picker') folder = '/images/hero/';
+
+      var newPath = folder + cleanName + '.' + ext;
+      pendingImageUploads[newPath] = { base64: dataUrl.split(',')[1], mimeType: file.type, dataUrl: dataUrl };
+      if (container._onPathChange) container._onPathChange(newPath);
+      markChanged();
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function initHeroImagePicker() {
+    renderImagePicker('hero-image-picker', (data.hero && data.hero.image) || '', function(newPath) {
+      data.hero.image = newPath;
+      initHeroImagePicker();
+    });
+  }
+
+  function initAccommodationImagePickers() {
+    (data.accommodations || []).forEach(function(a, i) {
+      renderImagePicker('acc-image-picker-' + i, a.image || '', function(newPath) {
+        data.accommodations[i].image = newPath;
+        renderImagePicker('acc-image-picker-' + i, newPath, data.accommodations[i]._imgCb || arguments.callee);
+      });
+    });
+  }
+
+  function initActivityImagePickers() {
+    (data.activities || []).forEach(function(a, i) {
+      renderImagePicker('act-image-picker-' + i, a.image || '', function(newPath) {
+        data.activities[i].image = newPath;
+        renderImagePicker('act-image-picker-' + i, newPath, arguments.callee);
+      });
+    });
+  }
+
+  // ─── Populate forms ───────────────────────────────────────────────────
+  function populateAllForms() {
+    document.querySelectorAll('[data-path]').forEach(function(input) {
+      var val = getPath(data, input.dataset.path);
+      if (val !== undefined && val !== null) input.value = val;
+      input.addEventListener('input', function() {
+        var v = input.type === 'number' ? Number(input.value) : input.value;
+        setPath(data, input.dataset.path, v);
+        markChanged();
+      });
+    });
+
+    renderHighlights();
+    renderAccommodations();
+    renderTarifs();
+    renderActivities();
+    renderServices();
+    renderScheduleTimes();
+    renderFaq();
+    renderTestimonials();
+    renderSurroundings();
+    initHeroImagePicker();
+  }
+
+  // ─── Highlights ─────────────────────────────────────────────────────────
+  function renderHighlights() {
+    var c = $('highlights-list');
+    if (!c) return;
+    c.innerHTML = '';
+    var iconOptions = ['river','bike','star','boat','location','activity'];
+    (data.highlights || []).forEach(function(h, i) {
+      var optionsHtml = iconOptions.map(function(ic) {
+        return '<option value="' + ic + '"' + (h.icon === ic ? ' selected' : '') + '>' + ic + '</option>';
+      }).join('');
+      c.innerHTML += '<div class="item-card">' +
+        '<div class="item-header"><span class="item-title">' + esc(h.title || 'Point fort ' + (i+1)) + '</span>' +
+          '<div style="display:flex;gap:.5rem;align-items:center">' +
+            '<span class="item-number">' + (i+1) + '</span>' +
+            '<button class="btn btn-danger btn-sm" onclick="window.adminApp.confirmRemoveHighlight(' + i + ')">Supprimer</button>' +
+          '</div>' +
+        '</div>' +
+        '<div class="item-body">' +
+          '<div class="form-row-3">' +
+            '<div class="form-group"><label>Icône</label><select onchange="window.adminApp.data.highlights[' + i + '].icon=this.value;window.adminApp.markChanged()">' + optionsHtml + '</select></div>' +
+            '<div class="form-group"><label>Titre</label><input type="text" value="' + esc(h.title) + '" oninput="window.adminApp.data.highlights[' + i + '].title=this.value;window.adminApp.markChanged()"></div>' +
+            '<div class="form-group"><label>Description</label><input type="text" value="' + esc(h.description) + '" oninput="window.adminApp.data.highlights[' + i + '].description=this.value;window.adminApp.markChanged()"></div>' +
+          '</div>' +
+        '</div></div>';
+    });
+  }
+
+  function addHighlight() {
+    if (!data.highlights) data.highlights = [];
+    data.highlights.push({ icon: 'star', title: '', description: '' });
+    renderHighlights(); markChanged();
+  }
+
+  function confirmRemoveHighlight(i) {
+    showConfirm('Supprimer ce point fort ?', 'L\'élément sera supprimé.', function() {
+      data.highlights.splice(i, 1);
+      renderHighlights(); markChanged();
+    });
+  }
+
+  // ─── Accommodations ─────────────────────────────────────────────────────
+  function renderAccommodations() {
+    var c = $('accommodations-list');
+    if (!c) return;
+    c.innerHTML = '';
+    (data.accommodations || []).forEach(function(a, i) {
+      var featuresHtml = (a.features || []).map(function(f, fi) {
+        return '<span class="feature-tag">' + esc(f) + '<button onclick="window.adminApp.removeFeature(' + i + ',' + fi + ')">&times;</button></span>';
+      }).join('');
+
+      c.innerHTML += '<div class="item-card">' +
+        '<div class="item-header"><span class="item-title">' + esc(a.title || 'Hébergement ' + (i+1)) + '</span><span class="item-number">' + (i+1) + '</span></div>' +
+        '<div class="item-body">' +
+          '<div class="form-row">' +
+            '<div class="form-group"><label>Titre</label><input type="text" value="' + esc(a.title) + '" oninput="window.adminApp.data.accommodations[' + i + '].title=this.value;window.adminApp.markChanged()"></div>' +
+            '<div class="form-group"><label>Sous-titre</label><input type="text" value="' + esc(a.subtitle) + '" oninput="window.adminApp.data.accommodations[' + i + '].subtitle=this.value;window.adminApp.markChanged()"></div>' +
+          '</div>' +
+          '<div class="form-group"><label>Description</label><textarea oninput="window.adminApp.data.accommodations[' + i + '].description=this.value;window.adminApp.markChanged()">' + esc(a.description) + '</textarea></div>' +
+          '<div class="form-row-3">' +
+            '<div class="form-group"><label>Capacité</label><input type="text" value="' + esc(a.capacity) + '" oninput="window.adminApp.data.accommodations[' + i + '].capacity=this.value;window.adminApp.markChanged()"></div>' +
+            '<div class="form-group"><label>Check-in</label><input type="text" value="' + esc(a.checkin || '') + '" oninput="window.adminApp.data.accommodations[' + i + '].checkin=this.value;window.adminApp.markChanged()"></div>' +
+            '<div class="form-group"><label>Check-out</label><input type="text" value="' + esc(a.checkout || '') + '" oninput="window.adminApp.data.accommodations[' + i + '].checkout=this.value;window.adminApp.markChanged()"></div>' +
+          '</div>' +
+          '<div class="form-group"><label>Image</label><div class="image-picker" id="acc-image-picker-' + i + '" data-image-target="accommodations"></div></div>' +
+          '<div class="form-group"><label>Texte alternatif</label><input type="text" value="' + esc(a.imageAlt || '') + '" oninput="window.adminApp.data.accommodations[' + i + '].imageAlt=this.value;window.adminApp.markChanged()"></div>' +
+          '<div class="form-group"><label>Caractéristiques</label>' +
+            '<div class="features-input">' + featuresHtml +
+              '<div style="display:flex;gap:.35rem">' +
+                '<input type="text" id="feat-input-' + i + '" placeholder="Ajouter..." style="width:140px;padding:.3rem .6rem;font-size:.8rem;border:1px solid #ddd;border-radius:20px">' +
+                '<button class="btn btn-secondary btn-sm" onclick="window.adminApp.addFeature(' + i + ')">+</button>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+        '</div></div>';
+    });
+    initAccommodationImagePickers();
+  }
+
+  function addFeature(accIdx) {
+    var input = $('feat-input-' + accIdx);
+    if (input && input.value.trim()) {
+      if (!data.accommodations[accIdx].features) data.accommodations[accIdx].features = [];
+      data.accommodations[accIdx].features.push(input.value.trim());
+      input.value = '';
+      renderAccommodations(); markChanged();
+    }
+  }
+
+  function removeFeature(accIdx, featIdx) {
+    data.accommodations[accIdx].features.splice(featIdx, 1);
+    renderAccommodations(); markChanged();
+  }
+
+  // ─── Tarifs ───────────────────────────────────────────────────────────
+  function renderTarifs() {
+    var c = $('tarifs-sections');
+    if (!c) return;
+    c.innerHTML = '';
+    ['emplacements', 'chalets', 'bivouac', 'rentals'].forEach(function(key) {
+      var t = data.tarifs && data.tarifs[key];
+      if (!t) return;
+      var itemsHtml = (t.items || []).map(function(item, ii) {
+        return '<div class="tarif-item">' +
+          '<input type="text" value="' + esc(item.label) + '" oninput="window.adminApp.data.tarifs[\'' + key + '\'].items[' + ii + '].label=this.value;window.adminApp.markChanged()">' +
+          '<input type="text" value="' + esc(item.price) + '" oninput="window.adminApp.data.tarifs[\'' + key + '\'].items[' + ii + '].price=this.value;window.adminApp.markChanged()">' +
+          '<button class="btn-remove" onclick="window.adminApp.removeTarifItem(\'' + key + '\',' + ii + ')">&times;</button>' +
+        '</div>';
+      }).join('');
+
+      var footnoteHtml = '';
+      if (t.footnote !== undefined) {
+        footnoteHtml = '<div class="form-group"><label>Note de bas</label><input type="text" value="' + esc(t.footnote || '') + '" oninput="window.adminApp.data.tarifs[\'' + key + '\'].footnote=this.value;window.adminApp.markChanged()"></div>';
+      }
+
+      c.innerHTML += '<div class="item-card">' +
+        '<div class="item-header"><span class="item-title">' + esc(t.title) + '</span></div>' +
+        '<div class="form-row">' +
+          '<div class="form-group"><label>Titre</label><input type="text" value="' + esc(t.title) + '" oninput="window.adminApp.data.tarifs[\'' + key + '\'].title=this.value;window.adminApp.markChanged()"></div>' +
+          '<div class="form-group"><label>Description</label><input type="text" value="' + esc(t.description) + '" oninput="window.adminApp.data.tarifs[\'' + key + '\'].description=this.value;window.adminApp.markChanged()"></div>' +
+        '</div>' +
+        '<div class="form-group"><label>Tarifs</label>' + itemsHtml +
+          '<button class="btn btn-secondary btn-sm" style="margin-top:.5rem" onclick="window.adminApp.addTarifItem(\'' + key + '\')">+ Ajouter un tarif</button>' +
+        '</div>' +
+        footnoteHtml +
+      '</div>';
+    });
+  }
+
+  function addTarifItem(key) {
+    data.tarifs[key].items.push({ label: '', price: '' });
+    renderTarifs(); markChanged();
+  }
+
+  function removeTarifItem(key, idx) {
+    data.tarifs[key].items.splice(idx, 1);
+    renderTarifs(); markChanged();
+  }
+
+  // ─── Activities ─────────────────────────────────────────────────────────
+  function renderActivities() {
+    var c = $('activities-list');
+    if (!c) return;
+    c.innerHTML = '';
+    (data.activities || []).forEach(function(a, i) {
+      c.innerHTML += '<div class="item-card">' +
+        '<div class="item-header"><span class="item-title">' + (esc(a.title) || 'Activité ' + (i+1)) + '</span>' +
+          '<div style="display:flex;gap:.5rem;align-items:center">' +
+            '<span class="item-number">' + (i+1) + '</span>' +
+            '<button class="btn btn-danger btn-sm" onclick="window.adminApp.confirmRemoveActivity(' + i + ')">Supprimer</button>' +
+          '</div>' +
+        '</div>' +
+        '<div class="item-body">' +
+          '<div class="form-row">' +
+            '<div class="form-group"><label>Titre</label><input type="text" value="' + esc(a.title) + '" oninput="window.adminApp.data.activities[' + i + '].title=this.value;window.adminApp.markChanged()"></div>' +
+            '<div class="form-group"><label>Catégorie</label><input type="text" value="' + esc(a.category || '') + '" oninput="window.adminApp.data.activities[' + i + '].category=this.value;window.adminApp.markChanged()"></div>' +
+          '</div>' +
+          '<div class="form-group"><label>Description</label><textarea oninput="window.adminApp.data.activities[' + i + '].description=this.value;window.adminApp.markChanged()">' + esc(a.description) + '</textarea></div>' +
+          '<div class="form-group"><label>Image</label><div class="image-picker" id="act-image-picker-' + i + '" data-image-target="activities"></div></div>' +
+          '<div class="form-group"><label>Tarif</label><input type="text" value="' + esc(a.price || '') + '" oninput="window.adminApp.data.activities[' + i + '].price=this.value;window.adminApp.markChanged()"></div>' +
+        '</div></div>';
+    });
+    initActivityImagePickers();
+  }
+
+  function addActivity() {
+    if (!data.activities) data.activities = [];
+    data.activities.push({ title: '', description: '', image: '', category: '', price: '' });
+    renderActivities(); markChanged();
+  }
+
+  function confirmRemoveActivity(i) {
+    showConfirm('Supprimer cette activité ?', 'L\'activité sera supprimée.', function() {
+      data.activities.splice(i, 1);
+      renderActivities(); markChanged();
+    });
+  }
+
+  // ─── Services ─────────────────────────────────────────────────────────
+  function renderServices() {
+    var c = $('services-list');
+    if (!c) return;
+    c.innerHTML = '';
+    var iconOptions = ['wifi','electric','laundry','accessible','pets','bike-parking','playground','fishing','shower','parking','bbq'];
+    (data.services || []).forEach(function(s, i) {
+      var optionsHtml = iconOptions.map(function(ic) {
+        return '<option value="' + ic + '"' + (s.icon === ic ? ' selected' : '') + '>' + ic + '</option>';
+      }).join('');
+      c.innerHTML += '<div class="item-card">' +
+        '<div class="item-header"><span class="item-title">' + (esc(s.title) || 'Service ' + (i+1)) + '</span>' +
+          '<div style="display:flex;gap:.5rem;align-items:center">' +
+            '<span class="item-number">' + (i+1) + '</span>' +
+            '<button class="btn btn-danger btn-sm" onclick="window.adminApp.confirmRemoveService(' + i + ')">Supprimer</button>' +
+          '</div>' +
+        '</div>' +
+        '<div class="item-body">' +
+          '<div class="form-row-3">' +
+            '<div class="form-group"><label>Icône</label><select onchange="window.adminApp.data.services[' + i + '].icon=this.value;window.adminApp.markChanged()">' + optionsHtml + '</select></div>' +
+            '<div class="form-group"><label>Titre</label><input type="text" value="' + esc(s.title) + '" oninput="window.adminApp.data.services[' + i + '].title=this.value;window.adminApp.markChanged()"></div>' +
+            '<div class="form-group"><label>Description</label><input type="text" value="' + esc(s.description) + '" oninput="window.adminApp.data.services[' + i + '].description=this.value;window.adminApp.markChanged()"></div>' +
+          '</div>' +
+        '</div></div>';
+    });
+  }
+
+  function addService() {
+    if (!data.services) data.services = [];
+    data.services.push({ icon: 'wifi', title: '', description: '' });
+    renderServices(); markChanged();
+  }
+
+  function confirmRemoveService(i) {
+    showConfirm('Supprimer ce service ?', 'Le service sera supprimé.', function() {
+      data.services.splice(i, 1);
+      renderServices(); markChanged();
+    });
+  }
+
+  // ─── Schedule times ───────────────────────────────────────────────────
+  function renderScheduleTimes() {
+    ['low', 'high'].forEach(function(season) {
+      var key = season === 'low' ? 'lowSeason' : 'highSeason';
+      var c = $(season + '-season-times');
+      if (!c || !data.bac || !data.bac.schedules || !data.bac.schedules[key]) return;
+      c.innerHTML = '';
+      (data.bac.schedules[key].times || []).forEach(function(t, i) {
+        c.innerHTML += '<span class="time-tag">' + esc(t) + '<button onclick="window.adminApp.removeScheduleTime(\'' + season + '\',' + i + ')">&times;</button></span>';
+      });
+    });
+  }
+
+  function addScheduleTime(season) {
+    var key = season === 'low' ? 'lowSeason' : 'highSeason';
+    var input = $(season + '-season-new');
+    if (input && input.value.trim()) {
+      data.bac.schedules[key].times.push(input.value.trim());
+      input.value = '';
+      renderScheduleTimes(); markChanged();
+    }
+  }
+
+  function removeScheduleTime(season, i) {
+    var key = season === 'low' ? 'lowSeason' : 'highSeason';
+    data.bac.schedules[key].times.splice(i, 1);
+    renderScheduleTimes(); markChanged();
+  }
+
+  // ─── FAQ ──────────────────────────────────────────────────────────────
+  function renderFaq() {
+    var c = $('faq-list');
+    if (!c) return;
+    c.innerHTML = '';
+    (data.faq || []).forEach(function(f, i) {
+      var shortQ = esc(f.question || '').substring(0, 50) + (f.question && f.question.length > 50 ? '...' : '');
+      c.innerHTML += '<div class="item-card">' +
+        '<div class="item-header"><span class="item-title">' + shortQ + '</span>' +
+          '<div style="display:flex;gap:.5rem;align-items:center">' +
+            '<span class="item-number">' + (i+1) + '</span>' +
+            '<button class="btn btn-danger btn-sm" onclick="window.adminApp.confirmRemoveFaq(' + i + ')">Supprimer</button>' +
+          '</div>' +
+        '</div>' +
+        '<div class="item-body">' +
+          '<div class="form-group"><label>Question</label><input type="text" value="' + esc(f.question) + '" oninput="window.adminApp.data.faq[' + i + '].question=this.value;window.adminApp.markChanged()"></div>' +
+          '<div class="form-group"><label>Réponse</label><textarea style="min-height:100px" oninput="window.adminApp.data.faq[' + i + '].answer=this.value;window.adminApp.markChanged()">' + esc(f.answer) + '</textarea></div>' +
+        '</div></div>';
+    });
+  }
+
+  function addFaq() {
+    if (!data.faq) data.faq = [];
+    data.faq.push({ question: '', answer: '' });
+    renderFaq(); markChanged();
+  }
+
+  function confirmRemoveFaq(i) {
+    showConfirm('Supprimer cette question ?', 'La question sera supprimée.', function() {
+      data.faq.splice(i, 1);
+      renderFaq(); markChanged();
+    });
+  }
+
+  // ─── Testimonials ─────────────────────────────────────────────────────
+  function renderTestimonials() {
+    var c = $('testimonials-list');
+    if (!c) return;
+    c.innerHTML = '';
+    (data.testimonials || []).forEach(function(t, i) {
+      c.innerHTML += '<div class="item-card">' +
+        '<div class="item-header"><span class="item-title">' + (esc(t.author) || 'Témoignage ' + (i+1)) + '</span>' +
+          '<div style="display:flex;gap:.5rem;align-items:center">' +
+            '<span class="item-number">' + (i+1) + '</span>' +
+            '<button class="btn btn-danger btn-sm" onclick="window.adminApp.confirmRemoveTestimonial(' + i + ')">Supprimer</button>' +
+          '</div>' +
+        '</div>' +
+        '<div class="item-body">' +
+          '<div class="form-group"><label>Témoignage</label><textarea oninput="window.adminApp.data.testimonials[' + i + '].text=this.value;window.adminApp.markChanged()">' + esc(t.text) + '</textarea></div>' +
+          '<div class="form-row-3">' +
+            '<div class="form-group"><label>Auteur</label><input type="text" value="' + esc(t.author) + '" oninput="window.adminApp.data.testimonials[' + i + '].author=this.value;window.adminApp.markChanged()"></div>' +
+            '<div class="form-group"><label>Source</label><input type="text" value="' + esc(t.origin || '') + '" oninput="window.adminApp.data.testimonials[' + i + '].origin=this.value;window.adminApp.markChanged()"></div>' +
+            '<div class="form-group"><label>Note (1-5)</label><input type="number" min="1" max="5" value="' + (t.rating || 5) + '" oninput="window.adminApp.data.testimonials[' + i + '].rating=Number(this.value);window.adminApp.markChanged()"></div>' +
+          '</div>' +
+        '</div></div>';
+    });
+  }
+
+  function addTestimonial() {
+    if (!data.testimonials) data.testimonials = [];
+    data.testimonials.push({ text: '', author: '', origin: 'Google', rating: 5 });
+    renderTestimonials(); markChanged();
+  }
+
+  function confirmRemoveTestimonial(i) {
+    showConfirm('Supprimer ce témoignage ?', 'Le témoignage sera supprimé.', function() {
+      data.testimonials.splice(i, 1);
+      renderTestimonials(); markChanged();
+    });
+  }
+
+  // ─── Surroundings ─────────────────────────────────────────────────────
+  function renderSurroundings() {
+    var c = $('surroundings-list');
+    if (!c) return;
+    c.innerHTML = '';
+    (data.surroundings || []).forEach(function(s, i) {
+      c.innerHTML += '<div class="item-card">' +
+        '<div class="item-header"><span class="item-title">' + (esc(s.title) || 'Lieu ' + (i+1)) + '</span>' +
+          '<div style="display:flex;gap:.5rem;align-items:center">' +
+            '<span class="item-number">' + (i+1) + '</span>' +
+            '<button class="btn btn-danger btn-sm" onclick="window.adminApp.confirmRemoveSurrounding(' + i + ')">Supprimer</button>' +
+          '</div>' +
+        '</div>' +
+        '<div class="item-body">' +
+          '<div class="form-row-3">' +
+            '<div class="form-group"><label>Nom</label><input type="text" value="' + esc(s.title) + '" oninput="window.adminApp.data.surroundings[' + i + '].title=this.value;window.adminApp.markChanged()"></div>' +
+            '<div class="form-group"><label>Distance</label><input type="text" value="' + esc(s.distance) + '" oninput="window.adminApp.data.surroundings[' + i + '].distance=this.value;window.adminApp.markChanged()"></div>' +
+            '<div class="form-group"><label>URL</label><input type="url" value="' + esc(s.url || '') + '" oninput="window.adminApp.data.surroundings[' + i + '].url=this.value;window.adminApp.markChanged()"></div>' +
+          '</div>' +
+          '<div class="form-group"><label>Description</label><input type="text" value="' + esc(s.description) + '" oninput="window.adminApp.data.surroundings[' + i + '].description=this.value;window.adminApp.markChanged()"></div>' +
+        '</div></div>';
+    });
+  }
+
+  function addSurrounding() {
+    if (!data.surroundings) data.surroundings = [];
+    data.surroundings.push({ title: '', distance: '', description: '', url: '' });
+    renderSurroundings(); markChanged();
+  }
+
+  function confirmRemoveSurrounding(i) {
+    showConfirm('Supprimer ce lieu ?', 'Le lieu sera supprimé.', function() {
+      data.surroundings.splice(i, 1);
+      renderSurroundings(); markChanged();
+    });
+  }
+
+  // ─── Confirm dialog ──────────────────────────────────────────────────
+  function showConfirm(title, message, callback) {
+    $('confirm-title').textContent = title;
+    $('confirm-message').textContent = message;
+    pendingConfirm = callback;
+    $('confirm-dialog').classList.add('open');
+    $('confirm-btn').onclick = function() {
+      closeConfirm();
+      if (pendingConfirm) pendingConfirm();
+    };
+  }
+
+  function closeConfirm() {
+    $('confirm-dialog').classList.remove('open');
+    pendingConfirm = null;
+  }
+
+  // ─── Save / Export ────────────────────────────────────────────────────
+  function saveLocal() {
+    var btn = document.querySelector('.btn-save');
+    var originalHTML = btn.innerHTML;
+    btn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Enregistré !';
+    btn.style.background = '#065f46';
+
+    localStorage.setItem('admin_content_draft', JSON.stringify(data));
+    hasChanges = false;
+    $('unsaved-dot').classList.remove('visible');
+    $('saved-badge').classList.add('visible');
+    showToast('Brouillon enregistré localement');
+
+    setTimeout(function() {
+      btn.innerHTML = originalHTML;
+      btn.style.background = '';
+    }, 1500);
+  }
+
+  function exportContent() {
+    var json = JSON.stringify(data, null, 2);
+    var blob = new Blob([json], { type: 'application/json' });
+    var u = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = u; a.download = 'content.json'; a.click();
+    URL.revokeObjectURL(u);
+    showToast('Fichier content.json téléchargé');
+  }
+
+  // ─── GitHub config ────────────────────────────────────────────────────
+  function getGitHubConfig() {
+    var cfg = localStorage.getItem('admin_github_config');
+    if (!cfg) return null;
+    try { return JSON.parse(cfg); } catch(e) { return null; }
+  }
+
+  function loadGitHubConfig() {
+    var cfg = getGitHubConfig();
+    if (cfg) {
+      if (cfg.token) $('github-token').value = cfg.token;
+      if (cfg.owner) $('github-owner').value = cfg.owner;
+      if (cfg.repo) $('github-repo').value = cfg.repo;
+      if (cfg.branch) $('github-branch').value = cfg.branch;
+      if (cfg.path) $('github-path').value = cfg.path;
+    }
+  }
+
+  function saveGitHubConfig() {
+    var cfg = {
+      token: $('github-token').value,
+      owner: $('github-owner').value,
+      repo: $('github-repo').value,
+      branch: $('github-branch').value,
+      path: $('github-path').value
+    };
+    localStorage.setItem('admin_github_config', JSON.stringify(cfg));
+    updateGitHubStatus();
+    showToast('Configuration GitHub sauvegardée');
+  }
+
+  function updateGitHubStatus() {
+    var cfg = getGitHubConfig();
+    var card = $('github-status-card');
+    var icon = $('github-status-icon');
+    var title = $('github-status-title');
+    var desc = $('github-status-desc');
+
+    if (cfg && cfg.token) {
+      card.style.borderLeftColor = 'var(--sage)';
+      icon.style.background = 'var(--moss)';
+      icon.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>';
+      title.textContent = 'Configuré';
+      title.style.color = 'var(--green)';
+      desc.textContent = cfg.owner + '/' + cfg.repo + ' (branche ' + cfg.branch + ')';
+    } else {
+      card.style.borderLeftColor = '#ffc107';
+      icon.style.background = '#fff3cd';
+      icon.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>';
+      title.textContent = 'Non configuré';
+      title.style.color = '#b45309';
+      desc.textContent = 'Configurez votre token pour pouvoir publier';
+    }
+  }
+
+  async function testGitHubConnection() {
+    var cfg = getGitHubConfig();
+    if (!cfg || !cfg.token) {
+      alert('Token non trouvé. Sauvegardez d\'abord la configuration.');
+      return;
+    }
+    try {
+      var res = await fetch('https://api.github.com/repos/' + cfg.owner + '/' + cfg.repo, {
+        headers: { 'Authorization': 'token ' + cfg.token, 'Accept': 'application/vnd.github.v3+json' }
+      });
+      if (res.ok) {
+        var repoData = await res.json();
+        alert('Connexion réussie !\n\nDépôt : ' + repoData.full_name);
+      } else if (res.status === 401) {
+        alert('Token invalide ou expiré.');
+      } else if (res.status === 404) {
+        alert('Dépôt introuvable.');
+      } else {
+        alert('Erreur (code ' + res.status + ')');
+      }
+    } catch (err) {
+      alert('Erreur réseau : ' + err.message);
+    }
+  }
+
+  // ─── Publish modal ────────────────────────────────────────────────────
+  function openTokenModal() { $('token-modal').classList.add('open'); }
+  function closeTokenModal() { $('token-modal').classList.remove('open'); }
+
+  function openPublishModal() {
+    var cfg = getGitHubConfig();
+    if (!cfg || !cfg.token) { openTokenModal(); return; }
+    $('publish-form-view').style.display = 'block';
+    $('publish-transfer-view').style.display = 'none';
+    $('publish-status').innerHTML = '';
+    $('btn-do-publish').disabled = false;
+    $('transfer-actions').style.display = 'none';
+    document.querySelectorAll('.transfer-step').forEach(function(s) { s.className = 'transfer-step'; });
+    $('transfer-pipeline').classList.remove('done');
+    $('transfer-target').classList.remove('success');
+    $('publish-modal').classList.add('open');
+  }
+
+  function closePublishModal() { $('publish-modal').classList.remove('open'); }
+
+  function setStep(stepId, state) {
+    $(stepId).className = 'transfer-step ' + state;
+  }
+
+  // ─── Publish to GitHub ────────────────────────────────────────────────
+  async function publishToGitHub() {
+    var cfg = getGitHubConfig();
+    if (!cfg || !cfg.token) return;
+
+    $('publish-form-view').style.display = 'none';
+    $('publish-transfer-view').style.display = 'block';
+    $('transfer-title').textContent = 'Transfert en cours...';
+    $('transfer-subtitle').textContent = 'Envoi des données vers GitHub';
+
+    var statusEl = $('publish-status');
+    statusEl.innerHTML = '';
+
+    var apiBase = 'https://api.github.com';
+    var headers = {
+      'Authorization': 'token ' + cfg.token,
+      'Accept': 'application/vnd.github.v3+json',
+      'Content-Type': 'application/json'
+    };
+
+    try {
+      // Step 1: Read current file
+      setStep('step-read', 'active');
+      var getRes = await fetch(apiBase + '/repos/' + cfg.owner + '/' + cfg.repo + '/contents/' + cfg.path + '?ref=' + cfg.branch, { headers: headers });
+      if (!getRes.ok && getRes.status !== 404) {
+        var errData = await getRes.json();
+        throw new Error(errData.message || 'Erreur lecture fichier');
+      }
+      var currentSha = null;
+      if (getRes.ok) {
+        var fileData = await getRes.json();
+        currentSha = fileData.sha;
+      }
+      setStep('step-read', 'done');
+
+      // Step 2: Upload images
+      var imageKeys = Object.keys(pendingImageUploads);
+      if (imageKeys.length > 0) {
+        setStep('step-images', 'active');
+        for (var idx = 0; idx < imageKeys.length; idx++) {
+          var imgPath = imageKeys[idx];
+          var imgData = pendingImageUploads[imgPath];
+          var repoPath = 'public' + imgPath;
+          var imgGetRes = await fetch(apiBase + '/repos/' + cfg.owner + '/' + cfg.repo + '/contents/' + repoPath + '?ref=' + cfg.branch, { headers: headers });
+          var imgSha = null;
+          if (imgGetRes.ok) { imgSha = (await imgGetRes.json()).sha; }
+          var imgPutBody = { message: 'Ajout image: ' + imgPath.split('/').pop(), content: imgData.base64, branch: cfg.branch };
+          if (imgSha) imgPutBody.sha = imgSha;
+          var imgPutRes = await fetch(apiBase + '/repos/' + cfg.owner + '/' + cfg.repo + '/contents/' + repoPath, { method: 'PUT', headers: headers, body: JSON.stringify(imgPutBody) });
+          if (!imgPutRes.ok) {
+            var imgErr = await imgPutRes.json();
+            throw new Error('Erreur upload image: ' + (imgErr.message || ''));
+          }
+        }
+        for (var k = 0; k < imageKeys.length; k++) delete pendingImageUploads[imageKeys[k]];
+        setStep('step-images', 'done');
+      } else {
+        setStep('step-images', 'done');
+      }
+
+      // Step 3: Encode content
+      setStep('step-encode', 'active');
+      var jsonContent = JSON.stringify(data, null, 2) + '\n';
+      var base64Content = btoa(unescape(encodeURIComponent(jsonContent)));
+      await new Promise(function(r) { setTimeout(r, 400); });
+      setStep('step-encode', 'done');
+
+      // Step 4: Push commit
+      setStep('step-push', 'active');
+      var commitMessage = $('publish-message').value || 'Mise à jour du contenu';
+      var putBody = { message: commitMessage, content: base64Content, branch: cfg.branch };
+      if (currentSha) putBody.sha = currentSha;
+      var putRes = await fetch(apiBase + '/repos/' + cfg.owner + '/' + cfg.repo + '/contents/' + cfg.path, { method: 'PUT', headers: headers, body: JSON.stringify(putBody) });
+      if (!putRes.ok) {
+        var putErr = await putRes.json();
+        throw new Error(putErr.message || 'Erreur publication');
+      }
+      var result = await putRes.json();
+      var commitUrl = result.commit.html_url;
+      setStep('step-push', 'done');
+
+      // Step 5: Deploy
+      setStep('step-deploy', 'active');
+      await new Promise(function(r) { setTimeout(r, 600); });
+      setStep('step-deploy', 'done');
+
+      // Success
+      $('transfer-pipeline').classList.add('done');
+      $('transfer-target').classList.add('success');
+      $('transfer-title').textContent = 'Publié avec succès !';
+      $('transfer-subtitle').textContent = 'Le site sera reconstruit automatiquement';
+
+      localStorage.removeItem('admin_content_draft');
+      hasChanges = false;
+      $('unsaved-dot').classList.remove('visible');
+      $('saved-badge').classList.remove('visible');
+
+      statusEl.innerHTML = '<div class="status-msg success"><a href="' + commitUrl + '" target="_blank" style="color:#065f46;text-decoration:underline">Voir le commit sur GitHub</a></div>';
+      $('transfer-actions').style.display = 'flex';
+      showToast('Modifications publiées sur GitHub');
+
+    } catch (err) {
+      document.querySelectorAll('.transfer-step.active').forEach(function(s) { s.className = 'transfer-step error'; });
+      $('transfer-pipeline').classList.add('done');
+      $('transfer-title').textContent = 'Erreur de transfert';
+      $('transfer-subtitle').textContent = 'La publication a échoué';
+      statusEl.innerHTML = '<div class="status-msg error">Erreur : ' + esc(err.message) + '</div>';
+      $('transfer-actions').style.display = 'flex';
+    }
+  }
+
+  // ─── Event listeners ──────────────────────────────────────────────────
+  // Sidebar navigation
+  document.querySelectorAll('.sidebar a').forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      navigateTo(link.dataset.section);
+    });
+  });
+
+  // Mobile menu
+  if (window.innerWidth <= 768) $('menu-toggle').style.display = 'block';
+  window.addEventListener('resize', function() {
+    $('menu-toggle').style.display = window.innerWidth <= 768 ? 'block' : 'none';
+  });
+
+  // Keyboard shortcut: Ctrl+S
+  document.addEventListener('keydown', function(e) {
+    if ((e.ctrlKey || e.metaKey) && e.key === 's') { e.preventDefault(); saveLocal(); }
+  });
+
+  // Collapsible cards
+  document.addEventListener('click', function(e) {
+    var header = e.target.closest('.item-card .item-header');
+    if (!header) return;
+    if (e.target.closest('button')) return;
+    header.closest('.item-card').classList.toggle('collapsed');
+  });
+
+  // Close modals on overlay click
+  $('confirm-dialog').addEventListener('click', function(e) { if (e.target === e.currentTarget) closeConfirm(); });
+  $('publish-modal').addEventListener('click', function(e) { if (e.target === e.currentTarget) closePublishModal(); });
+  $('token-modal').addEventListener('click', function(e) { if (e.target === e.currentTarget) closeTokenModal(); });
+
+  // Warn before leaving with unsaved changes
+  window.addEventListener('beforeunload', function(e) {
+    if (hasChanges) { e.preventDefault(); e.returnValue = ''; }
+  });
+
+  // ─── Init ─────────────────────────────────────────────────────────────
   loadGitHubConfig();
   populateAllForms();
   renderDashboard();
   updateGitHubStatus();
-  if (savedDraft) {
-    document.getElementById('saved-badge').classList.add('visible');
-  }
-}
+  if (hasDraft) $('saved-badge').classList.add('visible');
 
-initAdmin();
-
-// ─── Dashboard ──────────────────────────────────────────────────────────
-function renderDashboard() {
-  const stats = [
-    { number: data.accommodations?.length || 0, label: 'Hébergements' },
-    { number: data.activities?.length || 0, label: 'Activités' },
-    { number: data.services?.length || 0, label: 'Services' },
-    { number: data.faq?.length || 0, label: 'FAQ' },
-    { number: data.testimonials?.length || 0, label: 'Témoignages' },
-    { number: data.surroundings?.length || 0, label: 'Aux environs' },
-  ];
-  document.getElementById('dashboard-stats').innerHTML = stats.map(s =>
-    `<div class="stat-card"><div class="stat-number">${s.number}</div><div class="stat-label">${s.label}</div></div>`
-  ).join('');
-
-  const links = [
-    { section: 'general', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09a1.65 1.65 0 001.51-1 1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06a1.65 1.65 0 001.82.33 1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82 1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>', label: 'Modifier les infos générales' },
-    { section: 'hero', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>', label: 'Page d\'accueil' },
-    { section: 'hebergements', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>', label: 'Gérer les hébergements' },
-    { section: 'tarifs', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>', label: 'Mettre à jour les tarifs' },
-    { section: 'parametres', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>', label: 'Configurer GitHub' },
-  ];
-  document.getElementById('quick-links').innerHTML = links.map(l =>
-    `<div class="quick-link" onclick="navigateTo('${l.section}')">${l.icon} ${l.label}</div>`
-  ).join('');
-}
-
-// ─── Navigation ─────────────────────────────────────────────────────────
-function navigateTo(section) {
-  document.querySelectorAll('.sidebar a').forEach(l => l.classList.remove('active'));
-  const link = document.querySelector('[data-section="' + section + '"]');
-  if (link) link.classList.add('active');
-  document.querySelectorAll('.section-panel').forEach(p => p.classList.remove('active'));
-  document.getElementById('panel-' + section).classList.add('active');
-  document.getElementById('sidebar').classList.remove('open');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-document.querySelectorAll('.sidebar a').forEach(link => {
-  link.addEventListener('click', (e) => {
-    e.preventDefault();
-    navigateTo(link.dataset.section);
-  });
-});
-
-// Mobile menu toggle
-if (window.innerWidth <= 768) document.getElementById('menu-toggle').style.display = 'block';
-window.addEventListener('resize', () => {
-  document.getElementById('menu-toggle').style.display = window.innerWidth <= 768 ? 'block' : 'none';
-});
-
-// ─── Keyboard shortcuts ────────────────────────────────────────────────
-document.addEventListener('keydown', (e) => {
-  if ((e.ctrlKey || e.metaKey) && e.key === 's') {
-    e.preventDefault();
-    saveLocal();
-  }
-});
-
-// ─── Confirm dialog ────────────────────────────────────────────────────
-function showConfirm(title, message, callback) {
-  document.getElementById('confirm-title').textContent = title;
-  document.getElementById('confirm-message').textContent = message;
-  pendingConfirm = callback;
-  document.getElementById('confirm-dialog').classList.add('open');
-  document.getElementById('confirm-btn').onclick = () => {
-    closeConfirm();
-    if (pendingConfirm) pendingConfirm();
-  };
-}
-function closeConfirm() {
-  document.getElementById('confirm-dialog').classList.remove('open');
-  pendingConfirm = null;
-}
-document.getElementById('confirm-dialog').addEventListener('click', (e) => {
-  if (e.target === e.currentTarget) closeConfirm();
-});
-
-// ─── Collapsible cards ─────────────────────────────────────────────────
-document.addEventListener('click', (e) => {
-  const header = e.target.closest('.item-card .item-header');
-  if (!header) return;
-  // Don't collapse if clicking a button inside header
-  if (e.target.closest('button')) return;
-  header.closest('.item-card').classList.toggle('collapsed');
-});
-
-// ─── Data helpers ───────────────────────────────────────────────────────
-function getPath(obj, path) {
-  return path.split('.').reduce((o, k) => o?.[k], obj);
-}
-function setPath(obj, path, val) {
-  const keys = path.split('.');
-  const last = keys.pop();
-  const target = keys.reduce((o, k) => o[k] = o[k] || {}, obj);
-  target[last] = val;
-}
-function markChanged() {
-  hasChanges = true;
-  document.getElementById('unsaved-dot').classList.add('visible');
-  // Auto-save after 30 seconds of inactivity
-  if (autoSaveTimer) clearTimeout(autoSaveTimer);
-  autoSaveTimer = setTimeout(() => {
-    localStorage.setItem('admin_content_draft', JSON.stringify(data));
-    document.getElementById('saved-badge').classList.add('visible');
-  }, 30000);
-}
-
-// ─── Image Picker ───────────────────────────────────────────────────────
-const pendingImageUploads = {}; // key: imagePath → { base64, mimeType }
-
-function getImageSrc(imagePath) {
-  // If there's a pending upload with a data URL preview, show that
-  if (pendingImageUploads[imagePath] && pendingImageUploads[imagePath].dataUrl) {
-    return pendingImageUploads[imagePath].dataUrl;
-  }
-  // Otherwise resolve from existing path
-  if (imagePath && imagePath.startsWith('/')) {
-    return basePath.replace(/\/$/, '') + imagePath;
-  }
-  return imagePath || '';
-}
-
-function renderImagePicker(containerId, imagePath, onPathChange) {
-  const container = document.getElementById(containerId);
-  if (!container) return;
-  const src = getImageSrc(imagePath);
-  const hasPending = pendingImageUploads[imagePath];
-  const hasImg = !!imagePath;
-
-  container.className = 'image-picker' + (hasImg ? ' has-image' : '');
-
-  // Build preview HTML
-  var previewHtml;
-  if (hasImg && src) {
-    previewHtml = '<img src="' + esc(src) + '" alt="Aperçu">';
-  } else {
-    previewHtml = '<div class="no-image"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="m21 15-5-5L5 21"></path></svg>Aucune image</div>';
-  }
-
-  container.innerHTML = '<div class="image-picker-preview">' + previewHtml + '</div>' +
-    '<div class="image-picker-actions">' +
-      '<label class="btn-upload"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg> Importer' +
-        '<input type="file" accept="image/*" onchange="handleImageUpload(this, \'' + containerId + '\')">' +
-      '</label>' +
-      '<span class="image-picker-path">' + (imagePath ? esc(imagePath) : 'Aucun fichier') + '</span>' +
-      (hasPending ? '<span class="image-picker-badge">Nouvelle</span>' : '') +
-    '</div>';
-
-  // Handle broken images
-  var img = container.querySelector('img');
-  if (img) {
-    img.onerror = function() {
-      this.parentElement.innerHTML = '<div class="no-image">Image introuvable</div>';
-    };
-  }
-
-  // Store callback for later use
-  container._onPathChange = onPathChange;
-}
-
-function handleImageUpload(input, containerId) {
-  const file = input.files[0];
-  if (!file) return;
-  const container = document.getElementById(containerId);
-  if (!container) return;
-
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    const dataUrl = e.target.result;
-    // Generate a clean filename
-    const ext = file.name.split('.').pop().toLowerCase();
-    const cleanName = file.name.replace(/\.[^.]+$/, '').toLowerCase()
-      .replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
-
-    // Determine destination folder based on context
-    let folder = '/images/';
-    const target = container.dataset.imageTarget;
-    if (target === 'accommodations') folder = '/images/hebergements/';
-    else if (target === 'activities') folder = '/images/activites/';
-    else if (containerId === 'hero-image-picker') folder = '/images/hero/';
-
-    const newPath = folder + cleanName + '.' + ext;
-
-    // Extract base64 data (strip "data:image/...;base64," prefix)
-    const base64Data = dataUrl.split(',')[1];
-    pendingImageUploads[newPath] = {
-      base64: base64Data,
-      mimeType: file.type,
-      dataUrl: dataUrl
-    };
-
-    // Update data model
-    if (container._onPathChange) {
-      container._onPathChange(newPath);
-    }
-    markChanged();
-  };
-  reader.readAsDataURL(file);
-}
-
-function initHeroImagePicker() {
-  renderImagePicker('hero-image-picker', data.hero?.image || '', (newPath) => {
-    data.hero.image = newPath;
-    initHeroImagePicker();
-  });
-}
-
-function makeAccImageCallback(i) {
-  return function(newPath) {
-    data.accommodations[i].image = newPath;
-    renderImagePicker('acc-image-picker-' + i, newPath, makeAccImageCallback(i));
-  };
-}
-function initAccommodationImagePickers() {
-  data.accommodations.forEach((a, i) => {
-    renderImagePicker('acc-image-picker-' + i, a.image || '', makeAccImageCallback(i));
-  });
-}
-
-function makeActImageCallback(i) {
-  return function(newPath) {
-    data.activities[i].image = newPath;
-    renderImagePicker('act-image-picker-' + i, newPath, makeActImageCallback(i));
-  };
-}
-function initActivityImagePickers() {
-  data.activities.forEach((a, i) => {
-    renderImagePicker('act-image-picker-' + i, a.image || '', makeActImageCallback(i));
-  });
-}
-
-// ─── Populate simple fields ─────────────────────────────────────────────
-function populateAllForms() {
-  document.querySelectorAll('[data-path]').forEach(input => {
-    const val = getPath(data, input.dataset.path);
-    if (val !== undefined) input.value = val;
-    input.addEventListener('input', () => {
-      const v = input.type === 'number' ? Number(input.value) : input.value;
-      setPath(data, input.dataset.path, v);
-      markChanged();
-    });
-  });
-
-  renderHighlights();
-  renderAccommodations();
-  renderTarifs();
-  renderActivities();
-  renderServices();
-  renderScheduleTimes();
-  renderFaq();
-  renderTestimonials();
-  renderSurroundings();
-  initHeroImagePicker();
-}
-
-// ─── Highlights ─────────────────────────────────────────────────────────
-function renderHighlights() {
-  const c = document.getElementById('highlights-list');
-  c.innerHTML = '';
-  data.highlights.forEach((h, i) => {
-    c.innerHTML += `<div class="item-card">
-      <div class="item-header"><span class="item-title">${h.title || 'Point fort ' + (i+1)}</span>
-        <div style="display:flex;gap:.5rem;align-items:center">
-          <span class="item-number">${i+1}</span>
-          <button class="btn btn-danger btn-sm" onclick="confirmRemoveHighlight(${i})">Supprimer</button>
-        </div>
-      </div>
-      <div class="item-body">
-        <div class="form-row-3">
-          <div class="form-group"><label>Icône</label>
-            <select onchange="data.highlights[${i}].icon=this.value;markChanged()">
-              ${['river','bike','star','boat','location','activity'].map(ic => `<option value="${ic}" ${h.icon===ic?'selected':''}>${ic}</option>`).join('')}
-            </select>
-          </div>
-          <div class="form-group"><label>Titre</label>
-            <input type="text" value="${esc(h.title)}" oninput="data.highlights[${i}].title=this.value;markChanged()">
-          </div>
-          <div class="form-group" style="grid-column:span 1"><label>Description</label>
-            <input type="text" value="${esc(h.description)}" oninput="data.highlights[${i}].description=this.value;markChanged()">
-          </div>
-        </div>
-      </div>
-    </div>`;
-  });
-}
-function addHighlight() {
-  data.highlights.push({ icon: 'star', title: '', description: '' });
-  renderHighlights(); markChanged();
-}
-function confirmRemoveHighlight(i) {
-  showConfirm('Supprimer ce point fort ?', 'L\'élément "' + (data.highlights[i].title || 'Point fort') + '" sera supprimé.', () => {
-    data.highlights.splice(i, 1);
-    renderHighlights(); markChanged();
-  });
-}
-
-// ─── Accommodations ─────────────────────────────────────────────────────
-function renderAccommodations() {
-  const c = document.getElementById('accommodations-list');
-  c.innerHTML = '';
-  data.accommodations.forEach((a, i) => {
-    const featuresHtml = (a.features || []).map((f, fi) =>
-      `<span class="feature-tag">${esc(f)}<button onclick="removeFeature(${i},${fi})">&times;</button></span>`
-    ).join('');
-
-    c.innerHTML += `<div class="item-card">
-      <div class="item-header">
-        <span class="item-title">${a.title || 'Hébergement ' + (i+1)}</span>
-        <span class="item-number">${i+1}</span>
-      </div>
-      <div class="item-body">
-        <div class="form-row">
-          <div class="form-group"><label>Titre</label><input type="text" value="${esc(a.title)}" oninput="data.accommodations[${i}].title=this.value;markChanged()"></div>
-          <div class="form-group"><label>Sous-titre</label><input type="text" value="${esc(a.subtitle)}" oninput="data.accommodations[${i}].subtitle=this.value;markChanged()"></div>
-        </div>
-        <div class="form-group"><label>Description</label><textarea oninput="data.accommodations[${i}].description=this.value;markChanged()">${esc(a.description)}</textarea></div>
-        <div class="form-row-3">
-          <div class="form-group"><label>Capacité</label><input type="text" value="${esc(a.capacity)}" oninput="data.accommodations[${i}].capacity=this.value;markChanged()"></div>
-          <div class="form-group"><label>Check-in</label><input type="text" value="${esc(a.checkin||'')}" oninput="data.accommodations[${i}].checkin=this.value;markChanged()"></div>
-          <div class="form-group"><label>Check-out</label><input type="text" value="${esc(a.checkout||'')}" oninput="data.accommodations[${i}].checkout=this.value;markChanged()"></div>
-        </div>
-        <div class="form-group"><label>Image</label>
-          <div class="image-picker" id="acc-image-picker-${i}" data-image-target="accommodations" data-image-index="${i}"></div>
-        </div>
-        <div class="form-group"><label>Texte alternatif</label><input type="text" value="${esc(a.imageAlt||'')}" oninput="data.accommodations[${i}].imageAlt=this.value;markChanged()"></div>
-        <div class="form-group"><label>Caractéristiques</label>
-          <div class="features-input">${featuresHtml}
-            <div style="display:flex;gap:.35rem">
-              <input type="text" id="feat-input-${i}" placeholder="Ajouter..." style="width:140px;padding:.3rem .6rem;font-size:.8rem;border:1px solid #ddd;border-radius:20px">
-              <button class="btn btn-secondary btn-sm" onclick="addFeature(${i})">+</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>`;
-  });
-  initAccommodationImagePickers();
-}
-function addFeature(accIdx) {
-  const input = document.getElementById('feat-input-' + accIdx);
-  if (input.value.trim()) {
-    if (!data.accommodations[accIdx].features) data.accommodations[accIdx].features = [];
-    data.accommodations[accIdx].features.push(input.value.trim());
-    input.value = '';
-    renderAccommodations(); markChanged();
-  }
-}
-function removeFeature(accIdx, featIdx) {
-  data.accommodations[accIdx].features.splice(featIdx, 1);
-  renderAccommodations(); markChanged();
-}
-
-// ─── Tarifs ─────────────────────────────────────────────────────────────
-function renderTarifs() {
-  const c = document.getElementById('tarifs-sections');
-  c.innerHTML = '';
-  ['emplacements', 'chalets', 'bivouac', 'rentals'].forEach(key => {
-    const t = data.tarifs[key];
-    if (!t) return;
-    const itemsHtml = (t.items || []).map((item, ii) => `
-      <div class="tarif-item">
-        <input type="text" value="${esc(item.label)}" oninput="data.tarifs['${key}'].items[${ii}].label=this.value;markChanged()">
-        <input type="text" value="${esc(item.price)}" oninput="data.tarifs['${key}'].items[${ii}].price=this.value;markChanged()">
-        <button class="btn-remove" onclick="removeTarifItem('${key}',${ii})">&times;</button>
-      </div>`).join('');
-
-    c.innerHTML += `<div class="item-card">
-      <div class="item-header"><span class="item-title">${esc(t.title)}</span></div>
-      <div class="form-row">
-        <div class="form-group"><label>Titre</label><input type="text" value="${esc(t.title)}" oninput="data.tarifs['${key}'].title=this.value;markChanged()"></div>
-        <div class="form-group"><label>Description</label><input type="text" value="${esc(t.description)}" oninput="data.tarifs['${key}'].description=this.value;markChanged()"></div>
-      </div>
-      <div class="form-group"><label>Tarifs</label>${itemsHtml}
-        <button class="btn btn-secondary btn-sm" style="margin-top:.5rem" onclick="addTarifItem('${key}')">+ Ajouter un tarif</button>
-      </div>
-      ${t.footnote !== undefined ? `<div class="form-group"><label>Note de bas</label><input type="text" value="${esc(t.footnote||'')}" oninput="data.tarifs['${key}'].footnote=this.value;markChanged()"></div>` : ''}
-    </div>`;
-  });
-}
-function addTarifItem(key) {
-  data.tarifs[key].items.push({ label: '', price: '' });
-  renderTarifs(); markChanged();
-}
-function removeTarifItem(key, idx) {
-  data.tarifs[key].items.splice(idx, 1);
-  renderTarifs(); markChanged();
-}
-
-// ─── Activities ─────────────────────────────────────────────────────────
-function renderActivities() {
-  const c = document.getElementById('activities-list');
-  c.innerHTML = '';
-  data.activities.forEach((a, i) => {
-    c.innerHTML += `<div class="item-card">
-      <div class="item-header"><span class="item-title">${esc(a.title) || 'Activité ' + (i+1)}</span>
-        <div style="display:flex;gap:.5rem;align-items:center">
-          <span class="item-number">${i+1}</span>
-          <button class="btn btn-danger btn-sm" onclick="confirmRemoveActivity(${i})">Supprimer</button>
-        </div>
-      </div>
-      <div class="item-body">
-        <div class="form-row">
-          <div class="form-group"><label>Titre</label><input type="text" value="${esc(a.title)}" oninput="data.activities[${i}].title=this.value;markChanged()"></div>
-          <div class="form-group"><label>Catégorie</label><input type="text" value="${esc(a.category||'')}" oninput="data.activities[${i}].category=this.value;markChanged()"></div>
-        </div>
-        <div class="form-group"><label>Description</label><textarea oninput="data.activities[${i}].description=this.value;markChanged()">${esc(a.description)}</textarea></div>
-        <div class="form-group"><label>Image</label>
-          <div class="image-picker" id="act-image-picker-${i}" data-image-target="activities" data-image-index="${i}"></div>
-        </div>
-        <div class="form-group"><label>Tarif</label><input type="text" value="${esc(a.price||'')}" oninput="data.activities[${i}].price=this.value;markChanged()"></div>
-      </div>
-    </div>`;
-  });
-  initActivityImagePickers();
-}
-function addActivity() {
-  data.activities.push({ title: '', description: '', image: '', category: '', price: '' });
-  renderActivities(); markChanged();
-}
-function confirmRemoveActivity(i) {
-  showConfirm('Supprimer cette activité ?', 'L\'activité "' + (data.activities[i].title || 'Sans titre') + '" sera supprimée.', () => {
-    data.activities.splice(i, 1);
-    renderActivities(); markChanged();
-  });
-}
-
-// ─── Services ───────────────────────────────────────────────────────────
-function renderServices() {
-  const c = document.getElementById('services-list');
-  c.innerHTML = '';
-  data.services.forEach((s, i) => {
-    c.innerHTML += `<div class="item-card">
-      <div class="item-header"><span class="item-title">${esc(s.title) || 'Service ' + (i+1)}</span>
-        <div style="display:flex;gap:.5rem;align-items:center">
-          <span class="item-number">${i+1}</span>
-          <button class="btn btn-danger btn-sm" onclick="confirmRemoveService(${i})">Supprimer</button>
-        </div>
-      </div>
-      <div class="item-body">
-        <div class="form-row-3">
-          <div class="form-group"><label>Icône</label>
-            <select onchange="data.services[${i}].icon=this.value;markChanged()">
-              ${['wifi','electric','laundry','accessible','pets','bike-parking','playground','fishing','shower','parking','bbq'].map(ic => `<option value="${ic}" ${s.icon===ic?'selected':''}>${ic}</option>`).join('')}
-            </select>
-          </div>
-          <div class="form-group"><label>Titre</label><input type="text" value="${esc(s.title)}" oninput="data.services[${i}].title=this.value;markChanged()"></div>
-          <div class="form-group"><label>Description</label><input type="text" value="${esc(s.description)}" oninput="data.services[${i}].description=this.value;markChanged()"></div>
-        </div>
-      </div>
-    </div>`;
-  });
-}
-function addService() {
-  data.services.push({ icon: 'wifi', title: '', description: '' });
-  renderServices(); markChanged();
-}
-function confirmRemoveService(i) {
-  showConfirm('Supprimer ce service ?', 'Le service "' + (data.services[i].title || 'Sans titre') + '" sera supprimé.', () => {
-    data.services.splice(i, 1);
-    renderServices(); markChanged();
-  });
-}
-
-// ─── Schedule times ─────────────────────────────────────────────────────
-function renderScheduleTimes() {
-  ['low', 'high'].forEach(season => {
-    const key = season === 'low' ? 'lowSeason' : 'highSeason';
-    const c = document.getElementById(season + '-season-times');
-    c.innerHTML = '';
-    (data.bac.schedules[key].times || []).forEach((t, i) => {
-      c.innerHTML += `<span class="time-tag">${t}<button onclick="removeScheduleTime('${season}',${i})">&times;</button></span>`;
-    });
-  });
-}
-function addScheduleTime(season) {
-  const key = season === 'low' ? 'lowSeason' : 'highSeason';
-  const input = document.getElementById(season + '-season-new');
-  if (input.value.trim()) {
-    data.bac.schedules[key].times.push(input.value.trim());
-    input.value = '';
-    renderScheduleTimes(); markChanged();
-  }
-}
-function removeScheduleTime(season, i) {
-  const key = season === 'low' ? 'lowSeason' : 'highSeason';
-  data.bac.schedules[key].times.splice(i, 1);
-  renderScheduleTimes(); markChanged();
-}
-
-// ─── FAQ ────────────────────────────────────────────────────────────────
-function renderFaq() {
-  const c = document.getElementById('faq-list');
-  c.innerHTML = '';
-  data.faq.forEach((f, i) => {
-    c.innerHTML += `<div class="item-card">
-      <div class="item-header"><span class="item-title">${esc(f.question).substring(0,50)}${f.question.length>50?'...':''}</span>
-        <div style="display:flex;gap:.5rem;align-items:center">
-          <span class="item-number">${i+1}</span>
-          <button class="btn btn-danger btn-sm" onclick="confirmRemoveFaq(${i})">Supprimer</button>
-        </div>
-      </div>
-      <div class="item-body">
-        <div class="form-group"><label>Question</label><input type="text" value="${esc(f.question)}" oninput="data.faq[${i}].question=this.value;markChanged()"></div>
-        <div class="form-group"><label>Réponse</label><textarea style="min-height:100px" oninput="data.faq[${i}].answer=this.value;markChanged()">${esc(f.answer)}</textarea></div>
-      </div>
-    </div>`;
-  });
-}
-function addFaq() {
-  data.faq.push({ question: '', answer: '' });
-  renderFaq(); markChanged();
-}
-function confirmRemoveFaq(i) {
-  showConfirm('Supprimer cette question ?', 'La question sera supprimée de la FAQ.', () => {
-    data.faq.splice(i, 1);
-    renderFaq(); markChanged();
-  });
-}
-
-// ─── Testimonials ───────────────────────────────────────────────────────
-function renderTestimonials() {
-  const c = document.getElementById('testimonials-list');
-  c.innerHTML = '';
-  data.testimonials.forEach((t, i) => {
-    c.innerHTML += `<div class="item-card">
-      <div class="item-header"><span class="item-title">${esc(t.author) || 'Témoignage ' + (i+1)}</span>
-        <div style="display:flex;gap:.5rem;align-items:center">
-          <span class="item-number">${i+1}</span>
-          <button class="btn btn-danger btn-sm" onclick="confirmRemoveTestimonial(${i})">Supprimer</button>
-        </div>
-      </div>
-      <div class="item-body">
-        <div class="form-group"><label>Témoignage</label><textarea oninput="data.testimonials[${i}].text=this.value;markChanged()">${esc(t.text)}</textarea></div>
-        <div class="form-row-3">
-          <div class="form-group"><label>Auteur</label><input type="text" value="${esc(t.author)}" oninput="data.testimonials[${i}].author=this.value;markChanged()"></div>
-          <div class="form-group"><label>Source</label><input type="text" value="${esc(t.origin||'')}" oninput="data.testimonials[${i}].origin=this.value;markChanged()"></div>
-          <div class="form-group"><label>Note (1-5)</label><input type="number" min="1" max="5" value="${t.rating}" oninput="data.testimonials[${i}].rating=Number(this.value);markChanged()"></div>
-        </div>
-      </div>
-    </div>`;
-  });
-}
-function addTestimonial() {
-  data.testimonials.push({ text: '', author: '', origin: 'Google', rating: 5 });
-  renderTestimonials(); markChanged();
-}
-function confirmRemoveTestimonial(i) {
-  showConfirm('Supprimer ce témoignage ?', 'Le témoignage de "' + (data.testimonials[i].author || 'Anonyme') + '" sera supprimé.', () => {
-    data.testimonials.splice(i, 1);
-    renderTestimonials(); markChanged();
-  });
-}
-
-// ─── Surroundings ───────────────────────────────────────────────────────
-function renderSurroundings() {
-  const c = document.getElementById('surroundings-list');
-  c.innerHTML = '';
-  data.surroundings.forEach((s, i) => {
-    c.innerHTML += `<div class="item-card">
-      <div class="item-header"><span class="item-title">${esc(s.title) || 'Lieu ' + (i+1)}</span>
-        <div style="display:flex;gap:.5rem;align-items:center">
-          <span class="item-number">${i+1}</span>
-          <button class="btn btn-danger btn-sm" onclick="confirmRemoveSurrounding(${i})">Supprimer</button>
-        </div>
-      </div>
-      <div class="item-body">
-        <div class="form-row-3">
-          <div class="form-group"><label>Nom</label><input type="text" value="${esc(s.title)}" oninput="data.surroundings[${i}].title=this.value;markChanged()"></div>
-          <div class="form-group"><label>Distance</label><input type="text" value="${esc(s.distance)}" oninput="data.surroundings[${i}].distance=this.value;markChanged()"></div>
-          <div class="form-group"><label>URL</label><input type="url" value="${esc(s.url||'')}" oninput="data.surroundings[${i}].url=this.value;markChanged()"></div>
-        </div>
-        <div class="form-group"><label>Description</label><input type="text" value="${esc(s.description)}" oninput="data.surroundings[${i}].description=this.value;markChanged()"></div>
-      </div>
-    </div>`;
-  });
-}
-function addSurrounding() {
-  data.surroundings.push({ title: '', distance: '', description: '', url: '' });
-  renderSurroundings(); markChanged();
-}
-function confirmRemoveSurrounding(i) {
-  showConfirm('Supprimer ce lieu ?', 'Le lieu "' + (data.surroundings[i].title || 'Sans titre') + '" sera supprimé.', () => {
-    data.surroundings.splice(i, 1);
-    renderSurroundings(); markChanged();
-  });
-}
-
-// ─── Save (localStorage) ────────────────────────────────────────────────
-function saveLocal() {
-  const btn = document.querySelector('.btn-save');
-  const originalHTML = btn.innerHTML;
-  btn.classList.add('saving');
-  btn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Enregistré !';
-  btn.style.background = '#065f46';
-
-  localStorage.setItem('admin_content_draft', JSON.stringify(data));
-  hasChanges = false;
-  document.getElementById('unsaved-dot').classList.remove('visible');
-  document.getElementById('saved-badge').classList.add('visible');
-  showToast('Brouillon enregistré localement');
-
-  setTimeout(() => {
-    btn.innerHTML = originalHTML;
-    btn.style.background = '';
-    btn.classList.remove('saving');
-  }, 1500);
-}
-
-// ─── Export (download) ──────────────────────────────────────────────────
-function exportContent() {
-  const json = JSON.stringify(data, null, 2);
-  const blob = new Blob([json], { type: 'application/json' });
-  const u = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = u;
-  a.download = 'content.json';
-  a.click();
-  URL.revokeObjectURL(u);
-  showToast('Fichier content.json téléchargé');
-}
-
-// ─── GitHub config ──────────────────────────────────────────────────────
-function loadGitHubConfig() {
-  const cfg = localStorage.getItem('admin_github_config');
-  if (cfg) {
-    try {
-      const c = JSON.parse(cfg);
-      document.getElementById('github-token').value = c.token || '';
-      document.getElementById('github-owner').value = c.owner || 'Lordahou';
-      document.getElementById('github-repo').value = c.repo || 'camping-menil';
-      document.getElementById('github-branch').value = c.branch || 'main';
-      document.getElementById('github-path').value = c.path || 'src/data/content.json';
-    } catch(e) {}
-  }
-}
-function saveGitHubConfig() {
-  try {
-    const token = document.getElementById('github-token').value;
-    const owner = document.getElementById('github-owner').value;
-    const repo = document.getElementById('github-repo').value;
-    const branch = document.getElementById('github-branch').value;
-    const path = document.getElementById('github-path').value;
-    const cfg = { token: token, owner: owner, repo: repo, branch: branch, path: path };
-    localStorage.setItem('admin_github_config', JSON.stringify(cfg));
-    updateGitHubStatus();
-    showToast('Configuration GitHub sauvegardée');
-  } catch(err) {
-    alert('Erreur lors de la sauvegarde : ' + err.message);
-  }
-}
-
-function updateGitHubStatus() {
-  const cfg = getGitHubConfig();
-  const card = document.getElementById('github-status-card');
-  const icon = document.getElementById('github-status-icon');
-  const title = document.getElementById('github-status-title');
-  const desc = document.getElementById('github-status-desc');
-
-  if (cfg && cfg.token) {
-    card.style.borderLeftColor = 'var(--sage)';
-    icon.style.background = 'var(--moss)';
-    icon.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>';
-    title.textContent = 'Configuré';
-    title.style.color = 'var(--green)';
-    desc.textContent = cfg.owner + '/' + cfg.repo + ' (branche ' + cfg.branch + ')';
-  } else {
-    card.style.borderLeftColor = '#ffc107';
-    icon.style.background = '#fff3cd';
-    icon.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>';
-    title.textContent = 'Non configuré';
-    title.style.color = '#b45309';
-    desc.textContent = 'Configurez votre token pour pouvoir publier';
-  }
-}
-
-async function testGitHubConnection() {
-  var cfg = getGitHubConfig();
-  if (!cfg || !cfg.token) {
-    alert('Token non trouvé. Cliquez d\'abord sur "Sauvegarder la configuration".');
-    return;
-  }
-
-  try {
-    var res = await fetch('https://api.github.com/repos/' + cfg.owner + '/' + cfg.repo, {
-      headers: {
-        'Authorization': 'token ' + cfg.token,
-        'Accept': 'application/vnd.github.v3+json'
-      }
-    });
-
-    if (res.ok) {
-      var repoData = await res.json();
-      alert('Connexion réussie !\n\nDépôt : ' + repoData.full_name + '\nVous pouvez maintenant publier vos modifications.');
-      document.getElementById('github-status-card').style.borderLeftColor = 'var(--sage)';
-      document.getElementById('github-status-icon').style.background = 'var(--moss)';
-      document.getElementById('github-status-icon').innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>';
-      document.getElementById('github-status-title').textContent = 'Connecté et vérifié';
-      document.getElementById('github-status-title').style.color = 'var(--green)';
-      document.getElementById('github-status-desc').textContent = cfg.owner + '/' + cfg.repo;
-    } else if (res.status === 401) {
-      alert('Token invalide ou expiré.\n\nVérifiez que vous avez bien copié le token complet (commence par ghp_).');
-    } else if (res.status === 404) {
-      alert('Dépôt introuvable.\n\nVérifiez le propriétaire (' + cfg.owner + ') et le nom du dépôt (' + cfg.repo + ').');
-    } else {
-      alert('Erreur de connexion (code ' + res.status + ')');
-    }
-  } catch (err) {
-    alert('Erreur réseau : impossible de joindre GitHub.\n\n' + err.message);
-  }
-}
-function getGitHubConfig() {
-  const cfg = localStorage.getItem('admin_github_config');
-  if (!cfg) return null;
-  try { return JSON.parse(cfg); } catch(e) { return null; }
-}
-
-// ─── Publish modal ──────────────────────────────────────────────────────
-function openTokenModal() {
-  document.getElementById('token-modal').classList.add('open');
-}
-function closeTokenModal() {
-  document.getElementById('token-modal').classList.remove('open');
-}
-document.getElementById('token-modal').addEventListener('click', (e) => {
-  if (e.target === e.currentTarget) closeTokenModal();
-});
-
-function openPublishModal() {
-  const cfg = getGitHubConfig();
-  if (!cfg || !cfg.token) {
-    openTokenModal();
-    return;
-  }
-  // Reset views
-  document.getElementById('publish-form-view').style.display = 'block';
-  document.getElementById('publish-transfer-view').style.display = 'none';
-  document.getElementById('publish-status').innerHTML = '';
-  document.getElementById('btn-do-publish').disabled = false;
-  document.getElementById('transfer-actions').style.display = 'none';
-  // Reset steps
-  document.querySelectorAll('.transfer-step').forEach(s => s.className = 'transfer-step');
-  document.getElementById('transfer-pipeline').classList.remove('done');
-  document.getElementById('transfer-target').classList.remove('success');
-  document.getElementById('publish-modal').classList.add('open');
-}
-function closePublishModal() {
-  document.getElementById('publish-modal').classList.remove('open');
-}
-
-function setStep(stepId, state) {
-  const el = document.getElementById(stepId);
-  el.className = 'transfer-step ' + state;
-}
-
-// ─── Publish to GitHub ──────────────────────────────────────────────────
-async function publishToGitHub() {
-  const cfg = getGitHubConfig();
-  if (!cfg || !cfg.token) return;
-
-  // Switch to transfer animation view
-  document.getElementById('publish-form-view').style.display = 'none';
-  document.getElementById('publish-transfer-view').style.display = 'block';
-  document.getElementById('transfer-title').textContent = 'Transfert en cours...';
-  document.getElementById('transfer-subtitle').textContent = 'Envoi des données vers GitHub';
-
-  const statusEl = document.getElementById('publish-status');
-  statusEl.innerHTML = '';
-
-  const apiBase = 'https://api.github.com';
-  const headers = {
-    'Authorization': 'token ' + cfg.token,
-    'Accept': 'application/vnd.github.v3+json',
-    'Content-Type': 'application/json',
+  // ─── Expose public API ────────────────────────────────────────────────
+  window.adminApp = {
+    data: data,
+    pendingImageUploads: pendingImageUploads,
+    markChanged: markChanged,
+    navigateTo: navigateTo,
+    saveLocal: saveLocal,
+    exportContent: exportContent,
+    openPublishModal: openPublishModal,
+    closePublishModal: closePublishModal,
+    publishToGitHub: publishToGitHub,
+    showConfirm: showConfirm,
+    closeConfirm: closeConfirm,
+    addHighlight: addHighlight,
+    confirmRemoveHighlight: confirmRemoveHighlight,
+    addFeature: addFeature,
+    removeFeature: removeFeature,
+    addActivity: addActivity,
+    confirmRemoveActivity: confirmRemoveActivity,
+    addService: addService,
+    confirmRemoveService: confirmRemoveService,
+    addScheduleTime: addScheduleTime,
+    removeScheduleTime: removeScheduleTime,
+    addTarifItem: addTarifItem,
+    removeTarifItem: removeTarifItem,
+    addFaq: addFaq,
+    confirmRemoveFaq: confirmRemoveFaq,
+    addTestimonial: addTestimonial,
+    confirmRemoveTestimonial: confirmRemoveTestimonial,
+    addSurrounding: addSurrounding,
+    confirmRemoveSurrounding: confirmRemoveSurrounding,
+    saveGitHubConfig: saveGitHubConfig,
+    testGitHubConnection: testGitHubConnection,
+    openTokenModal: openTokenModal,
+    closeTokenModal: closeTokenModal,
+    handleImageUpload: handleImageUpload
   };
 
-  try {
-    // Step 1: Read current file
-    setStep('step-read', 'active');
-    const getRes = await fetch(
-      apiBase + '/repos/' + cfg.owner + '/' + cfg.repo + '/contents/' + cfg.path + '?ref=' + cfg.branch,
-      { headers }
-    );
-
-    if (!getRes.ok && getRes.status !== 404) {
-      const err = await getRes.json();
-      throw new Error(err.message || 'Erreur lors de la lecture du fichier');
-    }
-
-    let currentSha = null;
-    if (getRes.ok) {
-      const fileData = await getRes.json();
-      currentSha = fileData.sha;
-    }
-    setStep('step-read', 'done');
-
-    // Step 2: Upload pending images
-    const imageKeys = Object.keys(pendingImageUploads);
-    if (imageKeys.length > 0) {
-      setStep('step-images', 'active');
-      for (const imgPath of imageKeys) {
-        const imgData = pendingImageUploads[imgPath];
-        // Path in the repo: "public" + imgPath (e.g., public/images/hebergements/photo.jpg)
-        const repoPath = 'public' + imgPath;
-
-        // Check if file already exists (to get SHA for update)
-        const imgGetRes = await fetch(
-          apiBase + '/repos/' + cfg.owner + '/' + cfg.repo + '/contents/' + repoPath + '?ref=' + cfg.branch,
-          { headers }
-        );
-        let imgSha = null;
-        if (imgGetRes.ok) {
-          const imgFileData = await imgGetRes.json();
-          imgSha = imgFileData.sha;
-        }
-
-        const imgPutBody = {
-          message: 'Ajout image: ' + imgPath.split('/').pop(),
-          content: imgData.base64,
-          branch: cfg.branch,
-        };
-        if (imgSha) imgPutBody.sha = imgSha;
-
-        const imgPutRes = await fetch(
-          apiBase + '/repos/' + cfg.owner + '/' + cfg.repo + '/contents/' + repoPath,
-          { method: 'PUT', headers, body: JSON.stringify(imgPutBody) }
-        );
-        if (!imgPutRes.ok) {
-          const err = await imgPutRes.json();
-          throw new Error('Erreur upload image ' + imgPath.split('/').pop() + ': ' + (err.message || ''));
-        }
-      }
-      // Clear pending uploads after successful upload
-      for (const key of imageKeys) delete pendingImageUploads[key];
-      setStep('step-images', 'done');
-    } else {
-      setStep('step-images', 'done');
-    }
-
-    // Step 3: Encode content
-    setStep('step-encode', 'active');
-    const jsonContent = JSON.stringify(data, null, 2) + '\n';
-    const base64Content = btoa(unescape(encodeURIComponent(jsonContent)));
-    await new Promise(r => setTimeout(r, 400)); // Small delay for visual feedback
-    setStep('step-encode', 'done');
-
-    // Step 3: Push commit
-    setStep('step-push', 'active');
-    const commitMessage = document.getElementById('publish-message').value || 'Mise à jour du contenu';
-    const putBody = {
-      message: commitMessage,
-      content: base64Content,
-      branch: cfg.branch,
-    };
-    if (currentSha) putBody.sha = currentSha;
-
-    const putRes = await fetch(
-      apiBase + '/repos/' + cfg.owner + '/' + cfg.repo + '/contents/' + cfg.path,
-      { method: 'PUT', headers, body: JSON.stringify(putBody) }
-    );
-
-    if (!putRes.ok) {
-      const err = await putRes.json();
-      throw new Error(err.message || 'Erreur lors de la publication');
-    }
-
-    const result = await putRes.json();
-    const commitUrl = result.commit.html_url;
-    setStep('step-push', 'done');
-
-    // Step 4: Deploy triggered
-    setStep('step-deploy', 'active');
-    await new Promise(r => setTimeout(r, 600));
-    setStep('step-deploy', 'done');
-
-    // Success animation
-    document.getElementById('transfer-pipeline').classList.add('done');
-    document.getElementById('transfer-target').classList.add('success');
-    document.getElementById('transfer-title').textContent = 'Publié avec succès !';
-    document.getElementById('transfer-subtitle').textContent = 'Le site sera reconstruit automatiquement';
-
-    localStorage.removeItem('admin_content_draft');
-    hasChanges = false;
-    document.getElementById('unsaved-dot').classList.remove('visible');
-    document.getElementById('saved-badge').classList.remove('visible');
-
-    statusEl.innerHTML = '<div class="status-msg success"><a href="' + commitUrl + '" target="_blank" style="color:#065f46;text-decoration:underline">Voir le commit sur GitHub</a></div>';
-    document.getElementById('transfer-actions').style.display = 'flex';
-    showToast('Modifications publiées sur GitHub');
-
-  } catch (err) {
-    // Mark current active step as error
-    document.querySelectorAll('.transfer-step.active').forEach(s => s.className = 'transfer-step error');
-    document.getElementById('transfer-pipeline').classList.add('done');
-    document.getElementById('transfer-title').textContent = 'Erreur de transfert';
-    document.getElementById('transfer-subtitle').textContent = 'La publication a échoué';
-    statusEl.innerHTML = '<div class="status-msg error">Erreur : ' + esc(err.message) + '</div>';
-    document.getElementById('transfer-actions').style.display = 'flex';
-  }
-}
-
-// ─── Utilities ──────────────────────────────────────────────────────────
-function esc(str) {
-  if (str === undefined || str === null) return '';
-  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  document.getElementById('toast-text').textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 3000);
-}
-
-// Warn before leaving with unsaved changes
-window.addEventListener('beforeunload', (e) => {
-  if (hasChanges) { e.preventDefault(); e.returnValue = ''; }
-});
-
-// Close modal on overlay click
-document.getElementById('publish-modal').addEventListener('click', (e) => {
-  if (e.target === e.currentTarget) closePublishModal();
-});
-
-// ─── Expose functions to global scope (needed because Astro wraps in IIFE) ──
-Object.assign(window, {
-  saveLocal, openPublishModal, closePublishModal, publishToGitHub,
-  navigateTo, showConfirm, closeConfirm,
-  addHighlight, confirmRemoveHighlight,
-  addFeature, removeFeature,
-  addActivity, confirmRemoveActivity,
-  addService, confirmRemoveService,
-  addScheduleTime, removeScheduleTime,
-  addTarifItem, removeTarifItem,
-  addFaq, confirmRemoveFaq,
-  addTestimonial, confirmRemoveTestimonial,
-  addSurrounding, confirmRemoveSurrounding,
-  saveGitHubConfig, testGitHubConnection, exportContent,
-  openTokenModal, closeTokenModal,
-  markChanged, handleImageUpload,
-  data, pendingImageUploads
-});
+})();
 </script>
 
 </body>
