@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180">
+  <rect width="180" height="180" rx="40" fill="#2D5016"/>
+  <!-- Tent -->
+  <path d="M90 35L55 130L90 130L125 130Z" fill="#4A7C2E"/>
+  <path d="M90 35L70 130L90 130L110 130Z" fill="#5B8C3E"/>
+  <path d="M90 60L90 130" stroke="#F5F0E8" stroke-width="3"/>
+  <path d="M78 130L90 105L102 130" fill="#F5F0E8" opacity="0.3"/>
+  <!-- Water wave -->
+  <path d="M30 142C45 138 55 146 70 142C85 138 95 146 110 142C125 138 135 146 150 142" stroke="#8FB87A" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <path d="M35 154C50 150 60 158 75 154C90 150 100 158 115 154C130 150 140 158 155 154" stroke="#8FB87A" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.5"/>
+</svg>

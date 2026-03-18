@@ -52,12 +52,17 @@ const overlayClasses = {
   <!-- Content -->
   <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 text-center py-32">
     {size === 'full' && (
-      <div class="inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm rounded-full px-4 py-2 mb-8 animate-fade-in">
-        <svg class="w-4 h-4 text-sage" fill="currentColor" viewBox="0 0 24 24">
-          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26" />
-        </svg>
-        <span class="text-white/90 text-sm font-medium">Noté 9.6/10 par nos visiteurs</span>
-      </div>
+      <Fragment>
+        <h2 class="text-white font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.1] mb-6 animate-fade-in drop-shadow-lg">
+          Camping du BAC de Ménil
+        </h2>
+        <div class="inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm rounded-full px-4 py-2 mb-8 animate-fade-in" style="animation-delay: 0.15s">
+          <svg class="w-4 h-4 text-sage" fill="currentColor" viewBox="0 0 24 24">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26" />
+          </svg>
+          <span class="text-white/90 text-sm font-medium">Noté 9.6/10 par nos visiteurs</span>
+        </div>
+      </Fragment>
     )}
 
     <h1 class="text-white font-heading text-balance leading-[1.1] mb-6 animate-fade-in-up" style="animation-delay: 0.1s">
