@@ -126,14 +126,46 @@ import { url } from '../utils/paths';
     });
 
     if (valid) {
-      // In production, replace with actual form submission
+      // Build mailto link with form data
+      const firstname = (form.querySelector('#firstname') as HTMLInputElement).value;
+      const lastname = (form.querySelector('#lastname') as HTMLInputElement).value;
+      const email = (form.querySelector('#email') as HTMLInputElement).value;
+      const phone = (form.querySelector('#phone') as HTMLInputElement).value;
+      const subject = (form.querySelector('#subject') as HTMLSelectElement).value || 'Contact depuis le site';
+      const message = (form.querySelector('#message') as HTMLTextAreaElement).value;
+
+      const subjectMap: Record<string, string> = {
+        'reservation': 'Réservation',
+        'information': "Demande d'information",
+        'groupe': 'Réservation groupe',
+        'autre': 'Autre',
+        '': 'Contact depuis le site'
+      };
+
+      const mailSubject = subjectMap[subject] || subject;
+      const mailBody = `Nom : ${firstname} ${lastname}\nEmail : ${email}${phone ? '\nTéléphone : ' + phone : ''}\n\n${message}`;
+
+      const mailtoUrl = `mailto:campingdubac@orange.fr?subject=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(mailBody)}`;
+      window.location.href = mailtoUrl;
+
+      // Show success feedback
       const btn = form.querySelector('button[type="submit"]');
       if (btn) {
-        btn.innerHTML = '✓ Message envoyé !';
+        btn.innerHTML = 'Votre messagerie va s\'ouvrir...';
         btn.classList.remove('btn-primary');
         btn.classList.add('bg-sage', 'text-forest', 'border-sage');
         (btn as HTMLButtonElement).disabled = true;
       }
+
+      // Reset after 3 seconds
+      setTimeout(() => {
+        if (btn) {
+          btn.innerHTML = 'Envoyer le message <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4z"/></svg>';
+          btn.classList.add('btn-primary');
+          btn.classList.remove('bg-sage', 'text-forest', 'border-sage');
+          (btn as HTMLButtonElement).disabled = false;
+        }
+      }, 3000);
     }
   });
 </script>

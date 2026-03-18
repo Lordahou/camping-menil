@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" fill="none">
+  <!-- Tent/Camping icon -->
+  <g transform="translate(5, 5)">
+    <path d="M25 45L12.5 45L25 10L37.5 45L25 45Z" fill="#2D5016" opacity="0.9"/>
+    <path d="M25 45L18 45L25 22L32 45L25 45Z" fill="#4A7C2E"/>
+    <path d="M25 28L25 45" stroke="#F5F0E8" stroke-width="1.5"/>
+    <path d="M20 45L25 35L30 45" fill="#F5F0E8" opacity="0.3"/>
+    <!-- Water wave -->
+    <path d="M5 48C10 46 15 50 20 48C25 46 30 50 35 48C40 46 45 50 50 48" stroke="#5B8C3E" stroke-width="2" fill="none" stroke-linecap="round"/>
+  </g>
+  <!-- Text -->
+  <text x="62" y="28" font-family="'DM Serif Display', Georgia, serif" font-size="18" fill="#2D5016" font-weight="400">Camping du Bac</text>
+  <text x="62" y="46" font-family="Inter, sans-serif" font-size="11" fill="#5B8C3E" font-weight="500" letter-spacing="2">MÉNIL · MAYENNE</text>
+</svg>
